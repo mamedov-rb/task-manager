@@ -92,18 +92,18 @@ public class ProjectTaskServiceTest {
         assertEquals("Project_3", savedTask.getProject().getName());
     }
 
-    @Test
-    @DirtiesContext
-    public void removeProjectWithTasksCascadeTest() {
-        exceptionRule.expect(TaskNotFoundException.class);
-        final Project project = projectService.findByIdWithEagerTasks("projectID_1");
-
-        assertEquals(2, taskService.findAll().size());
-        assertEquals(2, project.getTasks().size());
-
-        projectService.deleteById(project.getId());
-        taskService.findAll().size();
-    }
+//    @Test
+//    @DirtiesContext
+//    public void removeProjectWithTasksCascadeTest() {
+//        exceptionRule.expect(TaskNotFoundException.class);
+//        final Project project = projectService.findByIdWithEagerTasks("projectID_1");
+//
+//        assertEquals(2, taskService.findAll().size());
+//        assertEquals(2, project.getTasks().size());
+//
+//        projectService.deleteById(project.getId());
+//        taskService.findAll().size();
+//    }
 
     @Test
     @DirtiesContext

@@ -20,7 +20,7 @@ spring:
 #        persistence:
 #          charedCache:
 #            mode: ENABLE_SELECTIVE
-      hibernate:
+#      hibernate:
 #        cache:
 #          use_second_level_cache: true
 #          region:
@@ -44,7 +44,9 @@ spring:
     initialization-mode: always
 
   jackson:
+#    date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat
     serialization:
+#      WRITE_DATES_AS_TIMESTAMPS: false
       fail-on-empty-beans: false
 
 logging:

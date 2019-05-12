@@ -2,12 +2,17 @@ package ru.rmamedov.app.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
+import ru.rmamedov.app.config.json.CustomLocalDateDeserializer;
+import ru.rmamedov.app.config.json.CustomLocalDateSerializer;
 import ru.rmamedov.app.model.user.User;
 
 import javax.persistence.*;
@@ -83,11 +88,15 @@ public class Project {
     private LocalDateTime updated;
 
     @Column(name = "start_date")
+    @JsonSerialize(using = CustomLocalDateSerializer.class)
+    @JsonDeserialize(using = CustomLocalDateDeserializer.class)
     @FutureOrPresent
     private LocalDate startDate;
 
     @Column(name = "end_date")
     @Future
+    @JsonSerialize(using = CustomLocalDateSerializer.class)
+    @JsonDeserialize(using = CustomLocalDateDeserializer.class)
     private LocalDate endDate;
 
     @OneToMany(

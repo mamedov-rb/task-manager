@@ -31,7 +31,7 @@ public interface IUserService extends UserDetailsService, IBaseService<User> {
     Project addProjectAndUpdate(@NotNull final Project projectId, @NotNull final String username) throws ProjectAlreadyExistsException;
 
     @Transactional
-    void removeProjectAndUpdate(@NotNull final String projectId, @NotNull final String username) throws ProjectAlreadyExistsException;
+    boolean removeProjectAndUpdate(@NotNull final String projectId, @NotNull final String username) throws ProjectAlreadyExistsException;
 
     @NotNull
     @Override
@@ -62,7 +62,6 @@ public interface IUserService extends UserDetailsService, IBaseService<User> {
     @NotNull
     User saveWithSelfInjection(@NotNull final User user) throws UserAlreadyExistsException;
 
-    @Override
     @Transactional
     void deleteById(@NotNull final String id);
 

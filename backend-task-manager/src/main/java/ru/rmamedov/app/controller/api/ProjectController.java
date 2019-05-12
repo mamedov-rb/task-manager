@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ru.rmamedov.app.exception.ProjectAlreadyExistsException;
@@ -83,11 +85,17 @@ public class ProjectController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Project> delete(@PathVariable final String id) {
+    public ResponseEntity<Project> delete(@PathVariable final String id, final Authentication authentication) {
         if (id == null || id.isEmpty()) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
-        projectService.deleteById(id);
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+        boolean deleted = projectService.deleteById(id, authentication.getName());
+        if (deleted) {
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_MODIFIED);
     }
 }

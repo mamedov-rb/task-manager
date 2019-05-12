@@ -1,9 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Board from 'component/Board.vue'
+import Board from 'component/board/Board.vue'
 import AddProject from 'component/AddProjectForm.vue'
-import ProjectDetails from 'component/ProjectDetails.vue'
 import Page_404 from 'component/Page_404.vue'
 import LoginForm from 'component/LoginForm.vue'
 import RegistrationForm from 'component/RegistrationForm.vue'
@@ -15,8 +14,7 @@ const routes = [
     {path: '/', component: Board},
     {path: '/login', component: LoginForm},
     {path: '/registration', component: RegistrationForm},
-    {path: '/add-project', component: AddProject},
-    {path: '/project-details', component: ProjectDetails}
+    {path: '/add-project', component: AddProject}
 ]
 
 export default new VueRouter({

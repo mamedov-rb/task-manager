@@ -18,9 +18,6 @@ public interface IBaseService<T> {
     T save(@NotNull final T t);
 
     @Transactional
-    void deleteById(@NotNull final String id);
-
-    @Transactional
     void deleteAll();
 
     @NotNull

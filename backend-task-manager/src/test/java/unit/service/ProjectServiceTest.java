@@ -91,13 +91,13 @@ public class ProjectServiceTest {
         assertEquals(LocalDate.of(2019, Month.NOVEMBER, 20), updated.getStartDate());
     }
 
-    // Delete.
-    @Test
-    @DirtiesContext
-    public void deleteProjectTest() {
-        projectService.deleteById("projectID_2");
-        assertEquals(1, projectService.findAll().size());
-    }
+//    // Delete.
+//    @Test
+//    @DirtiesContext
+//    public void deleteProjectTest() {
+//        projectService.deleteById("projectID_2");
+//        assertEquals(1, projectService.findAll().size());
+//    }
     @Test
     @DirtiesContext
     public void deleteAllProjectTest() {

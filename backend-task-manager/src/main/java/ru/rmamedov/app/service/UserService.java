@@ -69,7 +69,7 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional
-    public void removeProjectAndUpdate(@NotNull final String projectId, @NotNull final String username) throws ProjectAlreadyExistsException {
+    public boolean removeProjectAndUpdate(@NotNull final String projectId, @NotNull final String username) throws ProjectAlreadyExistsException {
         final Project project = projectService.findByIdWithEagerUsers(projectId);
         final User user = findByUsernameWithEagerProjects(username);
 
@@ -82,6 +82,7 @@ public class UserService implements IUserService {
         projectsOfUser.remove(project);
         usersOfProject.remove(user);
         update(user);
+        return true;
     }
 
     @Override

@@ -14,6 +14,7 @@ import ru.rmamedov.app.model.Task;
 import ru.rmamedov.app.repository.IProjectRepository;
 import ru.rmamedov.app.service.interfaces.IProjectService;
 import ru.rmamedov.app.service.interfaces.ITaskService;
+import ru.rmamedov.app.service.interfaces.IUserService;
 
 import java.util.*;
 
@@ -22,14 +23,16 @@ public class ProjectService implements IProjectService {
 
     private IProjectRepository projectRepository;
     private ITaskService taskService;
+    private IUserService userService;
 
     @Autowired
     private IProjectService projectService;
 
     @Autowired
-    public ProjectService(IProjectRepository projectRepository, ITaskService taskService) {
+    public ProjectService(IProjectRepository projectRepository, ITaskService taskService, IUserService userService) {
         this.projectRepository = projectRepository;
         this.taskService = taskService;
+        this.userService = userService;
     }
 
     @Override
@@ -104,8 +107,13 @@ public class ProjectService implements IProjectService {
     }
     @Override
     @Transactional
-    public void deleteById(@NotNull final String id) {
-        projectRepository.delete(findById(id));
+    public boolean deleteById(@NotNull final String projectId, @NotNull final String username) {
+        boolean updated = userService.removeProjectAndUpdate(projectId, username);
+        if (updated) {
+            projectRepository.delete(findById(projectId));
+            return true;
+        }
+        return false;
     }
 
     @Override

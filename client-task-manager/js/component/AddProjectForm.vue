@@ -58,11 +58,13 @@
 
 <script>
 export default {
-  data: {
-    name: '',
-    description: '',
-    startDate: '',
-    endDate: ''
+  data() {
+    return {
+      name: '',
+      description: '',
+      startDate: '',
+      endDate: ''
+    }
   },
   methods: {
     addProject: function () {

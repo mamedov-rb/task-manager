@@ -32,6 +32,21 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PutMapping("/drop-project/{id}")
+    public ResponseEntity dropProject(@PathVariable String id, final Authentication authentication) {
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+        if (id == null || id.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        boolean updated = userService.removeProjectAndUpdate(id, authentication.getName());
+        if (updated) {
+            return new ResponseEntity(null, HttpStatus.OK);
+        }
+        return new ResponseEntity(null, HttpStatus.NOT_MODIFIED);
+    }
+
     @GetMapping(value = "/current")
     public ResponseEntity<UserDetails> findCurrentUser(final Authentication authentication) {
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
@@ -92,6 +107,7 @@ public class UserController {
         if (id == null) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
+        // TODO: before this, remove record from users_projects
         userService.deleteById(id);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
