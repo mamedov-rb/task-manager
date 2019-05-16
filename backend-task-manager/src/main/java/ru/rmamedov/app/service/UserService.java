@@ -17,10 +17,7 @@ import ru.rmamedov.app.service.interfaces.IProjectService;
 import ru.rmamedov.app.service.interfaces.IRoleService;
 import ru.rmamedov.app.service.interfaces.IUserService;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Rustam Mamedov
@@ -189,8 +186,18 @@ public class UserService implements IUserService {
     @Override
     @Transactional
     public User save(@NotNull final User user) throws DataIntegrityViolationException {
+        final Iterator<Role> iterator = user.getRoles().iterator();
+        String roleName = null;
+        if (iterator.hasNext()) {
+            roleName = iterator.next().getName();
+        }
+        user.setRoles(new HashSet<>());
         user.setPassword(encoder.encode(user.getPassword()));
-        return userRepository.saveAndFlush(user);
+        userRepository.saveAndFlush(user);
+        if (roleName != null) {
+            addRoleAndUpdate(roleName, user.getUsername());
+        }
+        return user;
     }
 
     @NotNull

@@ -37,6 +37,14 @@ public interface ITaskService extends IBaseService<Task> {
     @NotNull
     Task saveWithSelfInjection(@NotNull final Task task) throws TaskAlreadyExistsException;
 
+    @NotNull
+    @Transactional
+    Task saveUnderUserAndProject(@NotNull final Task task, @NotNull final String projectId, @NotNull String username);
+    @NotNull
+    Task saveWithSelfInjectionUnderUserAndProject(@NotNull final Task task, @NotNull final String projectId, @NotNull String username) throws TaskAlreadyExistsException;
+
+
+
     @Transactional
     void deleteById(@NotNull final String id);
 

@@ -13,8 +13,8 @@
     <div class="text-center col-sm area border-right">
       <p class="card-header mb-3" style="border: solid 2px #eaed65;">IN PROGRESS</p>
       <hr>
-      <div v-if="inProgresTasks.length">
-        <div v-for="task in inProgresTasks" :key="task.id" class="card-deck">
+      <div v-if="inProgressTasks.length">
+        <div v-for="task in inProgressTasks" :key="task.id" class="card-deck">
           <task-inProgress :task="task"></task-inProgress>
         </div>
       </div>
@@ -46,7 +46,7 @@
 export default {
     props: [
         'plannedTasks',
-        'inProgresTasks',
+        'inProgressTasks',
         'pausedTasks',
         'doneTasks'
     ]

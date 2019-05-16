@@ -111,7 +111,7 @@ public class User implements Serializable {
             fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.DETACH,
-                    CascadeType.MERGE,
+//                    CascadeType.MERGE,
                     CascadeType.REFRESH
             })
     @JoinTable(

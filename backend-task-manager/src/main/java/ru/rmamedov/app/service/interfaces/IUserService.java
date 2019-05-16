@@ -55,7 +55,6 @@ public interface IUserService extends UserDetailsService, IBaseService<User> {
     List<User> findAll() throws UserNotFoundException;
 
     @NotNull
-    @Override
     @Transactional
     User save(@NotNull final User user) throws DataIntegrityViolationException;
 

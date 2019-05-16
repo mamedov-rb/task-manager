@@ -36,8 +36,18 @@ public class ProjectController {
         this.userService = userService;
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<Project>> findAll() {
+        try {
+            return new ResponseEntity<>(projectService.findAll(), HttpStatus.OK);
+        } catch (ProjectNotFoundException ex) {
+            ex.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+    }
+
     @GetMapping("/all-of-user")
-    public ResponseEntity<List<Project>> findAllOfCurrentUser(@AuthenticationPrincipal AppUserPrincipal userPrincipal) {
+    public ResponseEntity<List<Project>> findAllOfCurrentUser(@AuthenticationPrincipal final AppUserPrincipal userPrincipal) {
         final String userId = userPrincipal.getUser().getId();
         try {
             return new ResponseEntity<>(projectService.findAllOfCurrentUser(userId), HttpStatus.OK);
@@ -56,7 +66,7 @@ public class ProjectController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Project> save(@RequestBody final Project project, @AuthenticationPrincipal AppUserPrincipal userPrincipal) {
+    public ResponseEntity<Project> save(@RequestBody final Project project, @AuthenticationPrincipal final AppUserPrincipal userPrincipal) {
         if (project != null && userPrincipal.getUsername() != null) {
             try {
                 return new ResponseEntity<>(userService.addProjectAndUpdate(project, userPrincipal.getUsername()), HttpStatus.OK);

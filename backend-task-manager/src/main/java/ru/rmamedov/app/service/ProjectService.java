@@ -22,16 +22,17 @@ import java.util.*;
 public class ProjectService implements IProjectService {
 
     private IProjectRepository projectRepository;
-    private ITaskService taskService;
     private IUserService userService;
+
+    @Autowired
+    private ITaskService taskService;
 
     @Autowired
     private IProjectService projectService;
 
     @Autowired
-    public ProjectService(IProjectRepository projectRepository, ITaskService taskService, IUserService userService) {
+    public ProjectService(IProjectRepository projectRepository, IUserService userService) {
         this.projectRepository = projectRepository;
-        this.taskService = taskService;
         this.userService = userService;
     }
 

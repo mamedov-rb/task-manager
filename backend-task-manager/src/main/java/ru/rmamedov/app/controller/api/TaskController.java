@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import ru.rmamedov.app.exception.TaskAlreadyExistsException;
 import ru.rmamedov.app.exception.TaskNotFoundException;
@@ -46,11 +48,15 @@ public class TaskController {
         return new ResponseEntity<>(taskService.findById(id), HttpStatus.OK);
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<Task> save(@RequestBody final Task task) {
-        if (task != null) {
+    @PostMapping("/save/{projectId}")
+    public ResponseEntity<Task> save(@RequestBody final Task task,
+                                     @PathVariable final String projectId, final Authentication authentication) {
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+        if (task != null && projectId != null && !projectId.isEmpty()) {
             try {
-                return new ResponseEntity<>(taskService.saveWithSelfInjection(task), HttpStatus.OK);
+                return new ResponseEntity<>(taskService.saveWithSelfInjectionUnderUserAndProject(task, projectId, authentication.getName()),HttpStatus.OK);
             } catch (TaskAlreadyExistsException ex) {
                 ex.printStackTrace();
                 return new ResponseEntity<>(null, HttpStatus.CONFLICT);

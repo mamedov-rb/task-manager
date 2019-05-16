@@ -1,5 +1,5 @@
 <template>
-    <div class="card mb-3">
+    <div class="card mb-3" @click="showCurrentTask">
       <div class="card-header" style="background: #7aef9d;">{{ task.name }}</div>
         <div class="card-body" style="border: solid 2px #7aef9d;">
           <h6 class="card-title">{{ task.status }}</h6>
@@ -14,7 +14,15 @@
 
 <script>
 export default {
-  props:['task']
+  props:[
+    'task'
+  ],
+  methods: {
+    showCurrentTask: function () {
+      this.$route.params.t = this.task
+      document.location.href = '/#/task-current'
+    }
+  }
 }
 </script>
 

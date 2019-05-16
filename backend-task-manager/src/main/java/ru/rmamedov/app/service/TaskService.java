@@ -10,6 +10,7 @@ import ru.rmamedov.app.exception.TaskNotFoundException;
 import ru.rmamedov.app.model.Task;
 import ru.rmamedov.app.model.user.User;
 import ru.rmamedov.app.repository.ITaskRepository;
+import ru.rmamedov.app.service.interfaces.IProjectService;
 import ru.rmamedov.app.service.interfaces.ITaskService;
 import ru.rmamedov.app.service.interfaces.IUserService;
 
@@ -23,14 +24,17 @@ public class TaskService implements ITaskService {
 
     private ITaskRepository taskRepository;
     private IUserService userService;
+    private IProjectService projectService;
 
     @Autowired
     private ITaskService taskService;
 
     @Autowired
-    public TaskService(ITaskRepository taskRepository, IUserService userService) {
+    public TaskService(ITaskRepository taskRepository, IUserService userService,
+                       IProjectService projectService) {
         this.taskRepository = taskRepository;
         this.userService = userService;
+        this.projectService = projectService;
     }
 
     @Override
@@ -50,16 +54,35 @@ public class TaskService implements ITaskService {
 
     @NotNull
     @Override
-    @Transactional
-    public Task save(@NotNull final Task task) {
+    public Task save(@NotNull Task task) {
         return taskRepository.saveAndFlush(task);
     }
-
     @NotNull
     @Override
     public Task saveWithSelfInjection(@NotNull final Task task) throws TaskAlreadyExistsException {
         try {
             return taskService.save(task);
+        } catch (DataIntegrityViolationException ex) {
+            throw new TaskAlreadyExistsException("Task with name: '" + task.getName() + "' - Not saved!");
+        }
+    }
+
+    @NotNull
+    @Override
+    @Transactional
+    public Task saveUnderUserAndProject(@NotNull final Task task, @NotNull final String projectId,
+                                        @NotNull String username) {
+        final Task saved = taskRepository.saveAndFlush(task);
+        projectService.addTaskAndUpdate(projectId, saved.getId());
+        assignToUser(saved.getId(), username);
+        return saved;
+    }
+    @NotNull
+    @Override
+    public Task saveWithSelfInjectionUnderUserAndProject(@NotNull final Task task, @NotNull final String projectId,
+                                                         @NotNull String username) throws TaskAlreadyExistsException {
+        try {
+            return taskService.saveUnderUserAndProject(task, projectId, username);
         } catch (DataIntegrityViolationException ex) {
             throw new TaskAlreadyExistsException("Task with name: '" + task.getName() + "' - Not saved!");
         }

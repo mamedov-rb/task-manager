@@ -15,7 +15,16 @@
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link text-secondary" href="/#/">Home</a>
+            <a class="nav-link text-secondary" href="/#/">Board</a>
+          </li>
+          <li v-if="isAdmin" class="nav-item">
+            <a class="nav-link text-secondary" href="/#/users">Users</a>
+          </li>
+            <li v-if="isAdmin" class="nav-item">
+            <a class="nav-link text-secondary" href="/#/projects">Projects</a>
+          </li>
+            <li v-if="isAdmin" class="nav-item">
+            <a class="nav-link text-secondary" href="/#/tasks">Tasks</a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-secondary" href="/#/registration">Register</a>
@@ -45,22 +54,19 @@
 
 <script>
 export default {
-  data() {
-    return {
-      user: {}
-    };
-  },
-  created() {
-    this.axios
-      .get("/user/current")
-      .then(response => (this.user = response.data))
-      .catch(error => console.log(error));
+  props: {
+    user: {
+      type: Object
+    },
+    isAdmin: {
+      type: Boolean
+    }
   }
 };
 </script>
-  
+
 <style>
-.user-info {
+  .user-info {
     margin-left: 15px;
   }
 </style>

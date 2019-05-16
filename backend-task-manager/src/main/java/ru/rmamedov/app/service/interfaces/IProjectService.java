@@ -39,7 +39,6 @@ public interface IProjectService extends IBaseService<Project> {
     List<Project> findAllOfCurrentUser(@NotNull final String id) throws ProjectNotFoundException;
 
     @NotNull
-    @Override
     @Transactional
     Project save(@NotNull final Project project);
     @NotNull

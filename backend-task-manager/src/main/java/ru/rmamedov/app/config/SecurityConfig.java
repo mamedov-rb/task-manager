@@ -3,6 +3,7 @@ package ru.rmamedov.app.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -65,6 +66,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .permitAll()
 
                     .antMatchers("/api/**").access("isAuthenticated()")
+
+                    .antMatchers(HttpMethod.POST, "/api/user/saveUnderUserAndProject").access("permitAll()")
+                    .antMatchers(HttpMethod.GET, "/api/user/all").access("hasRole('ROLE_ADMIN')")
 
                     .and()
                         .formLogin()
