@@ -22,6 +22,8 @@ import java.util.*;
 public class ProjectService implements IProjectService {
 
     private IProjectRepository projectRepository;
+
+    @Autowired
     private IUserService userService;
 
     @Autowired
@@ -31,9 +33,8 @@ public class ProjectService implements IProjectService {
     private IProjectService projectService;
 
     @Autowired
-    public ProjectService(IProjectRepository projectRepository, IUserService userService) {
+    public ProjectService(IProjectRepository projectRepository) {
         this.projectRepository = projectRepository;
-        this.userService = userService;
     }
 
     @Override

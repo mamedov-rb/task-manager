@@ -23,18 +23,19 @@ import java.util.Set;
 public class TaskService implements ITaskService {
 
     private ITaskRepository taskRepository;
+
+    @Autowired
     private IUserService userService;
+
+    @Autowired
     private IProjectService projectService;
 
     @Autowired
     private ITaskService taskService;
 
     @Autowired
-    public TaskService(ITaskRepository taskRepository, IUserService userService,
-                       IProjectService projectService) {
+    public TaskService(ITaskRepository taskRepository) {
         this.taskRepository = taskRepository;
-        this.userService = userService;
-        this.projectService = projectService;
     }
 
     @Override

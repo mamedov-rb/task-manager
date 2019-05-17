@@ -61,6 +61,9 @@
         props: {
             user: {
                 type: Object
+            },
+            qwe: {
+
             }
         },
         data() {

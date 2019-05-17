@@ -26,15 +26,11 @@ import java.util.List;
 @RequestMapping("/api/project")
 public class ProjectController {
 
+    @Autowired
     private IProjectService projectService;
 
-    private IUserService userService;
-
     @Autowired
-    public ProjectController(IProjectService projectService, IUserService userService) {
-        this.projectService = projectService;
-        this.userService = userService;
-    }
+    private IUserService userService;
 
     @GetMapping("/all")
     public ResponseEntity<List<Project>> findAll() {

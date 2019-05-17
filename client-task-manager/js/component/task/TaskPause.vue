@@ -7,7 +7,7 @@
                 <div class="small card-subtitle">starts: {{ task.startDate }}</div>
                 <div class="small card-subtitle">ends: {{ task.endDate }}</div>
             </div>
-            <p class="card-text font-italic">{{ task.description }}</p>
+            <p class="card-text font-italic text-secondary">{{ task.description }}</p>
         </div>
     </div>
 </template>

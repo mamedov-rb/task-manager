@@ -7,10 +7,10 @@
 
       <div class="form-group">
         <select class="form-control" v-model="role" required style="height: 50px;">
-          <option value="" selected="true" disabled="disabled">Who you wonna be</option>
-          <option value="ROLE_ADMIN">Admin</option>
-          <option value="ROLE_DEVELOPER">Developer</option>
-          <option value="ROLE_TESTER">Tester</option>
+          <option value="" selected disabled>Who you wonna be?</option>
+          <option value="ROLE_ADMIN">ADMIN</option>
+          <option value="ROLE_DEVELOPER">DEVELOPER</option>
+          <option value="ROLE_TESTER">TESTER</option>
         </select>
       </div>
       <div class="form-group">
@@ -56,7 +56,7 @@ export default {
       email: '',
       phone: '',
       age: '',
-      role: []
+      role: {}
     }
   },
   methods: {
