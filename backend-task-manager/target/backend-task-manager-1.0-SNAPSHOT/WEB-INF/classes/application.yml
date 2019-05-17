@@ -1,5 +1,5 @@
 server:
-  port: 7575
+  port: 6060
   servlet:
       session:
         timeout: 600s
@@ -64,3 +64,11 @@ logging:
 #      sf:
 #        ehcache:
 #          DEBUG
+
+#log4j:
+#  logger:
+#    org:
+#      hibernate:
+#        SQL: TRACE
+#        type: TRACE
+
