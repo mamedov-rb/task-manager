@@ -27,6 +27,8 @@ import java.util.*;
 public class UserService implements IUserService {
 
     private IUserRepository userRepository;
+
+    @Autowired
     private PasswordEncoder encoder;
 
     @Autowired
@@ -39,9 +41,8 @@ public class UserService implements IUserService {
     private IUserService userService;
 
     @Autowired
-    public UserService(IUserRepository userRepository, PasswordEncoder encoder) {
+    public UserService(IUserRepository userRepository) {
         this.userRepository = userRepository;
-        this.encoder = encoder;
     }
 
     @NotNull

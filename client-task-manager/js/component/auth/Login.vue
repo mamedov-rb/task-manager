@@ -7,7 +7,7 @@
       </h5>
     </div>
     <form class="form-signin" action="/login" method="POST">
-      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+<!--      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
       <div>
         <span v-if='isError()'>
           <p class="alert alert-danger">Invalid username or password.</p>

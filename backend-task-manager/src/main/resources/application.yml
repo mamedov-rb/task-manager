@@ -1,5 +1,5 @@
 server:
-  port: 6060
+  port: 7575
   servlet:
       session:
         timeout: 600s
@@ -37,7 +37,7 @@ spring:
 
   datasource:
     platform: postgres
-    url: jdbc:postgresql://postgres-container:5432/tracker_db
+    url: jdbc:postgresql://localhost:5432/tracker_db
     username: tracker_admin
     password: 123qwe
     driverClassName: org.postgresql.Driver
