@@ -84,4 +84,9 @@ public class RoleService implements IRoleService {
     public void deleteByName(@NotNull String name) {
         roleRepository.delete(findByName(name));
     }
+
+    @Override
+    public void deleteAll() {
+        roleRepository.deleteAll();
+    }
 }

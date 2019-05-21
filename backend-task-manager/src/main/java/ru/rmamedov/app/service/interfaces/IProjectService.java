@@ -44,8 +44,12 @@ public interface IProjectService extends IBaseService<Project> {
     @NotNull
     Project saveWithSelfInjection(@NotNull final Project project) throws ProjectAlreadyExistsException;
 
+    @Override
     @Transactional
-    boolean deleteById(@NotNull final String id, @NotNull final String username);
+    void deleteById(@NotNull final String id);
+
+    @Transactional
+    boolean deleteByIdUnderUser(@NotNull final String projectId, @NotNull final String username);
 
     @Override
     @Transactional

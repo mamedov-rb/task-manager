@@ -37,32 +37,6 @@ public class ProjectService implements IProjectService {
         this.projectRepository = projectRepository;
     }
 
-    @Override
-    public void addTaskAndUpdate(@NotNull final String projectId, @NotNull final String taskId) throws TaskAlreadyExistsException {
-        final Project project = projectService.findByIdWithEagerTasks(projectId);
-        final Task task = taskService.findByIdWithEagerProject(taskId);
-        final Set<Task> tasks = project.getTasks();
-        if (tasks.contains(task)) {
-            throw new TaskAlreadyExistsException("Project with ID: '" + project.getId() +
-                    "' - Already has Task with ID: '" + task.getId() + "'!");
-        }
-        task.setProject(project);
-        tasks.add(task);
-        update(project);
-    }
-
-    @Override
-    public void removeTaskAndUpdate(@NotNull final String projectId, @NotNull final String taskId) throws TaskNotFoundException {
-        final Project project = projectService.findByIdWithEagerTasks(projectId);
-        final Task task = taskService.findByIdWithEagerProject(taskId);
-        final Set<Task> tasks = project.getTasks();
-        if (!tasks.contains(task)) {
-            throw new TaskNotFoundException("Project with ID: '" + project.getId() + "' - Has no Task with ID: '" + task.getId() + "'!");
-        }
-        tasks.remove(task);
-        update(project);
-    }
-
     @NotNull
     @Override
     @Transactional
@@ -107,9 +81,15 @@ public class ProjectService implements IProjectService {
         }
         return projectRepository.saveAndFlush(fromDb);
     }
+
+    @Override
+    public void deleteById(@NotNull String id) {
+        projectRepository.deleteById(id);
+    }
+
     @Override
     @Transactional
-    public boolean deleteById(@NotNull final String projectId, @NotNull final String username) {
+    public boolean deleteByIdUnderUser(@NotNull final String projectId, @NotNull final String username) {
         boolean updated = userService.removeProjectAndUpdate(projectId, username);
         if (updated) {
             projectRepository.delete(findById(projectId));
@@ -122,6 +102,32 @@ public class ProjectService implements IProjectService {
     @Transactional
     public void deleteAll() {
         projectRepository.deleteAll();
+    }
+
+    @Override
+    public void addTaskAndUpdate(@NotNull final String projectId, @NotNull final String taskId) throws TaskAlreadyExistsException {
+        final Project project = projectService.findByIdWithEagerTasks(projectId);
+        final Task task = taskService.findByIdWithEagerProject(taskId);
+        final Set<Task> tasks = project.getTasks();
+        if (tasks.contains(task)) {
+            throw new TaskAlreadyExistsException("Project with ID: '" + project.getId() +
+                    "' - Already has Task with ID: '" + task.getId() + "'!");
+        }
+        task.setProject(project);
+        tasks.add(task);
+        update(project);
+    }
+
+    @Override
+    public void removeTaskAndUpdate(@NotNull final String projectId, @NotNull final String taskId) throws TaskNotFoundException {
+        final Project project = projectService.findByIdWithEagerTasks(projectId);
+        final Task task = taskService.findByIdWithEagerProject(taskId);
+        final Set<Task> tasks = project.getTasks();
+        if (!tasks.contains(task)) {
+            throw new TaskNotFoundException("Project with ID: '" + project.getId() + "' - Has no Task with ID: '" + task.getId() + "'!");
+        }
+        tasks.remove(task);
+        update(project);
     }
 
     @NotNull

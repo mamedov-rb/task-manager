@@ -112,11 +112,17 @@ public class Task {
     @JsonIgnore
     private Set<Comment> comments = new HashSet<>();
 
-    public Task(String name, String description,
-                Status status, LocalDate startDate, LocalDate endDate) {
+    public Task(@Size(
+            min = 3,
+            max = 30,
+            message = "Task name should be not less than '3' and more than '30' characters!"
+    ) @NotBlank String name, @Size(
+            min = 3,
+            max = 2500,
+            message = "Task description should be not less than '3' and more than '2500' characters!"
+    ) @NotBlank String description, @FutureOrPresent LocalDate startDate, @Future LocalDate endDate) {
         this.name = name;
         this.description = description;
-        this.status = status;
         this.startDate = startDate;
         this.endDate = endDate;
     }

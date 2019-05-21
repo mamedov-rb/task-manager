@@ -40,6 +40,7 @@ public interface ITaskService extends IBaseService<Task> {
     @NotNull
     @Transactional
     Task saveUnderUserAndProject(@NotNull final Task task, @NotNull final String projectId, @NotNull String username);
+
     @NotNull
     Task saveWithSelfInjectionUnderUserAndProject(@NotNull final Task task, @NotNull final String projectId, @NotNull String username) throws TaskAlreadyExistsException;
 

@@ -98,7 +98,7 @@ public class ProjectController {
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
         }
-        boolean deleted = projectService.deleteById(id, authentication.getName());
+        boolean deleted = projectService.deleteByIdUnderUser(id, authentication.getName());
         if (deleted) {
             return new ResponseEntity<>(null, HttpStatus.OK);
         }

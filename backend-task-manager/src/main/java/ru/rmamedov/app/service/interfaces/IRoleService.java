@@ -32,4 +32,7 @@ public interface IRoleService {
 
     @Transactional
     void deleteByName(@NotNull final String name);
+
+    @Transactional
+    void deleteAll();
 }

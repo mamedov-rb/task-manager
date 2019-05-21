@@ -111,12 +111,17 @@ public class Project {
     @ManyToMany(mappedBy = "projects", fetch = FetchType.LAZY)
     private Set<User> users = new HashSet<>();
 
-    public Project(String name,
-                   String description, Status status,
-                   LocalDate startDate, LocalDate endDate) {
+    public Project(@Size(
+            min = 3,
+            max = 30,
+            message = "Project name should be not less than '3' and more than '30' characters!"
+    ) @NotBlank String name, @Size(
+            min = 3,
+            max = 2500,
+            message = "Project description should be not less than '3' and more than '2500' characters!"
+    ) @NotBlank String description, @FutureOrPresent LocalDate startDate, @Future LocalDate endDate) {
         this.name = name;
         this.description = description;
-        this.status = status;
         this.startDate = startDate;
         this.endDate = endDate;
     }
