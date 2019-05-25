@@ -35,24 +35,6 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-        <!--View-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-
-        <!--webjars-->
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery</artifactId>
-            <version>3.3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>4.0.0</version>
-        </dependency>
-
         <!--persist-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -71,11 +53,6 @@
             <version>1.4.197</version>
             <scope>test</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.hibernate</groupId>-->
-<!--            <artifactId>hibernate-ehcache</artifactId>-->
-<!--            <version>5.4.1.Final</version>-->
-<!--        </dependency>-->
 
         <!--test-->
         <dependency>
@@ -83,15 +60,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-webflux</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.projectreactor</groupId>-->
-<!--            <artifactId>reactor-spring</artifactId>-->
-<!--            <version>1.0.1.RELEASE</version>-->
-<!--        </dependency>-->
 
         <!--lombok-->
         <dependency>
@@ -132,7 +100,6 @@
 
     <build>
         <plugins>
-
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -148,7 +115,6 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 </project>

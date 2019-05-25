@@ -2,7 +2,7 @@ server:
   port: 7575
   servlet:
       session:
-        timeout: 600s
+        timeout: 10m
 
 spring:
   session:
@@ -16,16 +16,6 @@ spring:
     hibernate:
       ddl-auto: create-drop
     properties:
-#      javax:
-#        persistence:
-#          charedCache:
-#            mode: ENABLE_SELECTIVE
-#      hibernate:
-#        cache:
-#          use_second_level_cache: true
-#          region:
-#            factory_class: org.hibernate.cache.ehcache.internal.EhcacheRegionFactory
-
         dialect: org.hibernate.dialect.PostgreSQL93Dialect
         show_sql: true
         use_sql_comments: true
@@ -43,32 +33,20 @@ spring:
     driverClassName: org.postgresql.Driver
     initialization-mode: always
 
-#  postgres-container
-
   jackson:
-#    date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat
     serialization:
-#      WRITE_DATES_AS_TIMESTAMPS: false
       fail-on-empty-beans: false
 
 logging:
   level:
     org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
       springframework:
-#        security: DEBUG
+        security: ERROR
         web: DEBUG
-
-      hibernate: ERROR
-
-#    net:
-#      sf:
-#        ehcache:
-#          DEBUG
-
-#log4j:
-#  logger:
-#    org:
-#      hibernate:
-#        SQL: TRACE
-#        type: TRACE
 

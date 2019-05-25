@@ -62,7 +62,7 @@ export default {
   methods: {
     registerUser: function() {
       this.axios
-      .post('/user/save', {
+      .post('/api/user/save', {
         username: this.username,
         password: this.password,
         fullName: this.firstName + ' ' + this.lastName,

@@ -26,6 +26,7 @@ public class LoginAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(final HttpServletRequest request,
                        final HttpServletResponse response,
                        final AccessDeniedException ex) throws IOException {
+        final String host = "http://localhost:30000";
 
         final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -34,6 +35,7 @@ public class LoginAccessDeniedHandler implements AccessDeniedHandler {
             log.info("User '" + auth.getName() +
                     "' - Was trying to access protected resource: '" + request.getRequestURI() + "'");
         }
-        response.sendRedirect(request.getContextPath() + "/access-denied");
+        response.sendRedirect(host + "/#/access-denied");
+//      request.getContextPath() +
     }
 }

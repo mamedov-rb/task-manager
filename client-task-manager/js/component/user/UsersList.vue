@@ -43,7 +43,7 @@
         },
         created: function () {
             this.axios
-                .get("/user/all")
+                .get("/api/user/all")
                 .then(response => {
                     this.users = response.data
                 })

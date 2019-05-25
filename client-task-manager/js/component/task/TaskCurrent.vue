@@ -119,7 +119,7 @@
         methods: {
             deleteTask: function() {
                 this.axios
-                    .delete('/task/delete/' + this.id)
+                    .delete('/api/task/delete/' + this.id)
                     .then(response => {
                         document.location.reload(true);
                     })
@@ -127,7 +127,7 @@
             },
             patchTask: function() {
                 this.axios
-                    .patch('/task/patch', {
+                    .patch('/api/task/patch', {
                         id: this.id,
                         name: this.name,
                         description: this.description,
