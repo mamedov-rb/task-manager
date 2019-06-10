@@ -2,7 +2,7 @@ server:
   port: 7575
   servlet:
       session:
-        timeout: 10m
+        timeout: 600s
 
 spring:
   session:
@@ -33,6 +33,8 @@ spring:
     driverClassName: org.postgresql.Driver
     initialization-mode: always
 
+#  postgres-container
+
   jackson:
     serialization:
       fail-on-empty-beans: false
@@ -40,13 +42,21 @@ spring:
 logging:
   level:
     org:
-      hibernate:
-        SQL: DEBUG
-        type:
-          descriptor:
-            sql:
-              BasicBinder: TRACE
       springframework:
-        security: ERROR
+#        security: DEBUG
         web: DEBUG
+
+      hibernate: ERROR
+
+#    net:
+#      sf:
+#        ehcache:
+#          DEBUG
+
+#log4j:
+#  logger:
+#    org:
+#      hibernate:
+#        SQL: TRACE
+#        type: TRACE
 

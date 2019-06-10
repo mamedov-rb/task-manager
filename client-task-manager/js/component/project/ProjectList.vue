@@ -43,7 +43,7 @@
         },
         created: function () {
             this.axios
-                .get("/api/project/all")
+                .get("/project/all")
                 .then(response => {
                     this.projects = response.data
                 })

@@ -83,7 +83,7 @@ export default {
         createProjectOrTask: function () {
             if (this.taskWillBeCreated) {
                 this.axios
-                    .post('/api/task/save/' + this.projectId, {
+                    .post('/task/save/' + this.projectId, {
                         name: this.name,
                         description: this.description,
                         startDate: this.startDate,
@@ -96,7 +96,7 @@ export default {
                     .catch(e => {})
             } else {
                 this.axios
-                    .post('/api/project/save', {
+                    .post('/project/save', {
                         name: this.name,
                         description: this.description,
                         startDate: this.startDate,
@@ -111,7 +111,7 @@ export default {
         },
         dropProject: function() {
             this.axios
-                .put('/api/user/drop-project/' + this.id)
+                .put('/user/drop-project/' + this.id)
                 .then(response => {
                     document.location.reload(true);
                 })
@@ -119,7 +119,7 @@ export default {
         },
         deleteProject: function() {
             this.axios
-                .delete('/api/project/delete/' + this.id)
+                .delete('/project/delete/' + this.id)
                 .then(response => {
                     document.location.reload(true);
                 })
@@ -127,7 +127,7 @@ export default {
         },
         patchProject: function() {
             this.axios
-                .patch('/api/project/patch', {
+                .patch('/project/patch', {
                     id: this.id,
                     name: this.name,
                     description: this.description,

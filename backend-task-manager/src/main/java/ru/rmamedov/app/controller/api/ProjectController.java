@@ -22,7 +22,6 @@ import java.util.List;
  */
 
 @Slf4j
-@CrossOrigin(origins = "http://localhost:30000")
 @RestController
 @RequestMapping("/api/project")
 public class ProjectController {
@@ -45,16 +44,13 @@ public class ProjectController {
 
     @GetMapping("/all-of-user")
     public ResponseEntity<List<Project>> findAllOfCurrentUser(@AuthenticationPrincipal final AppUserPrincipal userPrincipal) {
-        if (userPrincipal != null) {
-            final String userId = userPrincipal.getUser().getId();
-            try {
-                return new ResponseEntity<>(projectService.findAllOfCurrentUser(userId), HttpStatus.OK);
-            } catch (ProjectNotFoundException ex) {
-                ex.printStackTrace();
-                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-            }
+        final String userId = userPrincipal.getUser().getId();
+        try {
+            return new ResponseEntity<>(projectService.findAllOfCurrentUser(userId), HttpStatus.OK);
+        } catch (ProjectNotFoundException ex) {
+            ex.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
     }
 
     @GetMapping("/{id}")

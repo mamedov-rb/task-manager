@@ -16,7 +16,7 @@ export default {
   },
   created: function () {
     this.axios
-            .get("/api/user/current")
+            .get("/user/current")
             .then(response => (this.user = response.data))
             .catch(error => console.log(error));
   },

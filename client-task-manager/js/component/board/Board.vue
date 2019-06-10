@@ -145,7 +145,7 @@
         },
         created() {
             this.axios
-                .get("/api/project/all-of-user")
+                .get("/project/all-of-user")
                 .then(response => {
                     let p = response.data;
                     if (isJson(p)) {

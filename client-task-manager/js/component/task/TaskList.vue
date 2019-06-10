@@ -42,7 +42,7 @@
         },
         created: function () {
             this.axios
-                .get("/api/task/all")
+                .get("/task/all")
                 .then(response => {
                     this.tasks = response.data
                 })

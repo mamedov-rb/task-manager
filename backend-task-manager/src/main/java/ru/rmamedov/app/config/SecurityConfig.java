@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.session.SessionRegistry;
@@ -44,41 +45,42 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    public void configure(WebSecurity web) throws Exception {
+        web
+                .ignoring()
+                    .antMatchers("/webjars/**", "/resources/**", "/js/**", "/css/**", "/js/**");
+    }
+
+    @Override
     protected void configure(final HttpSecurity http) throws Exception {
-
-        final String host = "http://localhost:30000";
-
         http
                 .csrf().disable();
 
         http
-                .cors();
-
-        http
-                .httpBasic();
+                .httpBasic().disable();
 
         http
                 .authorizeRequests()
 
-                    .antMatchers(host + "/#/", host + "/#/login", host + "/#/registration")
+                    .antMatchers("/#/", "/#/login", "/#/registration")
                         .permitAll()
 
-                    .antMatchers(host + "/api/**").access("isAuthenticated()")
+                    .antMatchers("/api/**").access("isAuthenticated()")
 
-                    .antMatchers(HttpMethod.POST, host + "/api/user/saveUnderUserAndProject").access("permitAll()")
-                    .antMatchers(HttpMethod.GET, host + "/api/user/all").access("hasRole('ROLE_ADMIN')")
+                    .antMatchers(HttpMethod.POST, "/api/user/saveUnderUserAndProject").access("permitAll()")
+                    .antMatchers(HttpMethod.GET, "/api/user/all").access("hasRole('ROLE_ADMIN')")
 
                     .and()
                         .formLogin()
                             .loginProcessingUrl("/login")
-                            .defaultSuccessUrl(host, true)
-                            .failureUrl(host + "/#/login?error")
+                            .defaultSuccessUrl("/", true)
+                            .failureUrl("/#/login?error")
                                 .permitAll()
 
                     .and()
                         .logout()
                             .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                            .logoutSuccessUrl(host + "/#/login?logout")
+                            .logoutSuccessUrl("/#/login?logout")
                             .deleteCookies("JSESSIONID")
                             .invalidateHttpSession(true)
                             .clearAuthentication(true)
@@ -96,7 +98,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .sessionManagement()
-                    .invalidSessionUrl(host + "/#/login")
+                    .invalidSessionUrl("/#/login")
                     .maximumSessions(1)
                     .maxSessionsPreventsLogin(true)
                     .sessionRegistry(sessionRegistry());
