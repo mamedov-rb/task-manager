@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: ru.rmamedov.app.service.ProjectServiceTest
--------------------------------------------------------------------------------
-Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.266 s - in ru.rmamedov.app.service.ProjectServiceTest

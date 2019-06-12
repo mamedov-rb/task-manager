@@ -173,8 +173,8 @@ public class ProjectService implements IProjectService {
     @NotNull
     @Override
     @Transactional
-    public List<Project> findAllOfCurrentUser(@NotNull final String id) throws ProjectNotFoundException {
-        final Optional<List<Project>> projects = projectRepository.findAllOfCurrentUser(id);
+    public List<Project> findAllOfCurrentUser(@NotNull final String userId) throws ProjectNotFoundException {
+        final Optional<List<Project>> projects = projectRepository.findAllOfCurrentUser(userId);
         if (projects.isPresent()) {
             return Collections.unmodifiableList(projects.get());
         }

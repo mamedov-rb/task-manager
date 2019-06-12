@@ -76,7 +76,11 @@ export default {
       .then(response => {
         // console.log('status is:' + response.status)
       })
-      .catch(e => {})
+      .catch(e => {
+        if (e.response) {
+          console.log(e.response.data);
+        }
+      })
     }
   }
 };
