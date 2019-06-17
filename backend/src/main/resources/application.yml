@@ -5,19 +5,12 @@ server:
         timeout: 600s
 
 spring:
-#  mvc:
-#    throw-exception-if-no-handler-found: true
-#
-#  resources:
-#    add-mappings: false
-
   session:
     store-type: jdbc
     jdbc:
       initialize-schema: always
       schema: classpath:org/springframework/session/jdbc/schema-@@platform@@.sql
       table-name: SPRING_SESSION
-
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -30,7 +23,6 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
-
   datasource:
     platform: postgres
     url: jdbc:postgresql://localhost:5432/tracker_db
@@ -38,9 +30,6 @@ spring:
     password: 123qwe
     driverClassName: org.postgresql.Driver
     initialization-mode: always
-
-#  postgres-container
-
   jackson:
     serialization:
       fail-on-empty-beans: false
@@ -49,20 +38,7 @@ logging:
   level:
     org:
       springframework:
-#        security: DEBUG
+        security: ERROR
         web: DEBUG
 
       hibernate: ERROR
-
-#    net:
-#      sf:
-#        ehcache:
-#          DEBUG
-
-#log4j:
-#  logger:
-#    org:
-#      hibernate:
-#        SQL: TRACE
-#        type: TRACE
-
