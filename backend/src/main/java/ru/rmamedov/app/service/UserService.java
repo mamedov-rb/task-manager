@@ -125,6 +125,7 @@ public class UserService implements IUserService {
 
     @NotNull
     @Override
+    @Transactional(readOnly=true)
     public AppUserPrincipal loadUserByUsername(@NotNull final String username) throws UsernameNotFoundException {
         final Optional<User> optionalUser = userRepository.loadByUsernameWithEagerRoles(username);
         if (optionalUser.isPresent()) {
@@ -135,6 +136,7 @@ public class UserService implements IUserService {
 
     @NotNull
     @Override
+    @Transactional(readOnly=true)
     public User findById(@NotNull final String id) throws UserNotFoundException {
         final Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
@@ -145,6 +147,7 @@ public class UserService implements IUserService {
 
     @NotNull
     @Override
+    @Transactional(readOnly=true)
     public User findByUsernameWithEagerRoles(@NotNull final String username) throws UserNotFoundException {
         final Optional<User> optionalUser = userRepository.findByUsernameWithEagerRoles(username);
         if (optionalUser.isPresent()) {
@@ -155,6 +158,7 @@ public class UserService implements IUserService {
 
     @NotNull
     @Override
+    @Transactional(readOnly=true)
     public User findByUsernameWithEagerProjects(@NotNull String username) throws UserNotFoundException {
         final Optional<User> optionalUser = userRepository.findByUsernameWithEagerProjects(username);
         if (optionalUser.isPresent()) {
@@ -165,6 +169,7 @@ public class UserService implements IUserService {
 
     @NotNull
     @Override
+    @Transactional(readOnly=true)
     public User findByUsernameWithEagerTasks(@NotNull String username) throws UserNotFoundException {
         final Optional<User> optionalUser = userRepository.findByUsernameWithEagerTasks(username);
         if (optionalUser.isPresent()) {
@@ -175,6 +180,7 @@ public class UserService implements IUserService {
 
     @NotNull
     @Override
+    @Transactional(readOnly=true)
     public List<User> findAll() throws UserNotFoundException {
         final List<User> users = userRepository.findAll();
         if (users == null || users.isEmpty()) {
