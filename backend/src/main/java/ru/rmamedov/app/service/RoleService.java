@@ -34,6 +34,7 @@ public class RoleService implements IRoleService {
 
     @NotNull
     @Override
+    @Transactional(readOnly=true)
     public List<Role> findAll() throws RoleNotFoundException {
         final List<Role> roles = roleRepository.findAll();
         if (roles == null || roles.isEmpty()) {
@@ -44,6 +45,7 @@ public class RoleService implements IRoleService {
 
     @NotNull
     @Override
+    @Transactional(readOnly=true)
     public Role findByName(@NotNull String name) throws RoleNotFoundException {
         final Optional<Role> optionalRole = roleRepository.findByName(name);
         if (optionalRole.isPresent()) {
@@ -54,6 +56,7 @@ public class RoleService implements IRoleService {
 
     @NotNull
     @Override
+    @Transactional(readOnly=true)
     public Role findByNameWithEagerUsers(@NotNull String name) throws RoleNotFoundException {
         final Optional<Role> optionalRole = roleRepository.findByNameWithEagerUsers(name);
         if (optionalRole.isPresent()) {
@@ -86,6 +89,7 @@ public class RoleService implements IRoleService {
     }
 
     @Override
+    @Transactional
     public void deleteAll() {
         roleRepository.deleteAll();
     }

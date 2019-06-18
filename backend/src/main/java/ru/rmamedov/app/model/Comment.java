@@ -2,9 +2,7 @@ package ru.rmamedov.app.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import ru.rmamedov.app.model.user.User;
@@ -31,6 +29,11 @@ public class Comment {
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
+
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    @Version
+    private int version;
 
     @Size(
             min = 3,

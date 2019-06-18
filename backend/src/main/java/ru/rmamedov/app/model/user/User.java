@@ -2,8 +2,7 @@ package ru.rmamedov.app.model.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -35,6 +34,11 @@ public class User implements Serializable {
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
+
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    @Version
+    private int version;
 
     @Size(
             min = 3,
