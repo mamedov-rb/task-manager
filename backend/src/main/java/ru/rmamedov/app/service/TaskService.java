@@ -55,6 +55,7 @@ public class TaskService implements ITaskService {
 
     @NotNull
     @Override
+    @Transactional
     public Task save(@NotNull Task task) {
         return taskRepository.saveAndFlush(task);
     }
@@ -134,6 +135,7 @@ public class TaskService implements ITaskService {
 
     @NotNull
     @Override
+    @Transactional(readOnly=true)
     public Task findById(@NotNull final String id) throws TaskNotFoundException {
         final Optional<Task> optionalTask = taskRepository.findById(id);
         if (optionalTask.isPresent()) {
@@ -144,6 +146,7 @@ public class TaskService implements ITaskService {
 
     @NotNull
     @Override
+    @Transactional(readOnly=true)
     public Task findByIdWithEagerProject(@NotNull String id) {
         final Optional<Task> optionalTask = taskRepository.findByIdWithEagerProject(id);
         if (optionalTask.isPresent()) {
@@ -154,6 +157,7 @@ public class TaskService implements ITaskService {
 
     @NotNull
     @Override
+    @Transactional(readOnly=true)
     public Task findByIdWithEagerUser(@NotNull String id) {
         final Optional<Task> optionalTask = taskRepository.findByIdWithEagerUser(id);
         if (optionalTask.isPresent()) {
@@ -164,6 +168,7 @@ public class TaskService implements ITaskService {
 
     @NotNull
     @Override
+    @Transactional(readOnly=true)
     public List<Task> findAll() throws TaskNotFoundException {
         final List<Task> tasks = taskRepository.findAll();
         if (tasks != null && !tasks.isEmpty()) {
@@ -174,6 +179,7 @@ public class TaskService implements ITaskService {
 
     @NotNull
     @Override
+    @Transactional(readOnly=true)
     public List<Task> findAllByProjectSortedByCreatedAsc(@NotNull final String id) throws TaskNotFoundException {
         final List<Task> tasks = taskRepository.findAllByProjectOrderByCreatedAsc(id);
         if (tasks != null && !tasks.isEmpty()) {
@@ -184,6 +190,7 @@ public class TaskService implements ITaskService {
 
     @NotNull
     @Override
+    @Transactional(readOnly=true)
     public List<Task> findAllByProjectSortByStartDateAsc(@NotNull final String id) throws TaskNotFoundException {
         final List<Task> tasks = taskRepository.findAllByProjectOrderByStartDateAsc(id);
         if (tasks != null && !tasks.isEmpty()) {
@@ -194,6 +201,7 @@ public class TaskService implements ITaskService {
 
     @NotNull
     @Override
+    @Transactional(readOnly=true)
     public List<Task> findAllByProjectSortByEndDateAsc(@NotNull final String id) throws TaskNotFoundException {
         final List<Task> tasks = taskRepository.findAllByProjectOrderByEndDateAsc(id);
         if (tasks != null && !tasks.isEmpty()) {
@@ -204,6 +212,7 @@ public class TaskService implements ITaskService {
 
     @NotNull
     @Override
+    @Transactional(readOnly=true)
     public List<Task> findAllByProjectId(@NotNull final String id) throws TaskNotFoundException {
         final List<Task> tasks = taskRepository.findAllByProjectId(id);
         if (tasks != null && !tasks.isEmpty()) {

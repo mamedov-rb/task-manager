@@ -47,9 +47,13 @@ public class ProjectServiceTest {
     @Before
     public void init() {
         id1 = projectService
-                .saveWithSelfInjection(new Project("Project_1", "Some description of project #1.", LocalDate.parse("2019-07-10"), LocalDate.parse("2020-10-10"))).getId();
+                .saveWithSelfInjection(
+                        new Project("Project_1", "Some description of project #1.",
+                                LocalDate.parse("2019-07-10"), LocalDate.parse("2020-10-10"))).getId();
         id2 = projectService
-                .saveWithSelfInjection(new Project("Project_2", "Some description of project #2.", LocalDate.parse("2019-10-01"), LocalDate.parse("2020-10-10"))).getId();
+                .saveWithSelfInjection(
+                        new Project("Project_2", "Some description of project #2.",
+                                LocalDate.parse("2019-10-01"), LocalDate.parse("2020-10-10"))).getId();
     }
 
     @After

@@ -83,6 +83,7 @@ public class ProjectService implements IProjectService {
     }
 
     @Override
+    @Transactional
     public void deleteById(@NotNull String id) {
         projectRepository.deleteById(id);
     }
@@ -105,6 +106,7 @@ public class ProjectService implements IProjectService {
     }
 
     @Override
+    @Transactional
     public void addTaskAndUpdate(@NotNull final String projectId, @NotNull final String taskId) throws TaskAlreadyExistsException {
         final Project project = projectService.findByIdWithEagerTasks(projectId);
         final Task task = taskService.findByIdWithEagerProject(taskId);
@@ -119,6 +121,7 @@ public class ProjectService implements IProjectService {
     }
 
     @Override
+    @Transactional
     public void removeTaskAndUpdate(@NotNull final String projectId, @NotNull final String taskId) throws TaskNotFoundException {
         final Project project = projectService.findByIdWithEagerTasks(projectId);
         final Task task = taskService.findByIdWithEagerProject(taskId);
@@ -132,6 +135,7 @@ public class ProjectService implements IProjectService {
 
     @NotNull
     @Override
+    @Transactional(readOnly=true)
     public Project findById(@NotNull final String id) throws ProjectNotFoundException {
         final Optional<Project> optionalProject = projectRepository.findById(id);
         if (optionalProject.isPresent()) {
@@ -142,6 +146,7 @@ public class ProjectService implements IProjectService {
 
     @NotNull
     @Override
+    @Transactional(readOnly=true)
     public Project findByIdWithEagerTasks(@NotNull final String id) throws ProjectNotFoundException {
         final Optional<Project> optionalProject = projectRepository.findByIdWithEagerTasks(id);
         if (optionalProject.isPresent()) {
@@ -152,6 +157,7 @@ public class ProjectService implements IProjectService {
 
     @NotNull
     @Override
+    @Transactional(readOnly=true)
     public Project findByIdWithEagerUsers(@NotNull final String id) throws ProjectNotFoundException {
         final Optional<Project> optionalProject = projectRepository.findByIdWithEagerUsers(id);
         if (optionalProject.isPresent()) {
@@ -162,6 +168,7 @@ public class ProjectService implements IProjectService {
 
     @NotNull
     @Override
+    @Transactional(readOnly=true)
     public List<Project> findAll() throws ProjectNotFoundException {
         final List<Project> projects = projectRepository.findAll();
         if (projects != null && !projects.isEmpty()) {
@@ -172,7 +179,7 @@ public class ProjectService implements IProjectService {
 
     @NotNull
     @Override
-    @Transactional
+    @Transactional(readOnly=true)
     public List<Project> findAllOfCurrentUser(@NotNull final String userId) throws ProjectNotFoundException {
         final Optional<List<Project>> projects = projectRepository.findAllOfCurrentUser(userId);
         if (projects.isPresent()) {
