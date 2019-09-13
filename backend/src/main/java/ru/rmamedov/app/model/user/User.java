@@ -2,20 +2,40 @@ package ru.rmamedov.app.model.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 import ru.rmamedov.app.model.Comment;
 import ru.rmamedov.app.model.Project;
+import ru.rmamedov.app.model.Role;
 import ru.rmamedov.app.model.Task;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import java.io.Serializable;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -25,9 +45,9 @@ import java.util.Set;
 @Data
 @Table(name = "app_user")
 @Entity
-@Cacheable
-@NoArgsConstructor
-public class User implements Serializable {
+@ToString(of = {"comments", "tasks", "projects", "roles", "password"})
+@EqualsAndHashCode()
+public class User {
 
     @Id
     @Column(name = "id", updatable = false, nullable = false)
@@ -64,6 +84,7 @@ public class User implements Serializable {
             nullable = false
     )
     @NotBlank
+    @JsonIgnore
     private String password;
 
     @Size(
@@ -115,16 +136,12 @@ public class User implements Serializable {
             fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.DETACH,
-//                    CascadeType.MERGE,
                     CascadeType.REFRESH
             })
     @JoinTable(
             name = "users_roles",
             uniqueConstraints = {
-                    @UniqueConstraint(columnNames = {
-                            "user_id",
-                            "role_id"
-                    })
+                    @UniqueConstraint(columnNames = {"user_id", "role_id"})
             },
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
@@ -203,31 +220,4 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return username.equals(user.username);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(username);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", age=" + age +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", registered=" + registered +
-                ", roles=" + roles +
-                '}';
-    }
 }

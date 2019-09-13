@@ -66,14 +66,5 @@ public interface IProjectService extends IBaseService<Project> {
     Project patch(@NotNull final Project project);
 
     @NotNull
-    List<Project> findAllWithEagerTasksSortByCreationDate();
-
-    @NotNull
-    List<Project> findAllWithEagerTasksSortByStartDate();
-
-    @NotNull
-    List<Project> findAllWithEagerTasksSortByEndDate();
-
-    @NotNull
     List<Project> searchAnyByNameOrDesc(@NotNull final String string);
 }

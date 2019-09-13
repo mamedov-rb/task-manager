@@ -40,4 +40,7 @@ public interface IProjectRepository extends JpaRepository<Project, String> {
 
     @Query(nativeQuery = true, value = ALL_PROJECTS_OF_CURRENT_USER)
     Optional<List<Project>> findAllOfCurrentUser(@Param("id") @NotNull final String id);
+
+    @Query(value = "SELECT p FROM Project p")
+    Optional<List<Project>> findAllProjects();
 }

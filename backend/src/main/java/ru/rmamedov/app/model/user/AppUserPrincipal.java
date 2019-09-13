@@ -1,11 +1,10 @@
 package ru.rmamedov.app.model.user;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.rmamedov.app.model.Role;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -15,9 +14,7 @@ import java.util.HashSet;
  * @author Rustam Mamedov
  */
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class AppUserPrincipal implements UserDetails {
 
     private User user;

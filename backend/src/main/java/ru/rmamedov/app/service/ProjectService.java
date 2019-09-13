@@ -170,9 +170,9 @@ public class ProjectService implements IProjectService {
     @Override
     @Transactional(readOnly=true)
     public List<Project> findAll() throws ProjectNotFoundException {
-        final List<Project> projects = projectRepository.findAll();
-        if (projects != null && !projects.isEmpty()) {
-            return Collections.unmodifiableList(projects);
+        final Optional<List<Project>> optProjects = projectRepository.findAllProjects();
+        if (optProjects.isPresent()) {
+            return Collections.unmodifiableList(optProjects.get());
         }
         throw new ProjectNotFoundException("There is no any projects!");
     }
@@ -190,66 +190,7 @@ public class ProjectService implements IProjectService {
 
     @NotNull
     @Override
-    public List<Project> findAllWithEagerTasksSortByCreationDate() throws ProjectNotFoundException {
-        final List<Project> projects = projectRepository.findAllSortByCreationDate();
-        final List<Project> projectsWithTasks = new ArrayList<>();
-        if (projects != null && !projects.isEmpty()) {
-            for (final Project p : projects) {
-                try {
-                    final List<Task> tasks = taskService.findAllByProjectSortedByCreatedAsc(p.getId());
-                    p.setTasks(new HashSet<>(tasks));
-                } catch (TaskNotFoundException ex) {
-                    p.setTasks(new HashSet<>());
-                }
-                projectsWithTasks.add(p);
-            }
-            return Collections.unmodifiableList(projectsWithTasks);
-        }
-        throw new ProjectNotFoundException("There is no any projects!");
-    }
-
-    @NotNull
-    @Override
-    public List<Project> findAllWithEagerTasksSortByStartDate() throws ProjectNotFoundException {
-        final List<Project> projects = projectRepository.findAllSortByStartDate();
-        final List<Project> projectsWithTasks = new ArrayList<>();
-        if (projects != null && !projects.isEmpty()) {
-            for (final Project p : projects) {
-                try {
-                    final List<Task> tasks = taskService.findAllByProjectSortByStartDateAsc(p.getId());
-                    p.setTasks(new HashSet<>(tasks));
-                } catch (TaskNotFoundException ex) {
-                    p.setTasks(new HashSet<>());
-                }
-                projectsWithTasks.add(p);
-            }
-            return Collections.unmodifiableList(projectsWithTasks);
-        }
-        throw new ProjectNotFoundException("There is no any projects!");
-    }
-
-    @NotNull
-    @Override
-    public List<Project> findAllWithEagerTasksSortByEndDate() throws ProjectNotFoundException {
-        final List<Project> list = projectRepository.findAllSortByEndDate();
-        final List<Project> projectsWithTasks = new ArrayList<>();
-        if (list != null && !list.isEmpty()) {
-            for (final Project p : list) {
-                try {
-                    final List<Task> tasks = taskService.findAllByProjectSortByEndDateAsc(p.getId());
-                    p.setTasks(new HashSet<>(tasks));
-                } catch (TaskNotFoundException ex) {
-                    p.setTasks(new HashSet<>());
-                }
-                projectsWithTasks.add(p);
-            }
-            return Collections.unmodifiableList(projectsWithTasks);
-        }
-        throw new ProjectNotFoundException("There is no any projects!");
-    }
-
-    @NotNull
-    @Override
+    @Transactional(readOnly=true)
     public List<Project> searchAnyByNameOrDesc(@NotNull final String criteria) throws ProjectNotFoundException {
         final List<Project> list = projectRepository.findAnyByNameOrDesc(criteria);
         if (list != null && !list.isEmpty()) {

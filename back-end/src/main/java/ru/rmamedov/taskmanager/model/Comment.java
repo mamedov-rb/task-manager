@@ -1,4 +1,4 @@
-package ru.rmamedov.app.model;
+package ru.rmamedov.taskmanager.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,7 +10,6 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
-import ru.rmamedov.app.model.user.User;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,41 +45,23 @@ public class Comment {
     @Version
     private int version;
 
-    @Size(
-            min = 3,
-            max = 30,
-            message = "Comment name should be not less than '3' and more than '30' characters!"
-    )
-    @Column(
-            name = "name",
-            unique = true,
-            nullable = false,
-            length = 30
-    )
+    @Size(min = 3, max = 30, message = "Comment name should be not less than '3' and more than '30' characters!")
+    @Column(name = "name", unique = true, nullable = false, length = 30)
     @NotBlank
     private String name;
 
-    @Size(
-            min = 3,
-            message = "Comment text should be not less than '3'!"
-    )
-    @Column(columnDefinition = "TEXT",
-            name = "description",
-            nullable = false
-    )
+    @Size(min = 3, message = "Comment text should be not less than '3'!")
+    @Column(columnDefinition = "TEXT", name = "description", nullable = false)
     @NotBlank
     private String text;
 
     @Column(name = "created")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MMMM-yyyy HH:mm:ss")
     @CreationTimestamp
     private LocalDateTime created;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Task task;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private User owner;
 

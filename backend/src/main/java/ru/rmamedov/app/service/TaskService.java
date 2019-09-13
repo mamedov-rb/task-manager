@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.rmamedov.app.exception.TaskAlreadyExistsException;
 import ru.rmamedov.app.exception.TaskNotFoundException;
+import ru.rmamedov.app.service.interfaces.ITaskService;
 import ru.rmamedov.app.model.Task;
 import ru.rmamedov.app.model.user.User;
 import ru.rmamedov.app.repository.ITaskRepository;
 import ru.rmamedov.app.service.interfaces.IProjectService;
-import ru.rmamedov.app.service.interfaces.ITaskService;
 import ru.rmamedov.app.service.interfaces.IUserService;
 
 import java.util.Collections;

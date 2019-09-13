@@ -1,9 +1,6 @@
-package ru.rmamedov.app.model;
+package ru.rmamedov.taskmanager.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,9 +10,7 @@ import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
-import ru.rmamedov.app.config.json.CustomLocalDateDeserializer;
-import ru.rmamedov.app.config.json.CustomLocalDateSerializer;
-import ru.rmamedov.app.model.user.User;
+import ru.rmamedov.taskmanager.model.enums.Status;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,6 +20,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -33,7 +29,6 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -45,8 +40,8 @@ import java.util.Set;
 @Data
 @Table(name = "task")
 @Entity
-@ToString(exclude = {"user", "project", "comments"})
-@EqualsAndHashCode(of = {"name", "created"})
+@ToString(exclude = {"createdBy", "assignedTo", "project", "comments"})
+@EqualsAndHashCode(of = {"name", "description"})
 public class Task {
 
     @Id
@@ -60,30 +55,13 @@ public class Task {
     @Version
     private int version;
 
-    @Size(
-            min = 3,
-            max = 30,
-            message = "Task name should be not less than '3' and more than '30' characters!"
-    )
-    @Column(
-            name = "name",
-            unique = true,
-            nullable = false,
-            length = 30
-    )
+    @Size(min = 3, max = 30, message = "Task name should be not less than '3' and more than '30' characters!")
+    @Column(name = "name", unique = true, nullable = false, length = 30)
     @NotBlank
     private String name;
 
-    @Size(
-            min = 3,
-            max = 2500,
-            message = "Task description should be not less than '3' and more than '2500' characters!"
-    )
-    @Column(
-            name = "description",
-            nullable = false,
-            length = 2500
-    )
+    @Size(min = 3, max = 2500, message = "Task description should be not less than '3' and more than '2500' characters!")
+    @Column(name = "description", nullable = false, length = 3000)
     @NotBlank
     private String description;
 
@@ -92,34 +70,32 @@ public class Task {
     private Status status = Status.PLANNED;
 
     @Column(name = "created")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MMMM-yyyy HH:mm:ss")
     @CreationTimestamp
     private LocalDateTime created;
 
     @Column(name = "updated")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MMMM-yyyy HH:mm:ss")
     @UpdateTimestamp
     private LocalDateTime updated;
 
     @Column(name = "start_date")
     @FutureOrPresent
-    @JsonSerialize(using = CustomLocalDateSerializer.class)
-    @JsonDeserialize(using = CustomLocalDateDeserializer.class)
-    private LocalDate startDate;
+    private LocalDateTime startDate;
 
     @Column(name = "end_date")
     @Future
-    @JsonSerialize(using = CustomLocalDateSerializer.class)
-    @JsonDeserialize(using = CustomLocalDateDeserializer.class)
-    private LocalDate endDate;
+    private LocalDateTime endDate;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id")
     private Project project;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    @JoinColumn(name = "created_by_id")
+    private User createdBy;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assigned_to_id")
+    private User assignedTo;
 
     @OneToMany(
             mappedBy = "task",
@@ -129,16 +105,5 @@ public class Task {
     )
     @JsonIgnore
     private Set<Comment> comments = new HashSet<>();
-
-    public Task(String name,
-                String description,
-                LocalDate startDate,
-                LocalDate endDate) {
-
-        this.name = name;
-        this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
-    }
 
 }

@@ -4,8 +4,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -13,27 +17,37 @@ import ru.rmamedov.app.config.json.CustomLocalDateDeserializer;
 import ru.rmamedov.app.config.json.CustomLocalDateSerializer;
 import ru.rmamedov.app.model.user.User;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
  * @author Rustam Mamedov
  */
+
 @Data
 @Table(name = "project")
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
-public class Project implements Serializable {
+@ToString(exclude = {"tasks", "users"})
+@EqualsAndHashCode(of = {"name", "created"})
+public class Project {
 
     @Id
     @Column(
@@ -109,6 +123,7 @@ public class Project implements Serializable {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @JsonIgnore
     private Set<Task> tasks = new HashSet<>();
 
     @JsonIgnore
@@ -130,30 +145,4 @@ public class Project implements Serializable {
         this.endDate = endDate;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Project project = (Project) o;
-        return name.equals(project.name) &&
-                description.equals(project.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, description);
-    }
-
-    @Override
-    public String toString() {
-        return "Project{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                ", created=" + created +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                '}';
-    }
 }

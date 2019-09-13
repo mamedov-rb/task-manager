@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.rmamedov.app.exception.*;
 import ru.rmamedov.app.model.Project;
 import ru.rmamedov.app.model.user.AppUserPrincipal;
-import ru.rmamedov.app.model.user.Role;
+import ru.rmamedov.app.model.Role;
 import ru.rmamedov.app.model.user.User;
 import ru.rmamedov.app.repository.IUserRepository;
 import ru.rmamedov.app.service.interfaces.IProjectService;

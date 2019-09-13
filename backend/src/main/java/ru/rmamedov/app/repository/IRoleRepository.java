@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import ru.rmamedov.app.model.user.Role;
+import ru.rmamedov.app.model.Role;
 
 import java.util.Optional;
 

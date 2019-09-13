@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.transaction.annotation.Transactional;
 import ru.rmamedov.app.exception.RoleAlreadyExistsException;
 import ru.rmamedov.app.exception.RoleNotFoundException;
-import ru.rmamedov.app.model.user.Role;
+import ru.rmamedov.app.model.Role;
 
 import java.util.List;
 
