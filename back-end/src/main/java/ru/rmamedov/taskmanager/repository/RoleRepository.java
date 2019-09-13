@@ -12,7 +12,7 @@ import java.util.Optional;
  */
 
 @Repository
-public interface IRoleRepository extends JpaRepository<Role, String> {
+public interface RoleRepository extends JpaRepository<Role, String> {
 
     Optional<Role> findByName(@NotNull final String name);
 

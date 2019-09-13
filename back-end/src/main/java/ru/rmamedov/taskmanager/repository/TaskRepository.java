@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import ru.rmamedov.taskmanager.model.Task;
 
 @Repository
-public interface ITaskRepository extends JpaRepository<Task, String> {
+public interface TaskRepository extends JpaRepository<Task, String> {
 
 }
