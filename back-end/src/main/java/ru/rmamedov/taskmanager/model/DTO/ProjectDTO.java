@@ -42,7 +42,6 @@ public class ProjectDTO {
         dto.setEndDate(project.getEndDate());
         dto.setCreated(project.getCreated());
         dto.setUpdated(project.getUpdated());
-        dto.setCreatedBy(project.getCreatedBy().getUsername());
         return dto;
     }
 

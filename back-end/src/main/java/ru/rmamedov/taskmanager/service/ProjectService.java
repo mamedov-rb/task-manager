@@ -13,6 +13,8 @@ import ru.rmamedov.taskmanager.model.Project;
 import ru.rmamedov.taskmanager.model.User;
 import ru.rmamedov.taskmanager.repository.ProjectRepository;
 
+import java.util.Set;
+
 @Service
 @RequiredArgsConstructor
 public class ProjectService {
@@ -37,6 +39,23 @@ public class ProjectService {
         final Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new ProjectNotFoundException("Project with id: " + id + " - Not found."));
         return ProjectDTO.of(project);
+    }
+
+    @Transactional(readOnly = true)
+    public Set<ProjectDTO> findAllByUsername(final String username) {
+        return projectRepository.findAllProjectsByUsername(username);
+    }
+
+    @Transactional
+    public void assignToUserById(final String id, @Nullable final Authentication authentication) {
+//        if (authentication != null) {
+//            final User user = (User) userService.loadUserByUsername(authentication.getName());
+//            final Project project = projectRepository.findById(id)
+//                    .orElseThrow(() -> new ProjectNotFoundException("Project with id: " + id + " - Not found."));
+//            user.addProject(project);
+//        } else {
+//            throw new UserNotAuthorizedException("User - Not authorized. Please login");
+//        }
     }
 
 }

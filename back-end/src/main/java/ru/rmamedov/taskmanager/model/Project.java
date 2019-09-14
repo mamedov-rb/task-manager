@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -17,6 +18,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
@@ -25,6 +27,8 @@ import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Rustam Mamedov
@@ -33,6 +37,7 @@ import java.time.LocalDateTime;
 @Data
 @Table(name = "project")
 @Entity
+@ToString(exclude = {"users", "createdBy"})
 @EqualsAndHashCode(of = {"name", "description"})
 @NoArgsConstructor
 public class Project {
@@ -82,6 +87,9 @@ public class Project {
     @JoinColumn(name = "created_by_id", nullable = false)
     private User createdBy;
 
+    @ManyToMany(mappedBy = "projects")
+    private Set<User> users = new HashSet<>();
+
     @Builder
     public Project (String name,
                     String description,
@@ -95,4 +103,5 @@ public class Project {
         this.endDate = endDate;
         this.createdBy = createdBy;
     }
+
 }

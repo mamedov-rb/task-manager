@@ -2,9 +2,11 @@ package ru.rmamedov.taskmanager.model.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import ru.rmamedov.taskmanager.model.Project;
 import ru.rmamedov.taskmanager.model.User;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 /**
  * @author Rustam Mamedov
@@ -30,6 +32,8 @@ public class UserDTO {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
     private LocalDateTime updated;
+
+    private Set<Project> projects;
 
     public static UserDTO of(final User user) {
         final UserDTO dto = new UserDTO();

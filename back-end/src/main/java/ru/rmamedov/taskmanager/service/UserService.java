@@ -7,8 +7,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.rmamedov.taskmanager.model.User;
 import ru.rmamedov.taskmanager.model.DTO.UserDTO;
+import ru.rmamedov.taskmanager.model.User;
 import ru.rmamedov.taskmanager.repository.UserRepository;
 
 /**
@@ -37,7 +37,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void create(final User user) {
+    public void save(final User user) {
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
     }

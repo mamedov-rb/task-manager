@@ -29,7 +29,7 @@ public class UserController {
 
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity create(@RequestBody @Valid final User user) {
-        userService.create(user);
+        userService.save(user);
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 

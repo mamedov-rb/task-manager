@@ -1,15 +1,17 @@
 package controller
 
 import helper.MockMvcHelper
-import org.mockito.Mockito
-import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.context.SecurityContext
 import org.springframework.security.test.context.support.WithMockUser
-import ru.rmamedov.taskmanager.repository.ProjectRepository
-import ru.rmamedov.taskmanager.repository.UserRepository
+import org.springframework.test.web.servlet.ResultActions
+import ru.rmamedov.taskmanager.model.DTO.ProjectDTO
+import ru.rmamedov.taskmanager.model.Project
+import ru.rmamedov.taskmanager.model.User
 
 import static TestData.getProject
-import static TestData.getUser
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
@@ -19,57 +21,44 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class ProjectControllerTest extends MockMvcHelper {
 
-    private final static String CREATE_PROJECT = "/api/project/create"
+    @MockBean
+    SecurityContext securityContext
 
-    private final static String FIND_PROJECT_BY_ID = "/api/project/find/{id}"
+    @MockBean
+    Authentication authentication
 
-    @Autowired
-    private UserRepository userRepository
-
-    @Autowired
-    private ProjectRepository projectRepository
+    def cleanup() {
+        clear()
+    }
 
     @WithMockUser(username = "test-user")
     def "Create new project"() {
         given:
-        userRepository.save(getUser())
-        def project = getProject()
+        performSavingUser()
 
         when:
-        def result = performPost(CREATE_PROJECT, project)
+        def result = performPost(CREATE_PROJECT, getProject())
 
         then:
         result.andDo(print())
                 .andExpect(status().isCreated())
         userRepository.findAll().size() == 1
-
-        cleanup:
-        projectRepository.deleteAll()
-        userRepository.deleteAll()
     }
 
     @WithMockUser
-    def "Create new project if 'createdBy' Not found"() {
-        given:
-        def project = getProject()
-
+    def "Create new project if 'createdBy' Not found."() {
         when:
-        def result = performPost(CREATE_PROJECT, project)
+        def result = performPost(CREATE_PROJECT, getProject())
 
         then:
         result.andDo(print())
                 .andExpect(status().isBadRequest())
-
-        cleanup:
-        projectRepository.deleteAll()
     }
 
     @WithMockUser(username = "test-user")
     def "Find project by id"() {
         given:
-        userRepository.save(getUser())
-        def project = getProject()
-        performPost(CREATE_PROJECT, project)
+        saveProjectWithCreatedBy()
         def id = projectRepository.findAll().stream().findFirst().get().id
 
         when:
@@ -85,16 +74,48 @@ class ProjectControllerTest extends MockMvcHelper {
                 .andExpect(jsonPath('$.startDate').isNotEmpty())
                 .andExpect(jsonPath('$.endDate').isNotEmpty())
                 .andExpect(jsonPath('$.created').isNotEmpty())
-
-        cleanup:
-        projectRepository.deleteAll()
-        userRepository.deleteAll()
     }
 
-    def "Create new project - 403"() {
+//    @WithMockUser(username = "test-user")
+//    def "Assign project to user"() {
+//        given:
+//        saveProjectWithCreatedBy()
+//        def id = projectRepository.findAll().stream().findFirst().get().id
+//
+//        when:
+//        def result = performPatch(ASSIGN_TO_USER, id)
+//
+//        then:
+//        result.andDo(print())
+//                .andExpect(status().isCreated())
+//        projectRepository.findAllProjectsByUsername("test-user").size() == 1
+//        userRepository.findUserWithEagerProjects("test-user").get().projects.size() == 1
+//        projectRepository.findProjectWithEagerUsers(id).get().users.size() == 1
+//
+//        cleanup:
+//        def user = userRepository.findUserWithEagerProjects("test-user").get()
+//        def project = projectRepository.findById(id).get()
+//        user.removeProject(project)
+//        userRepository.findAll()
+//    }
 
+//    @WithMockUser(username = "test-user") // TODO: fix
+//    def "Find all by current user"() {
+//        given:
+//        saveProjectWithCreatedBy()
+//
+//        when:
+//        def result = performGet(FIND_ALL_PROJECTS_BY_USER_ID, "test-user")
+//
+//        then:
+//        result.andDo(print())
+//                .andExpect(status().isOk())
+//    }
+
+
+    def "Create new project - 403"() {
         when:
-        def result = performPost(CREATE_PROJECT, project)
+        def result = performPost(CREATE_PROJECT, getProject())
 
         then:
         result.andDo(print())
@@ -102,9 +123,8 @@ class ProjectControllerTest extends MockMvcHelper {
     }
 
     def "Find project by id - 403"() {
-
         when:
-        def result = performGet(FIND_PROJECT_BY_ID, Mockito.anyString())
+        def result = performGet(FIND_PROJECT_BY_ID, "123")
 
         then:
         result.andDo(print())

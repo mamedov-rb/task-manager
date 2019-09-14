@@ -162,4 +162,5 @@ public class User implements UserDetails {
         this.phone = phone;
         this.email = email;
     }
+
 }
