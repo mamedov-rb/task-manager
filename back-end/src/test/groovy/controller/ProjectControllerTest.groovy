@@ -73,4 +73,39 @@ class ProjectControllerTest extends MockMvcHelper {
         userRepository.deleteAll()
     }
 
+    def "Create new project - 403"() {
+        given:
+        def user = userRepository.save(getUser())
+        def project = getProject(user)
+
+        when:
+        def result = performPost(CREATE_PROJECT, project)
+
+        then:
+        result.andDo(print())
+                .andExpect(status().isForbidden())
+
+        cleanup:
+        projectRepository.deleteAll()
+        userRepository.deleteAll()
+    }
+
+    def "Find project by id - 403"() {
+        given:
+        def user = userRepository.save(getUser())
+        def project = getProject(user)
+        projectRepository.save(project)
+
+        when:
+        def result = performGet(FIND_PROJECT_BY_ID, project.id)
+
+        then:
+        result.andDo(print())
+                .andExpect(status().isForbidden())
+
+        cleanup:
+        projectRepository.deleteAll()
+        userRepository.deleteAll()
+    }
+
 }

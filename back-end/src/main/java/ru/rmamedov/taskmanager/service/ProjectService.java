@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.rmamedov.taskmanager.exception.ProjectNotFoundException;
 import ru.rmamedov.taskmanager.model.Project;
-import ru.rmamedov.taskmanager.model.projection.ProjectDTO;
+import ru.rmamedov.taskmanager.model.DTO.ProjectDTO;
 import ru.rmamedov.taskmanager.repository.ProjectRepository;
 
 @Service

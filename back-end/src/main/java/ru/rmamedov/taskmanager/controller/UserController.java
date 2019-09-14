@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.rmamedov.taskmanager.model.User;
-import ru.rmamedov.taskmanager.model.projection.UserDTO;
+import ru.rmamedov.taskmanager.model.DTO.UserDTO;
 import ru.rmamedov.taskmanager.service.UserService;
 
 import javax.validation.Valid;

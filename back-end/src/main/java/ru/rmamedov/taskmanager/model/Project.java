@@ -79,7 +79,7 @@ public class Project {
     private LocalDateTime endDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by_id")
+    @JoinColumn(name = "created_by_id", nullable = false)
     private User createdBy;
 
     @Builder

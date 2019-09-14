@@ -62,4 +62,20 @@ class UserControllerTest extends MockMvcHelper {
         userRepository.deleteAll()
     }
 
+    def "Find user by username - 403"() {
+        given:
+        def user = getUser()
+        performPost(REGISTER_USER, user)
+
+        when:
+        def result = performGet(FIND_USER_BY_USERNAME, user.username)
+
+        then:
+        result.andDo(print())
+                .andExpect(status().isForbidden())
+
+        cleanup:
+        userRepository.deleteAll()
+    }
+
 }

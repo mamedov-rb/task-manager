@@ -1,4 +1,4 @@
-package ru.rmamedov.taskmanager.model.projection;
+package ru.rmamedov.taskmanager.model.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
