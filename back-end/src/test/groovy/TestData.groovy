@@ -16,7 +16,7 @@ class TestData {
                 .lastName(RandomStringUtils.randomAlphabetic(10))
                 .username(RandomStringUtils.randomAlphabetic(10))
                 .password(RandomStringUtils.randomAlphabetic(10))
-                .email("user111@gmail.com")
+                .email("user@gmail.com")
                 .phone("+7(800)100-10-10")
                 .build()
     }

@@ -27,7 +27,7 @@ class UserControllerTest extends MockMvcHelper {
         def user = getUser()
 
         when:
-        def result = post(REGISTER_USER, user)
+        def result = performPost(REGISTER_USER, user)
 
         then:
         result.andDo(print())
@@ -37,7 +37,7 @@ class UserControllerTest extends MockMvcHelper {
                 .andExpect(jsonPath('$.firstName').isNotEmpty())
                 .andExpect(jsonPath('$.lastName').isNotEmpty())
                 .andExpect(jsonPath('$.phone').value("+7(800)100-10-10"))
-                .andExpect(jsonPath('$.email').value("user111@gmail.com"))
+                .andExpect(jsonPath('$.email').value("user@gmail.com"))
 
         cleanup:
         userRepository.deleteAll()
