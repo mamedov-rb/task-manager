@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
-    private static final String JWT_SECRET = "n2r5u8x/A%D*G-KaPdSgVkYp3s6v9y$B&E(H+MbQeThWmZq4t7w!z%C*F-J@NcRf";
+    private static final String JWT_SECRET = "n2r5u8xH+MbQeThWmZq4t7@NcRf";
 
     private static final String TOKEN_HEADER = "Authorization";
 
@@ -86,4 +86,5 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         }
         return null;
     }
+
 }
