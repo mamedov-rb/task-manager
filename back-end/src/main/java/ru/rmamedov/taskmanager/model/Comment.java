@@ -54,7 +54,7 @@ public class Comment {
     @NotBlank
     private String text;
 
-    @Column(name = "created")
+    @Column(name = "created", updatable = false)
     @CreationTimestamp
     private LocalDateTime created;
 

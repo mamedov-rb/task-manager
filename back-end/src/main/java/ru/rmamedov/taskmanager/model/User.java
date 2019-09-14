@@ -1,9 +1,11 @@
 package ru.rmamedov.taskmanager.model;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
@@ -42,6 +44,7 @@ import java.util.Set;
 @Table(name = "app_user")
 @Entity
 @ToString(of = {"projects", "roles", "password"})
+@NoArgsConstructor
 @EqualsAndHashCode()
 public class User implements UserDetails {
 
@@ -87,7 +90,7 @@ public class User implements UserDetails {
     @NotBlank
     private String email;
 
-    @Column(name = "created")
+    @Column(name = "created", updatable = false)
     @CreationTimestamp
     private LocalDateTime created;
 
@@ -142,5 +145,21 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Builder
+    private User(String username,
+                String password,
+                String firstName,
+                String lastName,
+                String phone,
+                String email) {
+
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.email = email;
     }
 }

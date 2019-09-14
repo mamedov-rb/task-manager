@@ -69,7 +69,7 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private Status status = Status.PLANNED;
 
-    @Column(name = "created")
+    @Column(name = "created", updatable = false)
     @CreationTimestamp
     private LocalDateTime created;
 

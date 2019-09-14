@@ -59,7 +59,7 @@ public class Project {
     @NotBlank
     private String description;
 
-    @Column(name = "created")
+    @Column(name = "created", updatable = false)
     @CreationTimestamp
     private LocalDateTime created;
 

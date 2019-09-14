@@ -34,7 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String LOGIN_URL = "/api/login";
 
-    private final UserService userService;
+    @Autowired
+    private UserService userService;
 
     @Autowired
     public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
@@ -54,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
-                .antMatchers(HttpMethod.POST, "/user/create").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/user/create").permitAll()
                 .anyRequest().authenticated()
                     .and()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(), LOGIN_URL))
