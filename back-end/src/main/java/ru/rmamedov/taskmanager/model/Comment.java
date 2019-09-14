@@ -59,10 +59,11 @@ public class Comment {
     private LocalDateTime created;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "commentator_id")
+    @JoinColumn(name = "commentator_id", nullable = false)
     private User commentator;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "task_id")
+    @JoinColumn(name = "task_id", nullable = false)
     private Task task;
+
 }

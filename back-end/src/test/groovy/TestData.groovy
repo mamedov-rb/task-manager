@@ -14,20 +14,19 @@ class TestData {
         return User.builder()
                 .firstName(RandomStringUtils.randomAlphabetic(10))
                 .lastName(RandomStringUtils.randomAlphabetic(10))
-                .username(RandomStringUtils.randomAlphabetic(10))
+                .username("test-user")
                 .password(RandomStringUtils.randomAlphabetic(10))
                 .email("user@gmail.com")
                 .phone("+7(800)100-10-10")
                 .build()
     }
 
-    static Project getProject(User user) {
+    static Project getProject() {
         return Project.builder()
                 .name(RandomStringUtils.randomAlphabetic(10))
                 .description(RandomStringUtils.randomAlphabetic(10))
                 .startDate(LocalDateTime.now().plusDays(1))
                 .endDate(LocalDateTime.now().plusMonths(1))
-                .createdBy(user)
                 .build()
     }
 }

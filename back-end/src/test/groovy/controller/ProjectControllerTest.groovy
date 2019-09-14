@@ -1,6 +1,7 @@
 package controller
 
 import helper.MockMvcHelper
+import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.security.test.context.support.WithMockUser
@@ -28,11 +29,11 @@ class ProjectControllerTest extends MockMvcHelper {
     @Autowired
     private ProjectRepository projectRepository
 
-    @WithMockUser
+    @WithMockUser(username = "test-user")
     def "Create new project"() {
         given:
-        def user = userRepository.save(getUser())
-        def project = getProject(user)
+        userRepository.save(getUser())
+        def project = getProject()
 
         when:
         def result = performPost(CREATE_PROJECT, project)
@@ -48,20 +49,37 @@ class ProjectControllerTest extends MockMvcHelper {
     }
 
     @WithMockUser
-    def "Find project by id"() {
+    def "Create new project if 'createdBy' Not found"() {
         given:
-        def user = userRepository.save(getUser())
-        def project = getProject(user)
-        projectRepository.save(project)
+        def project = getProject()
 
         when:
-        def result = performGet(FIND_PROJECT_BY_ID, project.id)
+        def result = performPost(CREATE_PROJECT, project)
+
+        then:
+        result.andDo(print())
+                .andExpect(status().isBadRequest())
+
+        cleanup:
+        projectRepository.deleteAll()
+    }
+
+    @WithMockUser(username = "test-user")
+    def "Find project by id"() {
+        given:
+        userRepository.save(getUser())
+        def project = getProject()
+        performPost(CREATE_PROJECT, project)
+        def id = projectRepository.findAll().stream().findFirst().get().id
+
+        when:
+        def result = performGet(FIND_PROJECT_BY_ID, id)
 
         then:
         result.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath('$.id').value(project.id))
+                .andExpect(jsonPath('$.id').value(id))
                 .andExpect(jsonPath('$.name').isNotEmpty())
                 .andExpect(jsonPath('$.description').isNotEmpty())
                 .andExpect(jsonPath('$.startDate').isNotEmpty())
@@ -74,9 +92,6 @@ class ProjectControllerTest extends MockMvcHelper {
     }
 
     def "Create new project - 403"() {
-        given:
-        def user = userRepository.save(getUser())
-        def project = getProject(user)
 
         when:
         def result = performPost(CREATE_PROJECT, project)
@@ -84,28 +99,16 @@ class ProjectControllerTest extends MockMvcHelper {
         then:
         result.andDo(print())
                 .andExpect(status().isForbidden())
-
-        cleanup:
-        projectRepository.deleteAll()
-        userRepository.deleteAll()
     }
 
     def "Find project by id - 403"() {
-        given:
-        def user = userRepository.save(getUser())
-        def project = getProject(user)
-        projectRepository.save(project)
 
         when:
-        def result = performGet(FIND_PROJECT_BY_ID, project.id)
+        def result = performGet(FIND_PROJECT_BY_ID, Mockito.anyString())
 
         then:
         result.andDo(print())
                 .andExpect(status().isForbidden())
-
-        cleanup:
-        projectRepository.deleteAll()
-        userRepository.deleteAll()
     }
 
 }
