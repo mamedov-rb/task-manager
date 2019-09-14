@@ -16,6 +16,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
@@ -30,8 +31,8 @@ import java.time.LocalDateTime;
 @Data
 @Table(name = "comment")
 @Entity
-@ToString(exclude = {"task", "owner"})
-@EqualsAndHashCode(of = {"name", "created"})
+@ToString(exclude = {"commentator"})
+@EqualsAndHashCode(of = {"name", "text"})
 public class Comment {
 
     @Id
@@ -60,9 +61,10 @@ public class Comment {
     private LocalDateTime created;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Task task;
+    @JoinColumn(name = "commentator_id")
+    private User commentator;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User owner;
-
+    @JoinColumn(name = "task_id")
+    private Task task;
 }
