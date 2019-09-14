@@ -8,7 +8,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.rmamedov.taskmanager.model.User;
-import ru.rmamedov.taskmanager.model.projection.UserDTO;
 import ru.rmamedov.taskmanager.repository.UserRepository;
 
 /**
@@ -30,9 +29,9 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public UserDTO create(final User user) {
+    public void create(final User user) {
         user.setPassword(encoder.encode(user.getPassword()));
-        return UserDTO.of(userRepository.save(user));
+        userRepository.save(user);
     }
 
 }

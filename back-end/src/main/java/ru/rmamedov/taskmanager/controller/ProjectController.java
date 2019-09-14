@@ -33,7 +33,7 @@ public class ProjectController {
         return new ResponseEntity(null, HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/find/{id}")
+    @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ProjectDTO> findById(@PathVariable final String id) {
         return new ResponseEntity<>(projectService.findById(id), HttpStatus.OK);
     }

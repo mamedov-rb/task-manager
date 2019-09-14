@@ -49,7 +49,6 @@ class ProjectControllerTest extends MockMvcHelper {
 
     @WithMockUser
     def "Find project by id"() {
-
         given:
         def user = userRepository.save(getUser())
         def project = getProject(user)

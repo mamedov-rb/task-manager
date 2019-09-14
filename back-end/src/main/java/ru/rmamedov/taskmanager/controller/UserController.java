@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.rmamedov.taskmanager.model.User;
-import ru.rmamedov.taskmanager.model.projection.UserDTO;
 import ru.rmamedov.taskmanager.service.UserService;
 
 import javax.validation.Valid;
@@ -25,13 +24,10 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping(
-            value = "/create",
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE
-    )
-    public ResponseEntity<UserDTO> create(@RequestBody @Valid final User user) {
-        return new ResponseEntity<>(userService.create(user), HttpStatus.CREATED);
+    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity create(@RequestBody @Valid final User user) {
+        userService.create(user);
+        return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
 }

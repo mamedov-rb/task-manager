@@ -2,13 +2,10 @@ package controller
 
 import helper.MockMvcHelper
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.MediaType
 import ru.rmamedov.taskmanager.repository.UserRepository
 
 import static TestData.getUser
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 /**
@@ -32,12 +29,6 @@ class UserControllerTest extends MockMvcHelper {
         then:
         result.andDo(print())
                 .andExpect(status().isCreated())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath('$.id').isNotEmpty())
-                .andExpect(jsonPath('$.firstName').isNotEmpty())
-                .andExpect(jsonPath('$.lastName').isNotEmpty())
-                .andExpect(jsonPath('$.phone').value("+7(800)100-10-10"))
-                .andExpect(jsonPath('$.email').value("user@gmail.com"))
 
         cleanup:
         userRepository.deleteAll()
