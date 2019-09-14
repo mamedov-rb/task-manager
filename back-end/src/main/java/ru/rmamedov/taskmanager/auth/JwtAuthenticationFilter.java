@@ -26,8 +26,6 @@ import java.util.stream.Stream;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private static final String AUTH_LOGIN_URL = "/api/login";
-
     private static final String JWT_SECRET = "n2r5u8xH+MbQeThWmZq4t7@NcRf";
 
     private static final String TOKEN_TYPE = "JWT";
@@ -38,9 +36,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private static final long EXPIRATION_TIME = 432_000_00;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public JwtAuthenticationFilter(final AuthenticationManager authenticationManager,
+                                   String loginUrl) {
         setAuthenticationManager(authenticationManager);
-        setFilterProcessesUrl(AUTH_LOGIN_URL);
+        setFilterProcessesUrl(loginUrl);
     }
 
     @Override

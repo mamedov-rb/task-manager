@@ -239,3 +239,5 @@ test/fixtures/**/.fbkpm
 .vscode/
 
 package-lock.json
+client/node_modules/**
+back-end/build/**
