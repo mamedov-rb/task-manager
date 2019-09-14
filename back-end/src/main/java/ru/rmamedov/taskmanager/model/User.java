@@ -45,7 +45,7 @@ import java.util.Set;
 @Entity
 @ToString(of = {"projects", "roles", "password"})
 @NoArgsConstructor
-@EqualsAndHashCode()
+@EqualsAndHashCode(of = {"username"})
 public class User implements UserDetails {
 
     @Id

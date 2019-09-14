@@ -1,9 +1,11 @@
 package ru.rmamedov.taskmanager.model;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -32,6 +34,7 @@ import java.time.LocalDateTime;
 @Table(name = "project")
 @Entity
 @EqualsAndHashCode(of = {"name", "description"})
+@NoArgsConstructor
 public class Project {
 
     @Id
@@ -79,4 +82,17 @@ public class Project {
     @JoinColumn(name = "created_by_id")
     private User createdBy;
 
+    @Builder
+    public Project (String name,
+                    String description,
+                    LocalDateTime startDate,
+                    LocalDateTime endDate,
+                    User createdBy) {
+
+        this.name = name;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.createdBy = createdBy;
+    }
 }

@@ -56,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
                 .antMatchers(HttpMethod.POST, "/api/user/create").permitAll()
+                .antMatchers("/api/project/**").authenticated()
                 .anyRequest().authenticated()
                     .and()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(), LOGIN_URL))

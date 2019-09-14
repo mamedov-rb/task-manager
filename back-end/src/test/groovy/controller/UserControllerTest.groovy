@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import ru.rmamedov.taskmanager.repository.UserRepository
 
-import static UserTestData.getOneUser
+import static TestData.getUser
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
@@ -24,7 +24,7 @@ class UserControllerTest extends MockMvcHelper {
 
     def "Register new user"() {
         given:
-        def user = getOneUser()
+        def user = getUser()
 
         when:
         def result = post(REGISTER_USER, user)
