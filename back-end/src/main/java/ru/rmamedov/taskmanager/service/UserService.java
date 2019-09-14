@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.rmamedov.taskmanager.model.User;
+import ru.rmamedov.taskmanager.model.projection.UserDTO;
 import ru.rmamedov.taskmanager.repository.UserRepository;
 
 /**
@@ -26,6 +27,13 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User with username: " + username + " - Not found!"));
+    }
+
+    @Transactional(readOnly = true)
+    public UserDTO findByUsername(final String username) {
+        final User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User with username: " + username + " - Not found!"));
+        return UserDTO.of(user);
     }
 
     @Transactional
