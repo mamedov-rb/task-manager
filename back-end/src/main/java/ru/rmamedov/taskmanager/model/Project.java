@@ -104,4 +104,8 @@ public class Project {
         this.createdBy = createdBy;
     }
 
+    public boolean addUser(final User user) {
+        return users.add(user);
+    }
+
 }

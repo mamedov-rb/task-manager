@@ -10,11 +10,11 @@ import java.time.LocalDateTime
 
 class TestData {
 
-    static User getUser() {
-        return User.builder()
+    static User getUser(String username) {
+        User.builder()
                 .firstName(RandomStringUtils.randomAlphabetic(10))
                 .lastName(RandomStringUtils.randomAlphabetic(10))
-                .username("test-user")
+                .username(username)
                 .password(RandomStringUtils.randomAlphabetic(10))
                 .email("user@gmail.com")
                 .phone("+7(800)100-10-10")
@@ -22,7 +22,7 @@ class TestData {
     }
 
     static Project getProject() {
-        return Project.builder()
+        Project.builder()
                 .name(RandomStringUtils.randomAlphabetic(10))
                 .description(RandomStringUtils.randomAlphabetic(10))
                 .startDate(LocalDateTime.now().plusDays(1))

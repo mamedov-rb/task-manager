@@ -13,10 +13,10 @@ import java.util.Set;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, String> {
 
-    @Query("SELECT p FROM Project p JOIN p.users u WHERE u.username = :username")
-    Set<ProjectDTO> findAllProjectsByUsername(@Param("username") String username);
+    @Query("SELECT p FROM Project p JOIN FETCH p.users u WHERE u.username = :username")
+    Set<ProjectDTO> findAllOfUserByUsername(@Param("username") String username);
 
     @Query("SELECT p FROM Project p LEFT JOIN FETCH p.users WHERE p.id = :id")
-    Optional<Project> findProjectWithEagerUsers(@Param("id") String id);
+    Optional<Project> findByIdWithEagerUsers(@Param("id") String id);
 
 }

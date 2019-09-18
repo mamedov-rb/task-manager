@@ -18,9 +18,9 @@ class UserControllerTest extends MockMvcHelper {
         clear()
     }
 
-    def "Register new user"() {
+    def "Create new user"() {
         given:
-        def user = getUser()
+        def user = getUser("test-user")
 
         when:
         def result = performPost(REGISTER_USER, user)
@@ -33,10 +33,10 @@ class UserControllerTest extends MockMvcHelper {
     @WithMockUser
     def "Find user by username"() {
         given:
-        performSavingUser()
+        performSavingUser("test-user")
 
         when:
-        def result = performGet(FIND_USER_BY_USERNAME, getUser().username)
+        def result = performGet(FIND_USER_BY_USERNAME, "test-user")
 
         then:
         result.andDo(print())
@@ -45,17 +45,38 @@ class UserControllerTest extends MockMvcHelper {
                 .andExpect(jsonPath('$.id').isNotEmpty())
                 .andExpect(jsonPath('$.firstName').isNotEmpty())
                 .andExpect(jsonPath('$.lastName').isNotEmpty())
-                .andExpect(jsonPath('$.username').value(user.username))
+                .andExpect(jsonPath('$.username').value("test-user"))
                 .andExpect(jsonPath('$.phone').value("+7(800)100-10-10"))
                 .andExpect(jsonPath('$.email').value("user@gmail.com"))
     }
 
-    def "Find user by username - 403"() {
+    @WithMockUser(username = "test-user")
+    def "Assign project to user"() {
         given:
-        performSavingUser()
+        saveProjectWithCreatedBy("test-user")
+        def developerUsername = "developer-user"
+        performSavingUser(developerUsername)
+
+        def id = projectRepository.findAll().stream().findFirst().get().id
 
         when:
-        def result = performGet(FIND_USER_BY_USERNAME, getUser().username)
+        def result = performPatch(ASSIGN_TO_PROJECT, developerUsername, id)
+
+        then:
+        result.andDo(print())
+                .andExpect(status().isCreated())
+        userRepository.findUserWithEagerProjects(developerUsername).get().projects.size() == 1
+        projectRepository.findByIdWithEagerUsers(id).get().users.size() == 1
+
+        // TODO: leave project before cleanup()
+    }
+
+    def "Find user by username - 403"() {
+        given:
+        performSavingUser("test-user")
+
+        when:
+        def result = performGet(FIND_USER_BY_USERNAME, "test-user")
 
         then:
         result.andDo(print())

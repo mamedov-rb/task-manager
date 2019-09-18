@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.rmamedov.taskmanager.exception.UserNotFoundException;
 import ru.rmamedov.taskmanager.model.DTO.UserDTO;
 import ru.rmamedov.taskmanager.model.User;
 import ru.rmamedov.taskmanager.repository.UserRepository;
@@ -29,10 +30,14 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User with username: " + username + " - Not found!"));
     }
 
-    @Transactional(readOnly = true)
+    public User findByUsernameWithEagerProject(final String username) {
+        return userRepository.findUserWithEagerProjects(username)
+                .orElseThrow(() -> new UserNotFoundException("User with username: " + username + " - Not found!"));
+    }
+
     public UserDTO findByUsername(final String username) {
         final User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User with username: " + username + " - Not found!"));
+                .orElseThrow(() -> new UserNotFoundException("User with username: " + username + " - Not found!"));
         return UserDTO.of(user);
     }
 

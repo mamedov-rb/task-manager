@@ -6,10 +6,6 @@ import org.springframework.http.MediaType
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContext
 import org.springframework.security.test.context.support.WithMockUser
-import org.springframework.test.web.servlet.ResultActions
-import ru.rmamedov.taskmanager.model.DTO.ProjectDTO
-import ru.rmamedov.taskmanager.model.Project
-import ru.rmamedov.taskmanager.model.User
 
 import static TestData.getProject
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
@@ -34,7 +30,7 @@ class ProjectControllerTest extends MockMvcHelper {
     @WithMockUser(username = "test-user")
     def "Create new project"() {
         given:
-        performSavingUser()
+        performSavingUser("test-user")
 
         when:
         def result = performPost(CREATE_PROJECT, getProject())
@@ -45,20 +41,10 @@ class ProjectControllerTest extends MockMvcHelper {
         userRepository.findAll().size() == 1
     }
 
-    @WithMockUser
-    def "Create new project if 'createdBy' Not found."() {
-        when:
-        def result = performPost(CREATE_PROJECT, getProject())
-
-        then:
-        result.andDo(print())
-                .andExpect(status().isBadRequest())
-    }
-
     @WithMockUser(username = "test-user")
     def "Find project by id"() {
         given:
-        saveProjectWithCreatedBy()
+        saveProjectWithCreatedBy("test-user")
         def id = projectRepository.findAll().stream().findFirst().get().id
 
         when:
@@ -75,29 +61,6 @@ class ProjectControllerTest extends MockMvcHelper {
                 .andExpect(jsonPath('$.endDate').isNotEmpty())
                 .andExpect(jsonPath('$.created').isNotEmpty())
     }
-
-//    @WithMockUser(username = "test-user")
-//    def "Assign project to user"() {
-//        given:
-//        saveProjectWithCreatedBy()
-//        def id = projectRepository.findAll().stream().findFirst().get().id
-//
-//        when:
-//        def result = performPatch(ASSIGN_TO_USER, id)
-//
-//        then:
-//        result.andDo(print())
-//                .andExpect(status().isCreated())
-//        projectRepository.findAllProjectsByUsername("test-user").size() == 1
-//        userRepository.findUserWithEagerProjects("test-user").get().projects.size() == 1
-//        projectRepository.findProjectWithEagerUsers(id).get().users.size() == 1
-//
-//        cleanup:
-//        def user = userRepository.findUserWithEagerProjects("test-user").get()
-//        def project = projectRepository.findById(id).get()
-//        user.removeProject(project)
-//        userRepository.findAll()
-//    }
 
 //    @WithMockUser(username = "test-user") // TODO: fix
 //    def "Find all by current user"() {

@@ -31,7 +31,7 @@ class MockMvcHelper extends Specification {
 
     protected final static String FIND_ALL_PROJECTS_BY_USER_ID = "/api/project/find/all/by/user/{username}"
 
-    protected final static String ASSIGN_TO_USER = "/api/project/assign-to-user/{id}"
+    protected final static String ASSIGN_TO_PROJECT = "/api/user//assign-to-project/username/{username}/id/{id}"
 
     protected final static String REGISTER_USER = "/api/user/save"
 
@@ -63,20 +63,20 @@ class MockMvcHelper extends Specification {
         mockMvc.perform(patch(url, vars))
     }
 
-    def saveProjectWithCreatedBy() {
-        performSavingUser()
+    def saveProjectWithCreatedBy(String createdBy) {
+        performSavingUser(createdBy)
         def project = getProject()
         performPost(CREATE_PROJECT, project)
     }
 
-    def performSavingUser() {
-        def user = getUser()
+    def performSavingUser(String username) {
+        def user = getUser(username)
         performPost(REGISTER_USER, user)
     }
 
     def clear() {
-//        projectRepository.deleteAll()
-//        userRepository.deleteAll()
+        projectRepository.deleteAll()
+        userRepository.deleteAll()
     }
 
 }

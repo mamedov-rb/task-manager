@@ -100,9 +100,7 @@ public class User implements UserDetails {
 
     @JoinTable(
             name = "users_roles",
-            uniqueConstraints = {
-                    @UniqueConstraint(columnNames = {"user_id", "role_id"})
-            },
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role_id"})},
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
@@ -111,9 +109,7 @@ public class User implements UserDetails {
 
     @JoinTable(
             name = "users_projects",
-            uniqueConstraints = {
-                    @UniqueConstraint(columnNames = {"user_id", "project_id"})
-            },
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "project_id"})},
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "project_id", referencedColumnName = "id")
     )
@@ -149,11 +145,11 @@ public class User implements UserDetails {
 
     @Builder
     private User(String username,
-                String password,
-                String firstName,
-                String lastName,
-                String phone,
-                String email) {
+                 String password,
+                 String firstName,
+                 String lastName,
+                 String phone,
+                 String email) {
 
         this.username = username;
         this.password = password;
@@ -161,6 +157,10 @@ public class User implements UserDetails {
         this.lastName = lastName;
         this.phone = phone;
         this.email = email;
+    }
+
+    public boolean addProject(final Project project) {
+        return project.addUser(this) && projects.add(project);
     }
 
 }

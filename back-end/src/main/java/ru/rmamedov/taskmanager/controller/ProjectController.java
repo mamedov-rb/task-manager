@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,11 +32,11 @@ public class ProjectController {
 
     private final ProjectService projectService;
 
-    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity create(@RequestBody @Valid final Project project,
                                  @Nullable @AuthenticationPrincipal Authentication authentication) {
 
-        projectService.create(project, authentication);
+        projectService.save(project, authentication);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -48,15 +47,7 @@ public class ProjectController {
 
     @GetMapping(value = "/find/all/by/user/{username}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Set<ProjectDTO>> findAllByUserId(@NotNull @PathVariable final String username) {
-        return new ResponseEntity<>(projectService.findAllByUsername(username), HttpStatus.OK);
-    }
-
-    @PatchMapping("/assign-to-user/{id}")
-    public ResponseEntity assignToUser(@PathVariable String id,
-                                       @Nullable @AuthenticationPrincipal Authentication authentication) {
-
-        projectService.assignToUserById(id, authentication);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return new ResponseEntity<>(projectService.findAllOfCurrentUser(username), HttpStatus.OK);
     }
 
 }

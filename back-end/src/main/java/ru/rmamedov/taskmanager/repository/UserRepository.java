@@ -18,4 +18,7 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query("SELECT u FROM User u LEFT JOIN FETCH u.projects WHERE u.username = :username")
     Optional<User> findUserWithEagerProjects(@Param("username") String username);
 
+    @Query(value = "DELETE FROM users_projects", nativeQuery = true)
+    void deleteAllProjectsFromUser();
+
 }
