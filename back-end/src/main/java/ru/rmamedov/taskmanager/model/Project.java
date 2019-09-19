@@ -91,7 +91,7 @@ public class Project {
     private Set<User> users = new HashSet<>();
 
     @Builder
-    public Project (String name,
+    private Project (String name,
                     String description,
                     LocalDateTime startDate,
                     LocalDateTime endDate,

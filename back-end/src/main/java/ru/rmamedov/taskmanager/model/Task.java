@@ -2,9 +2,11 @@ package ru.rmamedov.taskmanager.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
@@ -41,6 +43,7 @@ import java.util.Set;
 @Table(name = "task")
 @Entity
 @ToString(exclude = {"createdBy", "assignedTo", "project", "comments"})
+@NoArgsConstructor
 @EqualsAndHashCode(of = {"name", "description"})
 public class Task {
 
@@ -67,7 +70,7 @@ public class Task {
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private Status status = Status.PLANNED;
+    private Status status;
 
     @Column(name = "created", updatable = false)
     @CreationTimestamp
@@ -105,4 +108,17 @@ public class Task {
     @JsonIgnore
     private Set<Comment> comments = new HashSet<>();
 
+    @Builder
+    private Task(String name,
+                String description,
+                Status status,
+                LocalDateTime startDate,
+                LocalDateTime endDate) {
+
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
 }

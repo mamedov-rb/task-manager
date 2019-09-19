@@ -1,6 +1,9 @@
 import org.apache.commons.lang3.RandomStringUtils
+import ru.rmamedov.taskmanager.model.DTO.CreationTaskRequest
 import ru.rmamedov.taskmanager.model.Project
+import ru.rmamedov.taskmanager.model.Task
 import ru.rmamedov.taskmanager.model.User
+import ru.rmamedov.taskmanager.model.enums.Status
 
 import java.time.LocalDateTime
 
@@ -28,5 +31,18 @@ class TestData {
                 .startDate(LocalDateTime.now().plusDays(1))
                 .endDate(LocalDateTime.now().plusMonths(1))
                 .build()
+    }
+
+    static CreationTaskRequest getCreateTaskRequest(String projectId,
+                                                    String assignTo) {
+
+        def task = Task.builder()
+                .name(RandomStringUtils.randomAlphabetic(10))
+                .description(RandomStringUtils.randomAlphabetic(50))
+                .status(Status.PLANNED)
+                .startDate(LocalDateTime.now().plusDays(10))
+                .endDate(LocalDateTime.now().plusDays(30))
+                .build()
+        new CreationTaskRequest(task, projectId, assignTo)
     }
 }

@@ -8,14 +8,13 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import ru.rmamedov.taskmanager.Application
 import ru.rmamedov.taskmanager.repository.ProjectRepository
+import ru.rmamedov.taskmanager.repository.TaskRepository
 import ru.rmamedov.taskmanager.repository.UserRepository
 import spock.lang.Specification
 
 import static TestData.getProject
 import static TestData.getUser
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 
 /**
  * @author Rustam Mamedov
@@ -29,13 +28,15 @@ class MockMvcHelper extends Specification {
 
     protected final static String FIND_PROJECT_BY_ID = "/api/project/find/{id}"
 
-    protected final static String FIND_ALL_PROJECTS_BY_USER_ID = "/api/project/find/all/by/user/{username}"
+    protected final static String FIND_ALL_PROJECTS_BY_USER_ID = "/api/project/find-all-by/user/{username}"
 
-    protected final static String ASSIGN_TO_PROJECT = "/api/user//assign-to-project/username/{username}/id/{id}"
+    protected final static String ASSIGN_TO_PROJECT = "/api/manager/assign/username/{username}/projectId/{id}"
+
+    protected final static String ASSIGN_TASK_TO_USER = "/api/manager/assign/task/to/user"
 
     protected final static String REGISTER_USER = "/api/user/save"
 
-    protected final static String FIND_USER_BY_USERNAME = "/api/user/find/{username}"
+    protected final static String FIND_USER_BY_USERNAME = "/api/user/find/{assignTo}"
 
     @Autowired
     private MockMvc mockMvc
@@ -48,6 +49,9 @@ class MockMvcHelper extends Specification {
 
     @Autowired
     protected ProjectRepository projectRepository
+
+    @Autowired
+    protected TaskRepository taskRepository
 
     protected performPost(String url, Object object) {
         mockMvc.perform(post(url)
@@ -64,12 +68,12 @@ class MockMvcHelper extends Specification {
     }
 
     def saveProjectWithCreatedBy(String createdBy) {
-        performSavingUser(createdBy)
+        saveUserWithUsername(createdBy)
         def project = getProject()
         performPost(CREATE_PROJECT, project)
     }
 
-    def performSavingUser(String username) {
+    def saveUserWithUsername(String username) {
         def user = getUser(username)
         performPost(REGISTER_USER, user)
     }

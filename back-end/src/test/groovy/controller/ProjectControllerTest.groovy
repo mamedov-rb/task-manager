@@ -1,10 +1,7 @@
 package controller
 
 import helper.MockMvcHelper
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
-import org.springframework.security.core.Authentication
-import org.springframework.security.core.context.SecurityContext
 import org.springframework.security.test.context.support.WithMockUser
 
 import static TestData.getProject
@@ -17,12 +14,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class ProjectControllerTest extends MockMvcHelper {
 
-    @MockBean
-    SecurityContext securityContext
-
-    @MockBean
-    Authentication authentication
-
     def cleanup() {
         clear()
     }
@@ -30,7 +21,7 @@ class ProjectControllerTest extends MockMvcHelper {
     @WithMockUser(username = "test-user")
     def "Create new project"() {
         given:
-        performSavingUser("test-user")
+        saveUserWithUsername("test-user")
 
         when:
         def result = performPost(CREATE_PROJECT, getProject())
@@ -62,7 +53,7 @@ class ProjectControllerTest extends MockMvcHelper {
                 .andExpect(jsonPath('$.created').isNotEmpty())
     }
 
-//    @WithMockUser(username = "test-user") // TODO: fix
+//    @WithMockUser(assignTo = "test-user") // TODO: fix
 //    def "Find all by current user"() {
 //        given:
 //        saveProjectWithCreatedBy()

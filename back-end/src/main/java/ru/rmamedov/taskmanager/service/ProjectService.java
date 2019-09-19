@@ -24,28 +24,39 @@ public class ProjectService {
     private final UserService userService;
 
     @Transactional
-    public void save(@NotNull final Project project, @Nullable final Authentication authentication) {
-        if (authentication != null) {
-            final User user = (User) userService.loadUserByUsername(authentication.getName());
-            project.setCreatedBy(user);
-            projectRepository.save(project);
-        } else {
+    public void save(@NotNull final Project project,
+                     @Nullable final Authentication authentication) throws UserNotAuthorizedException {
+
+        if (authentication == null) {
             throw new UserNotAuthorizedException("User - Not authorized. Please login");
         }
+        final User createdBy = (User) userService.loadUserByUsername(authentication.getName());
+        project.setCreatedBy(createdBy);
+        projectRepository.save(project);
+
     }
 
+    @NotNull
+    public Project findById(final String id) throws ProjectNotFoundException {
+        return projectRepository.findById(id)
+                .orElseThrow(() -> new ProjectNotFoundException("Project with id: " + id + " - Not found."));
+    }
+
+    @NotNull
     @Transactional(readOnly = true)
-    public ProjectDTO findById(final String id) {
+    public ProjectDTO findDTOById(final String id) throws ProjectNotFoundException {
         final Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new ProjectNotFoundException("Project with id: " + id + " - Not found."));
         return ProjectDTO.of(project);
     }
 
-    public Project findByIdWithEagerUsers(final String id) {
+    @NotNull
+    public Project findByIdWithEagerUsers(final String id) throws ProjectNotFoundException {
         return projectRepository.findByIdWithEagerUsers(id)
                 .orElseThrow(() -> new ProjectNotFoundException("Project with id: " + id + " - Not found."));
     }
 
+    @NotNull
     public Set<ProjectDTO> findAllOfCurrentUser(final String username) {
         return projectRepository.findAllOfUserByUsername(username);
     }

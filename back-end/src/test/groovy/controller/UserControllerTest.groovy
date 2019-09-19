@@ -33,7 +33,7 @@ class UserControllerTest extends MockMvcHelper {
     @WithMockUser
     def "Find user by username"() {
         given:
-        performSavingUser("test-user")
+        saveUserWithUsername("test-user")
 
         when:
         def result = performGet(FIND_USER_BY_USERNAME, "test-user")
@@ -45,35 +45,14 @@ class UserControllerTest extends MockMvcHelper {
                 .andExpect(jsonPath('$.id').isNotEmpty())
                 .andExpect(jsonPath('$.firstName').isNotEmpty())
                 .andExpect(jsonPath('$.lastName').isNotEmpty())
-                .andExpect(jsonPath('$.username').value("test-user"))
+                .andExpect(jsonPath('$.assignTo').value("test-user"))
                 .andExpect(jsonPath('$.phone').value("+7(800)100-10-10"))
                 .andExpect(jsonPath('$.email').value("user@gmail.com"))
     }
 
-    @WithMockUser(username = "test-user")
-    def "Assign project to user"() {
-        given:
-        saveProjectWithCreatedBy("test-user")
-        def developerUsername = "developer-user"
-        performSavingUser(developerUsername)
-
-        def id = projectRepository.findAll().stream().findFirst().get().id
-
-        when:
-        def result = performPatch(ASSIGN_TO_PROJECT, developerUsername, id)
-
-        then:
-        result.andDo(print())
-                .andExpect(status().isCreated())
-        userRepository.findUserWithEagerProjects(developerUsername).get().projects.size() == 1
-        projectRepository.findByIdWithEagerUsers(id).get().users.size() == 1
-
-        // TODO: leave project before cleanup()
-    }
-
     def "Find user by username - 403"() {
         given:
-        performSavingUser("test-user")
+        saveUserWithUsername("test-user")
 
         when:
         def result = performGet(FIND_USER_BY_USERNAME, "test-user")

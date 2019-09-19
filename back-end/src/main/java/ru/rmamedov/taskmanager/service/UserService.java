@@ -1,6 +1,7 @@
 package ru.rmamedov.taskmanager.service;
 
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,20 +25,23 @@ public class UserService implements UserDetailsService {
 
     private final PasswordEncoder encoder;
 
+    @NotNull
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User with username: " + username + " - Not found!"));
+                .orElseThrow(() -> new UsernameNotFoundException("User with assignTo: " + username + " - Not found!"));
     }
 
+    @NotNull
     public User findByUsernameWithEagerProject(final String username) {
         return userRepository.findUserWithEagerProjects(username)
-                .orElseThrow(() -> new UserNotFoundException("User with username: " + username + " - Not found!"));
+                .orElseThrow(() -> new UserNotFoundException("User with assignTo: " + username + " - Not found!"));
     }
 
+    @NotNull
     public UserDTO findByUsername(final String username) {
         final User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("User with username: " + username + " - Not found!"));
+                .orElseThrow(() -> new UserNotFoundException("User with assignTo: " + username + " - Not found!"));
         return UserDTO.of(user);
     }
 
