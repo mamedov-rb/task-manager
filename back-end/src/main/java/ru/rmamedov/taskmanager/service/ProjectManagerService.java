@@ -28,10 +28,8 @@ public class ProjectManagerService {
 
     @Transactional
     public boolean assignUserToProject(final String username, final String projectId) {
-        @NotNull
-        final User user = userService.findByUsernameWithEagerProject(username);
-        @NotNull
-        final Project project = projectService.findByIdWithEagerUsers(projectId);
+        @NotNull final User user = userService.findByUsernameWithEagerProject(username);
+        @NotNull final Project project = projectService.findByIdWithEagerUsers(projectId);
         return user.addProject(project);
     }
 
@@ -42,17 +40,13 @@ public class ProjectManagerService {
         if (authentication == null) {
             throw new UserNotAuthorizedException("User - Not authorized. Please login");
         }
-        @NotNull
-        final Project project = projectService.findById(request.getProjectId());
+        @NotNull final Project project = projectService.findById(request.getProjectId());
 
-        @NotNull
-        final User createdBy = (User) userService.loadUserByUsername(authentication.getName());
+        @NotNull final User createdBy = (User) userService.loadUserByUsername(authentication.getName());
 
-        @NotNull
-        final User user = userService.findByUsernameAndProject(request.getAssignTo(), project);
+        @NotNull final User user = userService.findByUsernameAndProject(request.getAssignTo(), project);
 
-        @NotNull
-        final Task task = request.getTask();
+        @NotNull final Task task = request.getTask();
 
         task.setProject(project);
         task.setCreatedBy(createdBy);
@@ -65,14 +59,12 @@ public class ProjectManagerService {
     public void reassignTaskToAnotherUser(final String taskId,
                                              final String username,
                                              final String projectId) {
-        @NotNull
-        final Project project = projectService.findById(projectId);
 
-        @NotNull
-        final User user = userService.findByUsernameAndProject(username, project);
+        @NotNull final Project project = projectService.findById(projectId);
 
-        @NotNull
-        final Task task = taskService.findByIdWithEagerAssignedTo(taskId);
+        @NotNull final User user = userService.findByUsernameAndProject(username, project);
+
+        @NotNull final Task task = taskService.findByIdWithEagerAssignedTo(taskId);
 
         task.setAssignedTo(user);
     }

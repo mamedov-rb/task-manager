@@ -29,7 +29,7 @@ public class ProjectManagerController {
     private final ProjectManagerService projectManagerService;
 
     @PatchMapping("/assign/username/{username}/projectId/{id}")
-    public ResponseEntity assignToUser(@PathVariable final String username, @PathVariable String id) {
+    public ResponseEntity assignUserToProject(@PathVariable final String username, @PathVariable String id) {
         final boolean assigned = projectManagerService.assignUserToProject(username, id);
         if (assigned) {
             return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -38,8 +38,8 @@ public class ProjectManagerController {
     }
 
     @PostMapping(value = "/assign/task/to/user", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity createTaskAndAssign(@Valid @RequestBody CreationTaskRequest request,
-                                              @AuthenticationPrincipal Authentication authentication) {
+    public ResponseEntity createTaskAndAssignToUser(@Valid @RequestBody CreationTaskRequest request,
+                                                    @AuthenticationPrincipal Authentication authentication) {
 
         final boolean assigned = projectManagerService.createAndAssignTaskToUser(request, authentication);
         if (assigned) {

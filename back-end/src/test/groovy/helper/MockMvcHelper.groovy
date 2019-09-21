@@ -40,6 +40,8 @@ class MockMvcHelper extends Specification {
 
     protected final static String FIND_USER_BY_USERNAME = "/api/user/find/{assignTo}"
 
+    protected final static String DELETE_TASK_BY_ID = "/api/task/delete/{id}"
+
     @Autowired
     private MockMvc mockMvc
 
@@ -67,6 +69,10 @@ class MockMvcHelper extends Specification {
 
     protected performPatch(String url, String... vars) {
         mockMvc.perform(patch(url, vars))
+    }
+
+    protected performDelete(String url, String... vars) {
+        mockMvc.perform(delete(url, vars))
     }
 
     def saveProjectWithCreatedBy(String createdBy) {

@@ -13,9 +13,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class ProjectManagerControllerTest extends MockMvcHelper {
 
-    def cleanup() {
-        clearDb()
-    }
+//    def cleanup() {
+//        clearDb()
+//    }
 
     @WithMockUser(username = "admin-user")
     def "Assign user to project"() {
@@ -116,6 +116,27 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         task.assignedTo.username == developer_02
     }
 
+    @WithMockUser(username = "admin-user")
+    def "Delete task under user and project"() {
+        given:
+        saveProjectWithCreatedBy("admin-user")
 
+        def developer_01 = "developer_01"
+        saveUser(developer_01)
+
+        def projectId = projectRepository.findAll().stream().findFirst().get().id
+        performPatch(ASSIGN_TO_PROJECT, developer_01, projectId)
+        performPost(CREATE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer_01))
+        def taskId = taskRepository.findAll().stream().findFirst().get().id
+
+        when:
+        def result = performDelete(DELETE_TASK_BY_ID, taskId)
+
+        then:
+        result.andDo(print())
+                .andExpect(status().isNoContent())
+
+        taskRepository.findAll().size() == 0
+    }
 
 }

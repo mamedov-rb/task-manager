@@ -29,4 +29,10 @@ public class TaskService {
                 .orElseThrow(() -> new TaskNotFoundException("Task with id: " + id + " - Not found!"));
     }
 
+    public void deleteById(final String id) {
+        final Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new TaskNotFoundException("Task with id: " + id + " - Not found!"));
+        taskRepository.delete(task);
+    }
+
 }
