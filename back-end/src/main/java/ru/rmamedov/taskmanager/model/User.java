@@ -163,4 +163,8 @@ public class User implements UserDetails {
         return project.addUser(this) && projects.add(project);
     }
 
+    public boolean removeProject(final Project project) {
+        return project.removeUser(this) && projects.remove(project);
+    }
+
 }

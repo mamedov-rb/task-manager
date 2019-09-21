@@ -108,4 +108,8 @@ public class Project {
         return users.add(user);
     }
 
+    public boolean removeUser(final User user) {
+        return users.remove(user);
+    }
+
 }

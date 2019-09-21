@@ -1,6 +1,7 @@
 package ru.rmamedov.taskmanager.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.security.core.Authentication;
@@ -12,10 +13,13 @@ import ru.rmamedov.taskmanager.model.Project;
 import ru.rmamedov.taskmanager.model.Task;
 import ru.rmamedov.taskmanager.model.User;
 
+import java.util.Set;
+
 /**
  * @author Rustam Mamedov
  */
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProjectManagerService {
@@ -31,6 +35,18 @@ public class ProjectManagerService {
         @NotNull final User user = userService.findByUsernameWithEagerProject(username);
         @NotNull final Project project = projectService.findByIdWithEagerUsers(projectId);
         return user.addProject(project);
+    }
+
+    @Transactional
+    public boolean leaveProjectUnderUser(final String username, final String projectId) {
+        @NotNull final User user = userService.findByUsernameWithEagerProject(username);
+        @NotNull final Project project = projectService.findByIdWithEagerUsers(projectId);
+        final Set<Task> tasks = taskService.findAllByAssignedTo(user);
+        if (!tasks.isEmpty()) {
+            final long removed = taskService.deleteAllByAssignedTo(user);
+            log.info("While user '{}' were leaving project '{}', he removed: '{}' tasks.", user.getUsername(), project.getName(), removed);
+        }
+        return user.removeProject(project);
     }
 
     @Transactional
