@@ -41,11 +41,11 @@ public class ProjectManagerService {
             throw new UserNotAuthorizedException("User - Not authorized. Please login");
         }
         @NotNull
+        final Project project = projectService.findById(request.getProjectId());
+        @NotNull
         final User createdBy = (User) userService.loadUserByUsername(authentication.getName());
         @NotNull
-        final User assignTo = (User) userService.loadUserByUsername(request.getAssignTo());
-        @NotNull
-        final Project project = projectService.findById(request.getProjectId());
+        final User assignTo = userService.findByUsernameAndProject(request.getAssignTo(), project); // TODO: change to - find by username of current project.
         @NotNull
         final Task task = request.getTask();
 

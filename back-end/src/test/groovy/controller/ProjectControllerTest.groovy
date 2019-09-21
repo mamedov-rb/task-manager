@@ -21,7 +21,7 @@ class ProjectControllerTest extends MockMvcHelper {
     @WithMockUser(username = "test-user")
     def "Create new project"() {
         given:
-        saveUserWithUsername("test-user")
+        saveUser("test-user")
 
         when:
         def result = performPost(CREATE_PROJECT, getProject())

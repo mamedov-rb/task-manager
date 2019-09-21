@@ -33,7 +33,7 @@ class UserControllerTest extends MockMvcHelper {
     @WithMockUser
     def "Find user by username"() {
         given:
-        saveUserWithUsername("test-user")
+        saveUser("test-user")
 
         when:
         def result = performGet(FIND_USER_BY_USERNAME, "test-user")
@@ -52,7 +52,7 @@ class UserControllerTest extends MockMvcHelper {
 
     def "Find user by username - 403"() {
         given:
-        saveUserWithUsername("test-user")
+        saveUser("test-user")
 
         when:
         def result = performGet(FIND_USER_BY_USERNAME, "test-user")

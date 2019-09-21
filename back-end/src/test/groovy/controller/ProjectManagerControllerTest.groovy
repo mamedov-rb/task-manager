@@ -22,7 +22,7 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         given:
         def developerUsername = "developer-user"
         saveProjectWithCreatedBy("admin-user")
-        saveUserWithUsername(developerUsername)
+        saveUser(developerUsername)
         def id = projectRepository.findAll().stream().findFirst().get().id
 
         when:
@@ -42,9 +42,10 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         given:
         def developerUsername = "developer-user"
         saveProjectWithCreatedBy("admin-user")
-        saveUserWithUsername(developerUsername)
+        saveUser(developerUsername)
         def projectId = projectRepository.findAll().stream().findFirst().get().id
         def request = getCreateTaskRequest(projectId, developerUsername)
+        performPatch(ASSIGN_TO_PROJECT, developerUsername, projectId)
 
         when:
         def result = performPost(ASSIGN_TASK_TO_USER, request)

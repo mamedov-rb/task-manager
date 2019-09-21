@@ -68,12 +68,12 @@ class MockMvcHelper extends Specification {
     }
 
     def saveProjectWithCreatedBy(String createdBy) {
-        saveUserWithUsername(createdBy)
+        saveUser(createdBy)
         def project = getProject()
         performPost(CREATE_PROJECT, project)
     }
 
-    def saveUserWithUsername(String username) {
+    def saveUser(String username) {
         def user = getUser(username)
         performPost(REGISTER_USER, user)
     }

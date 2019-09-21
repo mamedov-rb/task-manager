@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.rmamedov.taskmanager.exception.UserNotFoundException;
 import ru.rmamedov.taskmanager.model.DTO.UserDTO;
+import ru.rmamedov.taskmanager.model.Project;
 import ru.rmamedov.taskmanager.model.User;
 import ru.rmamedov.taskmanager.repository.UserRepository;
 
@@ -29,19 +30,27 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User with assignTo: " + username + " - Not found!"));
+                .orElseThrow(() -> new UsernameNotFoundException("User with username: '" + username + "' - Not found!"));
+    }
+
+    @NotNull
+    public User findByUsernameAndProject(final String username, final Project project) throws UserNotFoundException {
+        return userRepository.findByUsernameAndProject(username, project)
+                .orElseThrow(() -> new UsernameNotFoundException("User with username: '" + username +
+                        "' - Not found, or user not a member of project: '" + project.getName() + "'."));
+
     }
 
     @NotNull
     public User findByUsernameWithEagerProject(final String username) {
         return userRepository.findUserWithEagerProjects(username)
-                .orElseThrow(() -> new UserNotFoundException("User with assignTo: " + username + " - Not found!"));
+                .orElseThrow(() -> new UserNotFoundException("User with username: '" + username + "' - Not found!"));
     }
 
     @NotNull
     public UserDTO findByUsername(final String username) {
         final User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("User with assignTo: " + username + " - Not found!"));
+                .orElseThrow(() -> new UserNotFoundException("User with username: '" + username + "' - Not found!"));
         return UserDTO.of(user);
     }
 
