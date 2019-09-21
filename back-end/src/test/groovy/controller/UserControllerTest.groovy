@@ -14,13 +14,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class UserControllerTest extends MockMvcHelper {
 
-    def cleanup() {
-        clearDb()
-    }
-
-    def "Create new user"() {
+    def "Save new user"() {
         given:
-        def user = getUser("test-user")
+        def user = getUser("admin-user")
 
         when:
         def result = performPost(REGISTER_USER, user)
@@ -30,13 +26,13 @@ class UserControllerTest extends MockMvcHelper {
                 .andExpect(status().isCreated())
     }
 
-    @WithMockUser
+    @WithMockUser(username = "admin-user")
     def "Find user by username"() {
         given:
-        saveUser("test-user")
+        saveUser("admin-user")
 
         when:
-        def result = performGet(FIND_USER_BY_USERNAME, "test-user")
+        def result = performGet(FIND_USER_BY_USERNAME, "admin-user")
 
         then:
         result.andDo(print())
@@ -45,17 +41,16 @@ class UserControllerTest extends MockMvcHelper {
                 .andExpect(jsonPath('$.id').isNotEmpty())
                 .andExpect(jsonPath('$.firstName').isNotEmpty())
                 .andExpect(jsonPath('$.lastName').isNotEmpty())
-                .andExpect(jsonPath('$.assignTo').value("test-user"))
                 .andExpect(jsonPath('$.phone').value("+7(800)100-10-10"))
                 .andExpect(jsonPath('$.email').value("user@gmail.com"))
     }
 
     def "Find user by username - 403"() {
         given:
-        saveUser("test-user")
+        saveUser("admin-user")
 
         when:
-        def result = performGet(FIND_USER_BY_USERNAME, "test-user")
+        def result = performGet(FIND_USER_BY_USERNAME, "admin-user")
 
         then:
         result.andDo(print())

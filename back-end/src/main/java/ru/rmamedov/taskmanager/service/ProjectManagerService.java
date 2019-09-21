@@ -13,6 +13,7 @@ import ru.rmamedov.taskmanager.model.Project;
 import ru.rmamedov.taskmanager.model.Task;
 import ru.rmamedov.taskmanager.model.User;
 
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -41,12 +42,28 @@ public class ProjectManagerService {
     public boolean leaveProjectUnderUser(final String username, final String projectId) {
         @NotNull final User user = userService.findByUsernameWithEagerProject(username);
         @NotNull final Project project = projectService.findByIdWithEagerUsers(projectId);
-        final Set<Task> tasks = taskService.findAllByAssignedTo(user);
+        final Set<Task> tasks = taskService.findAllByAssignedToAndProject(user, project);
         if (!tasks.isEmpty()) {
-            final long removed = taskService.deleteAllByAssignedTo(user);
+            final long removed = taskService.deleteAllByAssignedToAndProject(user, project);
             log.info("While user '{}' were leaving project '{}', he removed: '{}' tasks.", user.getUsername(), project.getName(), removed);
         }
         return user.removeProject(project);
+    }
+
+    @Transactional
+    public void leaveAllProjectsUnderUser(final String username) {
+        @NotNull final User user = userService.findByUsernameWithEagerProject(username);
+        final Iterator<Project> iterator = user.getProjects().iterator();
+        while (iterator.hasNext()) {
+            final Project project = iterator.next();
+            final Set<Task> tasks = taskService.findAllByAssignedToAndProject(user, project);
+            if (!tasks.isEmpty()) {
+                final long removed = taskService.deleteAllByAssignedToAndProject(user, project);
+                log.info("While user '{}' were leaving project '{}', he removed: '{}' tasks.", user.getUsername(), project.getName(), removed);
+            }
+            project.removeUser(user);
+            iterator.remove();
+        }
     }
 
     @Transactional

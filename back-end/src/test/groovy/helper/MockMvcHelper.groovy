@@ -1,6 +1,7 @@
 package helper
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import groovy.sql.Sql
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -10,7 +11,11 @@ import ru.rmamedov.taskmanager.Application
 import ru.rmamedov.taskmanager.repository.ProjectRepository
 import ru.rmamedov.taskmanager.repository.TaskRepository
 import ru.rmamedov.taskmanager.repository.UserRepository
+import ru.rmamedov.taskmanager.service.ProjectManagerService
+import spock.lang.Shared
 import spock.lang.Specification
+
+import javax.sql.DataSource
 
 import static TestData.getProject
 import static TestData.getUser
@@ -24,15 +29,17 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @AutoConfigureMockMvc
 class MockMvcHelper extends Specification {
 
-    protected final static String CREATE_PROJECT = "/api/project/save"
+    protected final static String SAVE_PROJECT = "/api/project/save"
 
     protected final static String FIND_PROJECT_BY_ID = "/api/project/find/{id}"
 
-    protected final static String FIND_ALL_PROJECTS_BY_USER_ID = "/api/project/find-all-by/user/{username}"
+    protected final static String FIND_ALL_PROJECTS_BY_USERNAME = "/api/project/find-all-by/user/{username}"
 
     protected final static String ASSIGN_USER_TO_PROJECT = "/api/manager/assign/username/{username}/projectId/{id}"
 
     protected final static String LEAVE_PROJECT_UNDER_USER = "/api/manager/leave/username/{username}/projectId/{id}"
+
+    protected final static String LEAVE_ALL_PROJECTS = "/api/manager/leave/all/projects/user/{username}"
 
     protected final static String CREATE_AND_ASSIGN_TASK_TO_USER = "/api/manager/assign/task/to/user"
 
@@ -59,6 +66,24 @@ class MockMvcHelper extends Specification {
     @Autowired
     protected TaskRepository taskRepository
 
+    @Autowired
+    protected ProjectManagerService projectManagerService
+
+    @Shared
+    Sql sql
+
+    @Autowired
+    DataSource dataSource
+
+    def cleanup() {
+        sql = new Sql(dataSource)
+        sql.execute("DELETE FROM comment")
+        sql.execute("DELETE FROM task")
+        sql.execute("DELETE FROM users_projects")
+        sql.execute("DELETE FROM project")
+        sql.execute("DELETE FROM app_user")
+    }
+
     protected performPost(String url, Object object) {
         mockMvc.perform(post(url)
                 .content(mapper.writeValueAsString(object))
@@ -80,18 +105,13 @@ class MockMvcHelper extends Specification {
     def saveProjectWithCreatedBy(String createdBy) {
         saveUser(createdBy)
         def project = getProject()
-        performPost(CREATE_PROJECT, project)
+        performPost(SAVE_PROJECT, project)
     }
+
 
     def saveUser(String username) {
         def user = getUser(username)
         performPost(REGISTER_USER, user)
-    }
-
-    def clearDb() { // TODO: leave projects.
-        projectRepository.deleteAll()
-        userRepository.deleteAll()
-        taskRepository.deleteAll()
     }
 
 }

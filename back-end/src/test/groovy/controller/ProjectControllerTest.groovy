@@ -14,17 +14,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class ProjectControllerTest extends MockMvcHelper {
 
-    def cleanup() {
-        clearDb()
-    }
-
-    @WithMockUser(username = "test-user")
-    def "Create new project"() {
+    @WithMockUser(username = "admin-user")
+    def "Save new project"() {
         given:
-        saveUser("test-user")
+        saveUser("admin-user")
 
         when:
-        def result = performPost(CREATE_PROJECT, getProject())
+        def result = performPost(SAVE_PROJECT, getProject())
 
         then:
         result.andDo(print())
@@ -32,10 +28,10 @@ class ProjectControllerTest extends MockMvcHelper {
         userRepository.findAll().size() == 1
     }
 
-    @WithMockUser(username = "test-user")
+    @WithMockUser(username = "admin-user")
     def "Find project by id"() {
         given:
-        saveProjectWithCreatedBy("test-user")
+        saveProjectWithCreatedBy("admin-user")
         def id = projectRepository.findAll().stream().findFirst().get().id
 
         when:
@@ -53,23 +49,27 @@ class ProjectControllerTest extends MockMvcHelper {
                 .andExpect(jsonPath('$.created').isNotEmpty())
     }
 
-//    @WithMockUser(assignTo = "test-user") // TODO: fix
-//    def "Find all by current user"() {
-//        given:
-//        saveProjectWithCreatedBy()
-//
-//        when:
-//        def result = performGet(FIND_ALL_PROJECTS_BY_USER_ID, "test-user")
-//
-//        then:
-//        result.andDo(print())
-//                .andExpect(status().isOk())
-//    }
+    @WithMockUser(username = "admin-user")
+    def "Find all projects by current user"() {
+        def developer = "admin-user"
+        given:
+        saveProjectWithCreatedBy(developer)
+        def id = projectRepository.findAll().stream().findFirst().get().id
+        performPatch(ASSIGN_USER_TO_PROJECT, developer, id)
 
+        when:
+        def result = performGet(FIND_ALL_PROJECTS_BY_USERNAME, developer)
+
+        then:
+        result.andDo(print())
+                .andExpect(status().isOk())
+
+        userRepository.findUserWithEagerProjects(developer).get().projects.size() == 1
+    }
 
     def "Create new project - 403"() {
         when:
-        def result = performPost(CREATE_PROJECT, getProject())
+        def result = performPost(SAVE_PROJECT, getProject())
 
         then:
         result.andDo(print())

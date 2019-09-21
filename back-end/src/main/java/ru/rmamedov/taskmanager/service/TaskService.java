@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.rmamedov.taskmanager.exception.TaskNotFoundException;
+import ru.rmamedov.taskmanager.model.Project;
 import ru.rmamedov.taskmanager.model.Task;
 import ru.rmamedov.taskmanager.model.User;
 import ru.rmamedov.taskmanager.repository.TaskRepository;
@@ -34,8 +35,12 @@ public class TaskService {
     }
 
     @NotNull
-    public Set<Task> findAllByAssignedTo(final User user) {
-        return taskRepository.findAllByAssignedTo(user);
+    public Set<Task> findAllByAssignedToAndProject(final User user, final Project project) {
+        return taskRepository.findAllByAssignedToAndProject(user, project);
+    }
+
+    public long deleteAllByAssignedToAndProject(final User user, final Project project) {
+        return taskRepository.deleteAllByAssignedToAndProject(user, project);
     }
 
     @Transactional
@@ -45,8 +50,5 @@ public class TaskService {
         taskRepository.delete(task);
     }
 
-    public long deleteAllByAssignedTo(final User user) {
-        return taskRepository.deleteAllByAssignedTo(user);
-    }
 
 }

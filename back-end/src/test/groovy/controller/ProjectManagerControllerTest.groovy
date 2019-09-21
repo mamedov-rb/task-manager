@@ -2,6 +2,7 @@ package controller
 
 import helper.MockMvcHelper
 import org.springframework.security.test.context.support.WithMockUser
+import ru.rmamedov.taskmanager.model.Project
 
 import static TestData.getCreateTaskRequest
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
@@ -12,10 +13,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 
 class ProjectManagerControllerTest extends MockMvcHelper {
-
-//    def cleanup() {
-//        clearDb()
-//    }
 
     @WithMockUser(username = "admin-user")
     def "Assign user to project"() {
@@ -80,6 +77,31 @@ class ProjectManagerControllerTest extends MockMvcHelper {
 
         userRepository.findUserWithEagerProjects(developer_01).get().projects.size() == 0
         projectRepository.findByIdWithEagerUsers(projectId).get().users.size() == 0
+        taskRepository.findAll().size() == 0
+    }
+
+    @WithMockUser(username = "admin-user")
+    def "Leave all projects with tasks under user"() {
+        given:
+        def developer_01 = "developer_01"
+        saveUser(developer_01)
+        saveProjectWithCreatedBy("admin-user")
+        saveProjectWithCreatedBy("admin-user")
+        saveProjectWithCreatedBy("admin-user")
+        for(Project p : projectRepository.findAll()) {
+            performPatch(ASSIGN_USER_TO_PROJECT, developer_01, p.id)
+            performPost(CREATE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(p.id, developer_01))
+        }
+
+        when:
+        def result = performPatch(LEAVE_ALL_PROJECTS, developer_01)
+
+        then:
+        result.andDo(print())
+                .andExpect(status().isCreated())
+
+        userRepository.findUserWithEagerProjects(developer_01).get().projects.size() == 0
+        taskRepository.findAll().size() == 0
     }
 
     @WithMockUser(username = "admin-user")
@@ -159,5 +181,29 @@ class ProjectManagerControllerTest extends MockMvcHelper {
 
         taskRepository.findAll().size() == 0
     }
+
+//    @WithMockUser(username = "admin-user")
+//    def "Delete all projects and tasks under user"() {
+//        given:
+//        saveProjectWithCreatedBy("admin-user")
+//        saveProjectWithCreatedBy("admin-user")
+//        saveProjectWithCreatedBy("admin-user")
+//
+//        def developer_01 = "developer_01"
+//        saveUser(developer_01)
+//
+//        for(Project p : projectRepository.findAll()) {
+//            performPatch(ASSIGN_USER_TO_PROJECT, developer_01, p.id)
+//        }
+//
+//        when:
+//        def result = performDelete(DELETE_TASK_BY_ID, taskId)
+//
+//        then:
+//        result.andDo(print())
+//                .andExpect(status().isNoContent())
+//
+//        taskRepository.findAll().size() == 0
+//    }
 
 }

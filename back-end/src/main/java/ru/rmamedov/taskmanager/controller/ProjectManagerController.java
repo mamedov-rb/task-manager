@@ -46,6 +46,12 @@ public class ProjectManagerController {
         return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
 
+    @PatchMapping("/leave/all/projects/user/{username}")
+    public ResponseEntity leaveAllProjects(@PathVariable final String username) {
+        projectManagerService.leaveAllProjectsUnderUser(username);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
     @PostMapping(value = "/assign/task/to/user", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity createTaskAndAssignToUser(@Valid @RequestBody CreationTaskRequest request,
                                                     @AuthenticationPrincipal Authentication authentication) {
