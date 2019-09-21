@@ -28,7 +28,9 @@ public class ProjectManagerService {
 
     @Transactional
     public boolean assignUserToProject(final String username, final String projectId) {
+        @NotNull
         final User user = userService.findByUsernameWithEagerProject(username);
+        @NotNull
         final Project project = projectService.findByIdWithEagerUsers(projectId);
         return user.addProject(project);
     }
@@ -42,18 +44,37 @@ public class ProjectManagerService {
         }
         @NotNull
         final Project project = projectService.findById(request.getProjectId());
+
         @NotNull
         final User createdBy = (User) userService.loadUserByUsername(authentication.getName());
+
         @NotNull
-        final User assignTo = userService.findByUsernameAndProject(request.getAssignTo(), project); // TODO: change to - find by username of current project.
+        final User user = userService.findByUsernameAndProject(request.getAssignTo(), project);
+
         @NotNull
         final Task task = request.getTask();
 
         task.setProject(project);
         task.setCreatedBy(createdBy);
-        task.setAssignedTo(assignTo);
+        task.setAssignedTo(user);
 
         return taskService.save(task).getId() != null;
+    }
+
+    @Transactional
+    public void reassignTaskToAnotherUser(final String taskId,
+                                             final String username,
+                                             final String projectId) {
+        @NotNull
+        final Project project = projectService.findById(projectId);
+
+        @NotNull
+        final User user = userService.findByUsernameAndProject(username, project);
+
+        @NotNull
+        final Task task = taskService.findByIdWithEagerAssignedTo(taskId);
+
+        task.setAssignedTo(user);
     }
 
 }

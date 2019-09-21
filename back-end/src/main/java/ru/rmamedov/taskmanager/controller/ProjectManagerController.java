@@ -48,4 +48,13 @@ public class ProjectManagerController {
         return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
 
+    @PatchMapping(value = "/reassign/task/{taskId}/user/{username}/by-project/{projectId}")
+    public ResponseEntity reassignTaskToAnotherUser(@PathVariable final String taskId,
+                                                    @PathVariable final String username,
+                                                    @PathVariable final String projectId) {
+
+        projectManagerService.reassignTaskToAnotherUser(taskId, username, projectId);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
 }

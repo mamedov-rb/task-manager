@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ProjectControllerTest extends MockMvcHelper {
 
     def cleanup() {
-        clear()
+        clearDb()
     }
 
     @WithMockUser(username = "test-user")

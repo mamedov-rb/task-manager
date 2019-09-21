@@ -32,7 +32,9 @@ class MockMvcHelper extends Specification {
 
     protected final static String ASSIGN_TO_PROJECT = "/api/manager/assign/username/{username}/projectId/{id}"
 
-    protected final static String ASSIGN_TASK_TO_USER = "/api/manager/assign/task/to/user"
+    protected final static String CREATE_AND_ASSIGN_TASK_TO_USER = "/api/manager/assign/task/to/user"
+
+    protected final static String REASSIGN_TASK_TO_ANOTHER_USER = "/api/manager/reassign/task/{taskId}/user/{username}/by-project/{projectId}"
 
     protected final static String REGISTER_USER = "/api/user/save"
 
@@ -59,11 +61,11 @@ class MockMvcHelper extends Specification {
                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
     }
 
-    protected performGet(String url, String...vars) {
+    protected performGet(String url, String... vars) {
         mockMvc.perform(get(url, vars))
     }
 
-    protected performPatch(String url, String...vars) {
+    protected performPatch(String url, String... vars) {
         mockMvc.perform(patch(url, vars))
     }
 
@@ -78,9 +80,10 @@ class MockMvcHelper extends Specification {
         performPost(REGISTER_USER, user)
     }
 
-    def clear() {
+    def clearDb() { // TODO: leave projects.
         projectRepository.deleteAll()
         userRepository.deleteAll()
+        taskRepository.deleteAll()
     }
 
 }

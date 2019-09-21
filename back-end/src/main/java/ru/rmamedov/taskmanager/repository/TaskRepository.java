@@ -11,6 +11,9 @@ import java.util.Optional;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, String> {
 
+    @Query("SELECT t FROM Task t JOIN FETCH t.assignedTo WHERE t.id = :id")
+    Optional<Task> findByIdWithEagerAssignedTo(@Param("id") String id);
+
     @Query("SELECT t FROM Task t JOIN FETCH t.createdBy JOIN FETCH t.assignedTo WHERE t.id = :id")
     Optional<Task> findByIdWithEagerCreatedByAndAssignedTo(@Param("id") String id);
 

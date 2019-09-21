@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class UserControllerTest extends MockMvcHelper {
 
     def cleanup() {
-        clear()
+        clearDb()
     }
 
     def "Create new user"() {

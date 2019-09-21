@@ -13,12 +13,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class ProjectManagerControllerTest extends MockMvcHelper {
 
-//    def cleanup() {
-//        clear()
-//    }
+    def cleanup() {
+        clearDb()
+    }
 
     @WithMockUser(username = "admin-user")
-    def "Assign project to user"() {
+    def "Assign user to project"() {
         given:
         def developerUsername = "developer-user"
         saveProjectWithCreatedBy("admin-user")
@@ -31,36 +31,89 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         then:
         result.andDo(print())
                 .andExpect(status().isCreated())
+
         userRepository.findUserWithEagerProjects(developerUsername).get().projects.size() == 1
         projectRepository.findByIdWithEagerUsers(id).get().users.size() == 1
-
-        // TODO: leave project before cleanup()
     }
 
     @WithMockUser(username = "admin-user")
-    def "Assign task to user and project"() {
+    def "Assign project to multiple users"() {
         given:
-        def developerUsername = "developer-user"
         saveProjectWithCreatedBy("admin-user")
-        saveUser(developerUsername)
-        def projectId = projectRepository.findAll().stream().findFirst().get().id
-        def request = getCreateTaskRequest(projectId, developerUsername)
-        performPatch(ASSIGN_TO_PROJECT, developerUsername, projectId)
+        def developer_01 = "developer_01"
+        def developer_02 = "developer_02"
+        def developer_03 = "developer_03"
+        saveUser(developer_01)
+        saveUser(developer_02)
+        saveUser(developer_03)
+        def id = projectRepository.findAll().stream().findFirst().get().id
+        performPatch(ASSIGN_TO_PROJECT, developer_01, id)
+        performPatch(ASSIGN_TO_PROJECT, developer_02, id)
+        performPatch(ASSIGN_TO_PROJECT, developer_03, id)
 
         when:
-        def result = performPost(ASSIGN_TASK_TO_USER, request)
+        def project = projectRepository.findByIdWithEagerUsers(id).get()
+
+        then:
+        project.users.size() == 3
+        userRepository.findUserWithEagerProjects(developer_01).get().projects.size() == 1
+        userRepository.findUserWithEagerProjects(developer_02).get().projects.size() == 1
+        userRepository.findUserWithEagerProjects(developer_03).get().projects.size() == 1
+    }
+
+    @WithMockUser(username = "admin-user")
+    def "Create and assign task to user and project"() {
+        given:
+        def developer = "developer-user"
+        saveProjectWithCreatedBy("admin-user")
+        saveUser(developer)
+        def projectId = projectRepository.findAll().stream().findFirst().get().id
+        performPatch(ASSIGN_TO_PROJECT, developer, projectId)
+
+        when:
+        def result = performPost(CREATE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer))
 
         then:
         result.andDo(print())
                 .andExpect(status().isCreated())
+
         def id = taskRepository.findAll().stream().findFirst().get().id
         def task = taskRepository.findByIdWithEagerCreatedByAndAssignedTo(id).get()
         task != null
         task.project.id == projectId
         task.createdBy.username == "admin-user"
-        task.assignedTo.username == developerUsername
+        task.assignedTo.username == developer
+    }
 
-        // TODO: leave project before cleanup()
+    @WithMockUser(username = "admin-user")
+    def "Reassign task to another user"() {
+        given:
+        saveProjectWithCreatedBy("admin-user")
+
+        def developer_01 = "developer_01"
+        saveUser(developer_01)
+
+        def developer_02 = "developer_02"
+        saveUser(developer_02)
+
+        def projectId = projectRepository.findAll().stream().findFirst().get().id
+        performPatch(ASSIGN_TO_PROJECT, developer_01, projectId)
+        performPatch(ASSIGN_TO_PROJECT, developer_02, projectId)
+        performPost(CREATE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer_01))
+        def taskId = taskRepository.findAll().stream().findFirst().get().id
+
+        when:
+        def result = performPatch(REASSIGN_TASK_TO_ANOTHER_USER, taskId, developer_02, projectId)
+
+        then:
+        result.andDo(print())
+                .andExpect(status().isCreated())
+
+        def task = taskRepository.findByIdWithEagerCreatedByAndAssignedTo(taskId).get()
+        task != null
+        task.project.id == projectId
+        task.createdBy.username == "admin-user"
+        task.assignedTo.username == developer_02
     }
 
 

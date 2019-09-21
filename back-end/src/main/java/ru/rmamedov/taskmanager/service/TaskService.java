@@ -18,6 +18,12 @@ public class TaskService {
     }
 
     @NotNull
+    public Task findByIdWithEagerAssignedTo(final String id) {
+        return taskRepository.findByIdWithEagerAssignedTo(id)
+                .orElseThrow(() -> new TaskNotFoundException("Task with id: " + id + " - Not found!"));
+    }
+
+    @NotNull
     public Task findById(final String id) {
         return taskRepository.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException("Task with id: " + id + " - Not found!"));
