@@ -34,7 +34,7 @@ class MockMvcHelper extends Specification {
 
     protected final static String FIND_PROJECT_BY_ID = "/api/project/find/{id}"
 
-    protected final static String FIND_ALL_PROJECTS_BY_USERNAME = "/api/project/find-all-by/user/{username}"
+    protected final static String FIND_ALL_PROJECTS_BY_CURRENT_USER = "/api/project/find/all"
 
     protected final static String ASSIGN_USER_TO_PROJECT = "/api/manager/assign/username/{username}/projectId/{id}"
 

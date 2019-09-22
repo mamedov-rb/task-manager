@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.rmamedov.taskmanager.exception.ProjectNotFoundException;
@@ -57,8 +58,12 @@ public class ProjectService {
     }
 
     @NotNull
-    public Set<ProjectDTO> findAllOfCurrentUser(final String username) {
-        return projectRepository.findAllOfUserByUsernameAsDto(username);
+    public Set<ProjectDTO> findAllOfCurrentUser(@Nullable final Authentication authentication) {
+        if (authentication == null) {
+            throw new UserNotAuthorizedException("User - Not authorized. Please login");
+        }
+        final User user = (User) userService.loadUserByUsername(authentication.getName());
+        return projectRepository.findAllAsDtoByUsername(user);
     }
 
     public void deleteProjectById(final String id) {

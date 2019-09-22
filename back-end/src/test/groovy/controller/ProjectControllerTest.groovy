@@ -3,6 +3,7 @@ package controller
 import helper.MockMvcHelper
 import org.springframework.http.MediaType
 import org.springframework.security.test.context.support.WithMockUser
+import ru.rmamedov.taskmanager.model.Project
 
 import static TestData.getProject
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
@@ -49,22 +50,25 @@ class ProjectControllerTest extends MockMvcHelper {
                 .andExpect(jsonPath('$.created').isNotEmpty())
     }
 
-    @WithMockUser(username = "admin-user")
+    @WithMockUser(username = "developer_01")
     def "Find all projects by current user"() {
-        def developer = "admin-user"
+        def developer = "developer_01"
         given:
         saveProjectWithCreatedBy(developer)
-        def id = projectRepository.findAll().stream().findFirst().get().id
-        performPatch(ASSIGN_USER_TO_PROJECT, developer, id)
+        saveProjectWithCreatedBy(developer)
+        saveProjectWithCreatedBy(developer)
+        for(Project p : projectRepository.findAll()) {
+            performPatch(ASSIGN_USER_TO_PROJECT, developer, p.id)
+        }
 
         when:
-        def result = performGet(FIND_ALL_PROJECTS_BY_USERNAME, developer)
+        def result = performGet(FIND_ALL_PROJECTS_BY_CURRENT_USER)
 
         then:
         result.andDo(print())
                 .andExpect(status().isOk())
 
-        userRepository.findUserWithEagerProjects(developer).get().projects.size() == 1
+        userRepository.findUserWithEagerProjects(developer).get().projects.size() == 3
     }
 
     def "Create new project - 403"() {
