@@ -6,14 +6,17 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.rmamedov.taskmanager.exception.UserNotAuthorizedException;
 import ru.rmamedov.taskmanager.model.DTO.CreationTaskRequest;
 import ru.rmamedov.taskmanager.service.ProjectManagerService;
+import ru.rmamedov.taskmanager.service.ProjectService;
 
 import javax.validation.Valid;
 
@@ -28,6 +31,8 @@ public class ProjectManagerController {
 
     private final ProjectManagerService projectManagerService;
 
+    private final ProjectService projectService;
+
     @PatchMapping("/assign/username/{username}/projectId/{id}")
     public ResponseEntity assignUserToProject(@PathVariable final String username, @PathVariable String id) {
         final boolean assigned = projectManagerService.assignUserToProject(username, id);
@@ -38,7 +43,7 @@ public class ProjectManagerController {
     }
 
     @PatchMapping("/leave/username/{username}/projectId/{id}")
-    public ResponseEntity leaveProjectUnderUser(@PathVariable final String username, @PathVariable String id) {
+    public ResponseEntity leaveProjectWithTasksUnderUser(@PathVariable final String username, @PathVariable String id) {
         final boolean assigned = projectManagerService.leaveProjectUnderUser(username, id);
         if (assigned) {
             return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -47,7 +52,7 @@ public class ProjectManagerController {
     }
 
     @PatchMapping("/leave/all/projects/user/{username}")
-    public ResponseEntity leaveAllProjects(@PathVariable final String username) {
+    public ResponseEntity leaveAllProjectsWithTasks(@PathVariable final String username) {
         projectManagerService.leaveAllProjectsUnderUser(username);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -63,13 +68,22 @@ public class ProjectManagerController {
         return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
 
-    @PatchMapping(value = "/reassign/task/{taskId}/user/{username}/by-project/{projectId}")
+    @PatchMapping("/reassign/task/{taskId}/user/{username}/by-project/{projectId}")
     public ResponseEntity reassignTaskToAnotherUser(@PathVariable final String taskId,
                                                     @PathVariable final String username,
                                                     @PathVariable final String projectId) {
 
         projectManagerService.reassignTaskToAnotherUser(taskId, username, projectId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @DeleteMapping("/delete/project/id/{id}/user/{username}")
+    public ResponseEntity deleteProjectWithTasksUnderUser(@PathVariable String id,
+                                                          @PathVariable final String username) {
+
+        projectManagerService.leaveProjectUnderUser(username, id);
+        projectService.deleteProjectById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }

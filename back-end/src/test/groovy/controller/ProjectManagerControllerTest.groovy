@@ -2,6 +2,7 @@ package controller
 
 import helper.MockMvcHelper
 import org.springframework.security.test.context.support.WithMockUser
+import org.springframework.test.web.servlet.ResultActions
 import ru.rmamedov.taskmanager.model.Project
 
 import static TestData.getCreateTaskRequest
@@ -182,28 +183,26 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         taskRepository.findAll().size() == 0
     }
 
-//    @WithMockUser(username = "admin-user")
-//    def "Delete all projects and tasks under user"() {
-//        given:
-//        saveProjectWithCreatedBy("admin-user")
-//        saveProjectWithCreatedBy("admin-user")
-//        saveProjectWithCreatedBy("admin-user")
-//
-//        def developer_01 = "developer_01"
-//        saveUser(developer_01)
-//
-//        for(Project p : projectRepository.findAll()) {
-//            performPatch(ASSIGN_USER_TO_PROJECT, developer_01, p.id)
-//        }
-//
-//        when:
-//        def result = performDelete(DELETE_TASK_BY_ID, taskId)
-//
-//        then:
-//        result.andDo(print())
-//                .andExpect(status().isNoContent())
-//
-//        taskRepository.findAll().size() == 0
-//    }
+    @WithMockUser(username = "admin-user")
+    def "Delete project with tasks under user"() {
+        given:
+        saveProjectWithCreatedBy("admin-user")
+
+        def developer_01 = "developer_01"
+        saveUser(developer_01)
+        def id = projectRepository.findAll().stream().findFirst().get().id
+        performPatch(ASSIGN_USER_TO_PROJECT, developer_01, id)
+
+        when:
+        def result = performDelete(DELETE_PROJECT_BY_ID, id, developer_01) //TODO: delete by username or authentication?
+
+        then:
+        result.andDo(print())
+                .andExpect(status().isNoContent())
+
+        userRepository.findUserWithEagerProjects(developer_01).get().projects.size() == 0
+        projectRepository.findAll().size() == 0
+
+    }
 
 }

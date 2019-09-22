@@ -58,7 +58,11 @@ public class ProjectService {
 
     @NotNull
     public Set<ProjectDTO> findAllOfCurrentUser(final String username) {
-        return projectRepository.findAllOfUserByUsername(username);
+        return projectRepository.findAllOfUserByUsernameAsDto(username);
+    }
+
+    public void deleteProjectById(final String id) {
+        projectRepository.deleteById(id);
     }
 
 }

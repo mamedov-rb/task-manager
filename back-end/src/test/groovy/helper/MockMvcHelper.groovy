@@ -51,6 +51,8 @@ class MockMvcHelper extends Specification {
 
     protected final static String DELETE_TASK_BY_ID = "/api/task/delete/{id}"
 
+    protected final static String DELETE_PROJECT_BY_ID = "/api/manager/delete/project/id/{id}/user/{username}"
+
     @Autowired
     private MockMvc mockMvc
 

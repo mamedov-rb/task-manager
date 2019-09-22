@@ -14,7 +14,7 @@ import java.util.Set;
 public interface ProjectRepository extends JpaRepository<Project, String> {
 
     @Query("SELECT p FROM Project p JOIN FETCH p.users u WHERE u.username = :username")
-    Set<ProjectDTO> findAllOfUserByUsername(@Param("username") String username);
+    Set<ProjectDTO> findAllOfUserByUsernameAsDto(@Param("username") String username);
 
     @Query("SELECT p FROM Project p LEFT JOIN FETCH p.users WHERE p.id = :id")
     Optional<Project> findByIdWithEagerUsers(@Param("id") String id);
