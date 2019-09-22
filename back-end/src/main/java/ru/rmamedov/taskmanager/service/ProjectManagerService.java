@@ -8,11 +8,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.rmamedov.taskmanager.exception.UserNotAuthorizedException;
-import ru.rmamedov.taskmanager.model.DTO.CreationTaskRequest;
+import ru.rmamedov.taskmanager.model.Comment;
+import ru.rmamedov.taskmanager.model.DTO.SaveCommentRequest;
+import ru.rmamedov.taskmanager.model.DTO.SaveTaskRequest;
 import ru.rmamedov.taskmanager.model.Project;
 import ru.rmamedov.taskmanager.model.Task;
 import ru.rmamedov.taskmanager.model.User;
 
+import javax.validation.Valid;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -30,6 +33,8 @@ public class ProjectManagerService {
     private final ProjectService projectService;
 
     private final TaskService taskService;
+
+    private final CommentService commentService;
 
     @Transactional
     public boolean assignUserToProject(final String username, final String projectId) {
@@ -67,7 +72,7 @@ public class ProjectManagerService {
     }
 
     @Transactional
-    public boolean createAndAssignTaskToUser(@NotNull final CreationTaskRequest request,
+    public boolean createAndAssignTaskToUser(@NotNull final SaveTaskRequest request,
                                           @Nullable final Authentication authentication) {
 
         if (authentication == null) {
@@ -100,6 +105,25 @@ public class ProjectManagerService {
         @NotNull final Task task = taskService.findByIdWithEagerAssignedTo(taskId);
 
         task.setAssignedTo(user);
+    }
+
+    @Transactional
+    public boolean saveCommentUnderUserAndTask(final SaveCommentRequest request, final Authentication authentication) {
+        if (authentication == null) {
+            throw new UserNotAuthorizedException("User - Not authorized. Please login");
+        }
+        final User user = (User) userService.loadUserByUsername(authentication.getName());
+        @Valid final Comment comment = request.getComment();
+        comment.setCommentator(user);
+        final Task task = taskService.findByIdWithEagerComments(request.getTaskId());
+        return task.addComment(comment);
+    }
+
+    @Transactional
+    public boolean removeCommentUnderUserAndTask(final String id) {
+        final Comment comment = commentService.findByIdWithEagerCommentatorAndTask(id);
+        final Task task = taskService.findByCommnetWithEagerComments(comment);
+        return task.removeComment(comment);
     }
 
 }

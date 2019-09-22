@@ -1,5 +1,7 @@
 import org.apache.commons.lang3.RandomStringUtils
-import ru.rmamedov.taskmanager.model.DTO.CreationTaskRequest
+import ru.rmamedov.taskmanager.model.Comment
+import ru.rmamedov.taskmanager.model.DTO.SaveCommentRequest
+import ru.rmamedov.taskmanager.model.DTO.SaveTaskRequest
 import ru.rmamedov.taskmanager.model.Project
 import ru.rmamedov.taskmanager.model.Task
 import ru.rmamedov.taskmanager.model.User
@@ -33,8 +35,8 @@ class TestData {
                 .build()
     }
 
-    static CreationTaskRequest getCreateTaskRequest(String projectId,
-                                                    String assignTo) {
+    static SaveTaskRequest getCreateTaskRequest(String projectId,
+                                                String assignTo) {
 
         def task = Task.builder()
                 .name(RandomStringUtils.randomAlphabetic(10))
@@ -43,6 +45,11 @@ class TestData {
                 .startDate(LocalDateTime.now().plusDays(10))
                 .endDate(LocalDateTime.now().plusDays(30))
                 .build()
-        new CreationTaskRequest(task, projectId, assignTo)
+        new SaveTaskRequest(task, projectId, assignTo)
+    }
+
+    static SaveCommentRequest getSaveCommentRequest(String taskId) {
+        def comment = new Comment(RandomStringUtils.randomAlphabetic(150))
+        new SaveCommentRequest(comment, taskId)
     }
 }

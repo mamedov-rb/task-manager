@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
@@ -30,7 +31,8 @@ import java.time.LocalDateTime;
 @Table(name = "comment")
 @Entity
 @ToString(exclude = {"commentator"})
-@EqualsAndHashCode(of = {"name", "text"})
+@EqualsAndHashCode(of = {"text"})
+@NoArgsConstructor
 public class Comment {
 
     @Id
@@ -44,12 +46,7 @@ public class Comment {
     @Version
     private int version;
 
-    @Size(min = 3, max = 30, message = "Comment name should be not less than '3' and more than '30' characters!")
-    @Column(name = "name", unique = true, nullable = false, length = 30)
-    @NotBlank
-    private String name;
-
-    @Size(min = 3, message = "Comment text should be not less than '3'!")
+    @Size(min = 5, message = "Comment text should be not less than '5'")
     @Column(columnDefinition = "TEXT", name = "description", nullable = false)
     @NotBlank
     private String text;
@@ -65,5 +62,9 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "task_id", nullable = false)
     private Task task;
+
+    public Comment(String text) {
+        this.text = text;
+    }
 
 }

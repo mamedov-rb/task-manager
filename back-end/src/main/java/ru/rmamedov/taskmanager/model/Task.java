@@ -1,6 +1,5 @@
 package ru.rmamedov.taskmanager.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -105,7 +104,6 @@ public class Task {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @JsonIgnore
     private Set<Comment> comments = new HashSet<>();
 
     @Builder
@@ -120,5 +118,15 @@ public class Task {
         this.status = status;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public boolean addComment(final Comment comment) {
+        comment.setTask(this);
+        return comments.add(comment);
+    }
+
+    public boolean removeComment(final Comment comment) {
+        comment.setCommentator(null);
+        return comments.remove(comment);
     }
 }

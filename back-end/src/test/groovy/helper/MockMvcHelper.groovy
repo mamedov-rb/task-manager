@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import ru.rmamedov.taskmanager.Application
+import ru.rmamedov.taskmanager.repository.CommentRepository
 import ru.rmamedov.taskmanager.repository.ProjectRepository
 import ru.rmamedov.taskmanager.repository.TaskRepository
 import ru.rmamedov.taskmanager.repository.UserRepository
@@ -41,7 +42,7 @@ class MockMvcHelper extends Specification {
 
     protected final static String LEAVE_ALL_PROJECTS = "/api/manager/leave/all/projects/user/{username}"
 
-    protected final static String CREATE_AND_ASSIGN_TASK_TO_USER = "/api/manager/assign/task/to/user"
+    protected final static String SAVE_AND_ASSIGN_TASK_TO_USER = "/api/manager/assign/task/to/user"
 
     protected final static String REASSIGN_TASK_TO_ANOTHER_USER = "/api/manager/reassign/task/{taskId}/user/{username}/by-project/{projectId}"
 
@@ -52,6 +53,10 @@ class MockMvcHelper extends Specification {
     protected final static String DELETE_TASK_BY_ID = "/api/task/delete/{id}"
 
     protected final static String DELETE_PROJECT_BY_ID = "/api/manager/delete/project/id/{id}/user/{username}"
+
+    protected final static String SAVE_COMMENT_UNDER_USER_TASK = "/api/manager/comment/save"
+
+    protected final static String DELETE_COMMENT_UNDER_USER_TASK = "/api/manager/comment/delete/{id}"
 
     @Autowired
     private MockMvc mockMvc
@@ -67,6 +72,9 @@ class MockMvcHelper extends Specification {
 
     @Autowired
     protected TaskRepository taskRepository
+
+    @Autowired
+    protected CommentRepository commentRepository
 
     @Autowired
     protected ProjectManagerService projectManagerService

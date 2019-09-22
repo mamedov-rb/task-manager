@@ -1,19 +1,19 @@
 package ru.rmamedov.taskmanager.service;
 
-        import lombok.RequiredArgsConstructor;
-        import org.jetbrains.annotations.NotNull;
-        import org.jetbrains.annotations.Nullable;
-        import org.springframework.security.core.Authentication;
-        import org.springframework.stereotype.Service;
-        import org.springframework.transaction.annotation.Transactional;
-        import ru.rmamedov.taskmanager.exception.ProjectNotFoundException;
-        import ru.rmamedov.taskmanager.exception.UserNotAuthorizedException;
-        import ru.rmamedov.taskmanager.model.DTO.ProjectDTO;
-        import ru.rmamedov.taskmanager.model.Project;
-        import ru.rmamedov.taskmanager.model.User;
-        import ru.rmamedov.taskmanager.repository.ProjectRepository;
+import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.rmamedov.taskmanager.exception.ProjectNotFoundException;
+import ru.rmamedov.taskmanager.exception.UserNotAuthorizedException;
+import ru.rmamedov.taskmanager.model.DTO.ProjectDTO;
+import ru.rmamedov.taskmanager.model.Project;
+import ru.rmamedov.taskmanager.model.User;
+import ru.rmamedov.taskmanager.repository.ProjectRepository;
 
-        import java.util.Set;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor

@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.rmamedov.taskmanager.exception.TaskNotFoundException;
+import ru.rmamedov.taskmanager.model.Comment;
 import ru.rmamedov.taskmanager.model.Project;
 import ru.rmamedov.taskmanager.model.Task;
 import ru.rmamedov.taskmanager.model.User;
@@ -29,8 +30,14 @@ public class TaskService {
     }
 
     @NotNull
-    public Task findById(final String id) {
-        return taskRepository.findById(id)
+    public Task findByCommnetWithEagerComments(final Comment comment) {
+        return taskRepository.findByCommentWithEagerComments(comment)
+                .orElseThrow(() -> new TaskNotFoundException("Task with id: " + comment.getId() + " - Not found!"));
+    }
+
+    @NotNull
+    public Task findByIdWithEagerComments(final String id) {
+        return taskRepository.findByIdWithEagerAssignedTo(id)
                 .orElseThrow(() -> new TaskNotFoundException("Task with id: " + id + " - Not found!"));
     }
 

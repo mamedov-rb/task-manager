@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.rmamedov.taskmanager.exception.UserNotAuthorizedException;
-import ru.rmamedov.taskmanager.model.DTO.CreationTaskRequest;
+import ru.rmamedov.taskmanager.model.DTO.SaveCommentRequest;
+import ru.rmamedov.taskmanager.model.DTO.SaveTaskRequest;
 import ru.rmamedov.taskmanager.service.ProjectManagerService;
 import ru.rmamedov.taskmanager.service.ProjectService;
 
@@ -58,7 +58,7 @@ public class ProjectManagerController {
     }
 
     @PostMapping(value = "/assign/task/to/user", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity createTaskAndAssignToUser(@Valid @RequestBody CreationTaskRequest request,
+    public ResponseEntity createTaskAndAssignToUser(@Valid @RequestBody SaveTaskRequest request,
                                                     @AuthenticationPrincipal Authentication authentication) {
 
         final boolean assigned = projectManagerService.createAndAssignTaskToUser(request, authentication);
@@ -84,6 +84,26 @@ public class ProjectManagerController {
         projectManagerService.leaveProjectUnderUser(username, id);
         projectService.deleteProjectById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PostMapping(value = "/comment/save", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity saveCommentUnderUserProjectTask(@Valid @RequestBody SaveCommentRequest request,
+                                                          @AuthenticationPrincipal Authentication authentication) {
+
+        final boolean saved = projectManagerService.saveCommentUnderUserAndTask(request, authentication);
+        if (saved) {
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+    }
+
+    @DeleteMapping("/comment/delete/{id}")
+    public ResponseEntity deleteCommentUnderTasksAndUser(@PathVariable String id) {
+        final boolean removed = projectManagerService.removeCommentUnderUserAndTask(id);
+        if (removed) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
 
 }

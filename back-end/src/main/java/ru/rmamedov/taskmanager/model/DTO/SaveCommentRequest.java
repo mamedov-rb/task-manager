@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.rmamedov.taskmanager.model.Task;
+import ru.rmamedov.taskmanager.model.Comment;
 
 import javax.validation.Valid;
 
@@ -17,13 +17,11 @@ import javax.validation.Valid;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreationTaskRequest {
+public class SaveCommentRequest {
 
     @Valid
-    private Task task;
+    private Comment comment;
 
-    private String projectId;
-
-    private String assignTo;
+    private String taskId;
 
 }
