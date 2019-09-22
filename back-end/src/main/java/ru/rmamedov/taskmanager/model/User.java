@@ -43,7 +43,7 @@ import java.util.Set;
 @Data
 @Table(name = "app_user")
 @Entity
-@ToString(of = {"projects", "roles", "password"})
+@ToString(exclude = {"projects", "roles", "password"})
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"username"})
 public class User implements UserDetails {
@@ -60,7 +60,7 @@ public class User implements UserDetails {
     private int version;
 
     @Size(min = 3, max = 30, message = "Username should be not less than '3' and more than '30' characters!")
-    @Column(name = "assignTo", nullable = false, unique = true, length = 30)
+    @Column(name = "username", nullable = false, unique = true, length = 30)
     @NotBlank
     private String username;
 

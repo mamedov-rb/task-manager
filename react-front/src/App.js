@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route} from 'react-router-dom'
-// import AppHeader from './component/AppHeader'
+import AgilePage from './component/AgilePage'
 // import UserList from './component/UserList'
 // import CoursePage from './component/CoursePage'
 // import HomePage from './component/HomePage'
@@ -30,16 +30,16 @@ class App extends Component {
             <div className="App ui center aligned container">
                 <Router>
                     {/*<AppHeader isAuthenticated={this.state.isAuthenticated} />*/}
-                    {/*<div>*/}
-                    {/*    <Route exact path="/" component={HomePage} />*/}
-                    {/*    <Route path="/users" component={UserList} />*/}
-                    {/*    <Route path="/course" component={CoursePage} />*/}
-                    {/*    <Route path="/blog" component={BlogPage} />*/}
-                    {/*    <Route path="/login" component={() => <LoginPage*/}
-                    {/*        isAuthenticated={this.state.isAuthenticated}*/}
-                    {/*        setAuthenticated={this.setAuthenticated} />}*/}
-                    {/*    />*/}
-                    {/*</div>*/}
+                    <div>
+                        <Route exact path="/" component={AgilePage} />
+                        {/*<Route path="/users" component={UserList} />*/}
+                        {/*<Route path="/course" component={CoursePage} />*/}
+                        {/*<Route path="/blog" component={BlogPage} />*/}
+                        {/*<Route path="/login" component={() => <LoginPage*/}
+                        {/*    isAuthenticated={this.state.isAuthenticated}*/}
+                        {/*    setAuthenticated={this.setAuthenticated} />}*/}
+                        {/*/>*/}
+                    </div>
                 </Router>
             </div>
         )

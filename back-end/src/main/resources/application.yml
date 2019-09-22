@@ -30,7 +30,7 @@ spring:
     password: 123qwe
     driverClassName: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/tracker_db
-#    initialization-mode: always
+    initialization-mode: always
 #    driver-class-name: org.h2.Driver
 #    url: jdbc:h2:~/test
 #    assignTo: test

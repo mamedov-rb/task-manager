@@ -47,7 +47,7 @@ public class Comment {
     private int version;
 
     @Size(min = 5, message = "Comment text should be not less than '5'")
-    @Column(columnDefinition = "TEXT", name = "description", nullable = false)
+    @Column(columnDefinition = "TEXT", name = "text", nullable = false)
     @NotBlank
     private String text;
 
