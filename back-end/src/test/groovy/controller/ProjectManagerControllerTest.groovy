@@ -2,6 +2,7 @@ package controller
 
 import helper.MockMvcHelper
 import org.springframework.security.test.context.support.WithMockUser
+import org.springframework.test.web.servlet.ResultActions
 import ru.rmamedov.taskmanager.model.Project
 
 import static TestData.getCreateTaskRequest
@@ -300,6 +301,32 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         result.andDo(print())
                 .andExpect(status().isNoContent())
         commentRepository.findAll().size() == 0
+    }
+
+    @WithMockUser(username = "admin-user")
+    def "Delete user with projects tasks"() {
+        given:
+        def developer_01 = "developer_01"
+        saveUser(developer_01)
+        saveProjectWithCreatedBy("admin-user")
+        saveProjectWithCreatedBy("admin-user")
+        saveProjectWithCreatedBy("admin-user")
+        for(Project p : projectRepository.findAll()) {
+            performPatch(ASSIGN_USER_TO_PROJECT, developer_01, p.id)
+            performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(p.id, developer_01))
+
+        }
+        performPatch(LEAVE_ALL_PROJECTS, developer_01)
+
+        when:
+        def result = performDelete(DELETE_USER_UNDER_PROJECTS_TASKS, developer_01)
+
+        then:
+        result.andDo(print())
+                .andExpect(status().isNoContent())
+
+        userRepository.findAll().size() == 1
+        taskRepository.findAll().size() == 0
     }
 
 }

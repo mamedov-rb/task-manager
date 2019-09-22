@@ -58,6 +58,8 @@ class MockMvcHelper extends Specification {
 
     protected final static String DELETE_COMMENT_UNDER_USER_TASK = "/api/manager/comment/delete/{id}"
 
+    protected final static String DELETE_USER_UNDER_PROJECTS_TASKS = "/api/manager/user/delete/{username}"
+
     @Autowired
     private MockMvc mockMvc
 

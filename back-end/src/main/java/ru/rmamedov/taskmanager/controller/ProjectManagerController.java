@@ -17,6 +17,7 @@ import ru.rmamedov.taskmanager.model.DTO.SaveCommentRequest;
 import ru.rmamedov.taskmanager.model.DTO.SaveTaskRequest;
 import ru.rmamedov.taskmanager.service.ProjectManagerService;
 import ru.rmamedov.taskmanager.service.ProjectService;
+import ru.rmamedov.taskmanager.service.UserService;
 
 import javax.validation.Valid;
 
@@ -32,6 +33,8 @@ public class ProjectManagerController {
     private final ProjectManagerService projectManagerService;
 
     private final ProjectService projectService;
+
+    private final UserService userService;
 
     @PatchMapping("/assign/username/{username}/projectId/{id}")
     public ResponseEntity assignUserToProject(@PathVariable final String username, @PathVariable String id) {
@@ -81,7 +84,7 @@ public class ProjectManagerController {
     public ResponseEntity deleteProjectWithTasksUnderUser(@PathVariable String id,
                                                           @PathVariable final String username) {
 
-        projectManagerService.leaveProjectUnderUser(username, id);
+        projectManagerService.leaveProjectUnderUser(username, id); //TODO: do in Transactional
         projectService.deleteProjectById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -104,6 +107,13 @@ public class ProjectManagerController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+    }
+
+    @DeleteMapping("/user/delete/{username}")
+    public ResponseEntity deleteUserWithProjectsTasksComments(@PathVariable String username) {
+        projectManagerService.leaveAllProjectsUnderUser(username); //TODO: do in Transactional
+        userService.deleteByUsername(username);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
