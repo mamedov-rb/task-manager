@@ -61,7 +61,7 @@ public class ProjectManagerController {
     }
 
     @PostMapping(value = "/assign/task/to/user", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity createTaskAndAssignToUser(@Valid @RequestBody SaveTaskRequest request,
+    public ResponseEntity createTaskAndAssignToYourself(@Valid @RequestBody SaveTaskRequest request,
                                                     @AuthenticationPrincipal Authentication authentication) {
 
         final boolean assigned = projectManagerService.createAndAssignTaskToUser(request, authentication);

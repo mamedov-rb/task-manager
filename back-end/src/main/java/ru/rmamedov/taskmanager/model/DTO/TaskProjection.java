@@ -1,7 +1,6 @@
 package ru.rmamedov.taskmanager.model.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
 import ru.rmamedov.taskmanager.model.enums.Status;
 
 import java.time.LocalDateTime;
@@ -10,19 +9,20 @@ import java.time.LocalDateTime;
  * @author Rustam Mamedov
  */
 
-@Data
-public class TaskDTO {
+public interface TaskProjection {
 
-    private String name;
+    String getId();
 
-    private String description;
+    String getName();
 
-    private Status status;
+    String getDescription();
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
-    private LocalDateTime startDate;
+    Status getStatus();
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
-    private LocalDateTime endDate;
+    LocalDateTime getStartDate();
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
+    LocalDateTime getEndDate();
 
 }

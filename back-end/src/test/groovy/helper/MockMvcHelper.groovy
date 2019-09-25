@@ -34,7 +34,7 @@ class MockMvcHelper extends Specification {
 
     protected final static String FIND_PROJECT_BY_ID = "/api/project/find/{id}"
 
-    protected final static String FIND_ALL_PROJECTS_BY_CURRENT_USER = "/api/project/find/all"
+    protected final static String FIND_ALL_PROJECTS_BY_CURRENT_USER = "/api/project/all"
 
     protected final static String ASSIGN_USER_TO_PROJECT = "/api/manager/assign/username/{username}/projectId/{id}"
 
@@ -59,6 +59,8 @@ class MockMvcHelper extends Specification {
     protected final static String DELETE_COMMENT_UNDER_USER_TASK = "/api/manager/comment/delete/{id}"
 
     protected final static String DELETE_USER_UNDER_PROJECTS_TASKS = "/api/manager/user/delete/{username}"
+
+    protected final static String FIND_ALL_TASKS_OF_PROJECT = "/api/task//all/projectId/{projectId}"
 
     @Autowired
     private MockMvc mockMvc

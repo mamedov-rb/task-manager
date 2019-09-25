@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.rmamedov.taskmanager.model.Comment;
+import ru.rmamedov.taskmanager.model.DTO.TaskProjection;
 import ru.rmamedov.taskmanager.model.Project;
 import ru.rmamedov.taskmanager.model.Task;
 import ru.rmamedov.taskmanager.model.User;
@@ -16,6 +17,8 @@ import java.util.Set;
 public interface TaskRepository extends JpaRepository<Task, String> {
 
     Set<Task> findAllByAssignedToAndProject(User assignedTo, Project project);
+
+    Set<TaskProjection> findAllByAssignedToUsernameAndProjectId(String assignedTo, String projectId);
 
     long deleteAllByAssignedToAndProject(User assignedTo, Project project);
 

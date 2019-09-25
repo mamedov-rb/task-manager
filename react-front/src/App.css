@@ -1,0 +1,16 @@
+.ui.container {
+    width: 96%;
+    margin-top: 15px;
+}
+
+.ui.form {
+    width: 500px;
+}
+
+.ui.center.aligned.grid {
+    margin-top: 10%;
+}
+
+.label {
+    width: 100%!important;
+}

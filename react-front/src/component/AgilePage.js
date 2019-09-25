@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import {ToastContainer, toast} from 'react-toastify'
-import Faker from 'faker'
 import api from '../axios-config'
+import Projects from './Projects'
+import {toast} from "react-toastify"
 
 class AgilePage extends Component {
     constructor(props) {
@@ -14,7 +14,19 @@ class AgilePage extends Component {
     }
 
     fetchProjects = () => {
-        api.get('/project/find/all')
+        api.get('/project/all')
+            .then(response => {
+                this.setState({projects: response.data})
+            })
+            .catch(err => {
+                toast.error(err.message, {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+            })
+    }
+
+    fetchTasks = () => {
+        api.get('/task/all')
             .then(response => {
                 this.setState({projects: response.data})
             })
@@ -27,28 +39,40 @@ class AgilePage extends Component {
 
     render() {
         return (
-            <div className="ui cards">
-                {this.state.projects.map((el) => {
-                    return (
-                        <a className="ui card" href="http://www.dog.com">
-                            <div className="content">
-                                <div className="header">{el.name}</div>
-                                <div className="meta">
-                                    <span className="category">Start date: {el.startDate}</span>
-                                </div>
-                                <div className="description">
-                                    <p>{el.description}</p>
-                                </div>
-                            </div>
-                            <div className="extra content">
-                                <div className="right floated author">
-                                    <img className="ui avatar image" src={Faker.image.avatar()} /> Matt
+            <div className="ui container">
+                <div className="ui grid">
+                    <div className="two wide column">
+                        <Projects projects={this.state.projects}/>
+                    </div>
+                    <div className="fourteen wide column">
+                        <div className="ui grid">
+                            <div className="four wide column">
+                                <div className="ui grey label">
+                                    <h3>PLANNED</h3>
+
                                 </div>
                             </div>
-                        </a>
-                    )
-                })}
-                <ToastContainer autoClose={3000}/>
+                            <div className="four wide column">
+                                <div className="ui blue label">
+                                    <h3>IN PROGRESS</h3>
+
+                                </div>
+                            </div>
+                            <div className="four wide column">
+                                <div className="ui yellow label">
+                                    <h3>REVIEW</h3>
+
+                                </div>
+                            </div>
+                            <div className="four wide column">
+                                <div className="ui green label">
+                                    <h3>DONE</h3>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

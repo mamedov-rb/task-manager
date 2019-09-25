@@ -1,14 +1,15 @@
 package controller
 
 import helper.MockMvcHelper
+import org.hamcrest.Matchers
+import org.springframework.http.MediaType
 import org.springframework.security.test.context.support.WithMockUser
-import org.springframework.test.web.servlet.ResultActions
 import ru.rmamedov.taskmanager.model.Project
 
 import static TestData.getCreateTaskRequest
 import static TestData.getSaveCommentRequest
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
 /**
  * @author Rustam Mamedov
@@ -128,6 +129,28 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         task.project.id == projectId
         task.createdBy.username == "admin-user"
         task.assignedTo.username == developer
+    }
+
+    @WithMockUser(username = "developer-user")
+    def "Find all tasks of project"() {
+        given:
+        def developer = "developer-user"
+        saveProjectWithCreatedBy(developer)
+        saveUser(developer)
+        def projectId = projectRepository.findAll().stream().findFirst().get().id
+        performPatch(ASSIGN_USER_TO_PROJECT, developer, projectId)
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer))
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer))
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer))
+
+        when:
+        def result = performGet(FIND_ALL_TASKS_OF_PROJECT, projectId)
+
+        then:
+        result.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect((jsonPath('$', Matchers.hasSize(3))))
     }
 
     @WithMockUser(username = "admin-user")

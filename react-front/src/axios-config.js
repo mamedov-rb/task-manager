@@ -6,7 +6,7 @@ export default axios.create({
     baseURL: URL,
     timeout: 1500,
     headers: {
-        'Authorization': jwt,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': jwt
     }
 })

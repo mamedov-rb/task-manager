@@ -45,7 +45,7 @@ public class ProjectController {
         return new ResponseEntity<>(projectService.findDTOById(id), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/find/all", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Set<ProjectDTO>> findAllByUserId(@Nullable @AuthenticationPrincipal Authentication authentication) {
         return new ResponseEntity<>(projectService.findAllOfCurrentUser(authentication), HttpStatus.OK);
     }

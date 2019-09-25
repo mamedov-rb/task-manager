@@ -122,7 +122,7 @@ public class ProjectManagerService {
     @Transactional
     public boolean removeCommentUnderUserAndTask(final String id) {
         final Comment comment = commentService.findByIdWithEagerCommentatorAndTask(id);
-        final Task task = taskService.findByCommnetWithEagerComments(comment);
+        final Task task = taskService.findByCommentWithEagerComments(comment);
         return task.removeComment(comment);
     }
 
