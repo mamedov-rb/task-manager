@@ -3,7 +3,8 @@ import './App.css';
 import { BrowserRouter as Router, Route} from 'react-router-dom'
 import {ToastContainer} from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
-import AgilePage from './component/AgilePage'
+import Projects from './component/Projects'
+import ProjectDetails from './component/ProjectDetails'
 import Header from './component/Header'
 import Login from './component/Login'
 
@@ -30,10 +31,8 @@ class App extends Component {
                 <Router>
                     <Header isAuthenticated={this.state.isAuthenticated} />
                     <div>
-                        <Route exact path="/" component={AgilePage} />
-                        {/*<Route path="/users" component={UserList} />*/}
-                        {/*<Route path="/course" component={CoursePage} />*/}
-                        {/*<Route path="/blog" component={BlogPage} />*/}
+                        <Route exact path="/projects" component={Projects} />
+                        <Route path="/project/details/:projectId" component={ProjectDetails} />
                         <Route path="/login" component={() => <Login
                             isAuthenticated={this.state.isAuthenticated}
                             setAuthenticated={this.setAuthenticated} />}

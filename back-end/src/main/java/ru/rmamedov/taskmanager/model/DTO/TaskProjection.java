@@ -19,10 +19,7 @@ public interface TaskProjection {
 
     Status getStatus();
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
     LocalDateTime getStartDate();
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
-    LocalDateTime getEndDate();
 
 }

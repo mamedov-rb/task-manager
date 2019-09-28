@@ -3,14 +3,30 @@
     margin-top: 15px;
 }
 
-.ui.form {
-    width: 500px;
-}
-
-.ui.center.aligned.grid {
-    margin-top: 10%;
+.ui.segment.container {
+    margin-top: 2%;
 }
 
 .label {
     width: 100%!important;
+}
+
+.login-form {
+    margin-top: 15% !important;
+    width: 400px !important;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.ui.input {
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 1em;
+}
+
+.task {
+    margin-top: 5px !important;
 }

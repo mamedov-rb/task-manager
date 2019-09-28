@@ -1,6 +1,7 @@
 package controller
 
 import helper.MockMvcHelper
+import org.hamcrest.Matchers
 import org.springframework.http.MediaType
 import org.springframework.security.test.context.support.WithMockUser
 import ru.rmamedov.taskmanager.model.Project
@@ -30,7 +31,7 @@ class ProjectControllerTest extends MockMvcHelper {
     }
 
     @WithMockUser(username = "admin-user")
-    def "Find project by id"() {
+    def "Find project  by id"() {
         given:
         saveProjectWithCreatedBy("admin-user")
         def id = projectRepository.findAll().stream().findFirst().get().id
@@ -48,6 +49,7 @@ class ProjectControllerTest extends MockMvcHelper {
                 .andExpect(jsonPath('$.startDate').isNotEmpty())
                 .andExpect(jsonPath('$.endDate').isNotEmpty())
                 .andExpect(jsonPath('$.created').isNotEmpty())
+                .andExpect(jsonPath('$.updated').isNotEmpty())
     }
 
     @WithMockUser(username = "developer_01")
@@ -67,8 +69,8 @@ class ProjectControllerTest extends MockMvcHelper {
         then:
         result.andDo(print())
                 .andExpect(status().isOk())
-
-        userRepository.findUserWithEagerProjects(developer).get().projects.size() == 3
+                .andExpect((jsonPath('$.[0].id')).isNotEmpty())
+                .andExpect((jsonPath('$', Matchers.hasSize(3))))
     }
 
     def "Create new project - 403"() {

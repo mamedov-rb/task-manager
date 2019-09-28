@@ -13,12 +13,12 @@ class Header extends Component {
                     </div>
                 </h2>
                 <div className="ui pointing menu">
-                    <div className="item">
-                        <Link to="/">Agile</Link>
-                    </div>
-                    <div className="item">
-                        <Link to="/login">Login</Link>
-                    </div>
+                    <Link to="/projects" className="item">
+                        Agile
+                    </Link>
+                    <Link to="/login" className="item">
+                        Login
+                    </Link>
                     <div className="right menu">
                         <div className="item">
                             <div className="ui transparent icon input">

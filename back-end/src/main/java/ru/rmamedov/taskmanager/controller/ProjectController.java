@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.rmamedov.taskmanager.model.DTO.ProjectDTO;
+import ru.rmamedov.taskmanager.model.DTO.ProjectDetailsProjection;
+import ru.rmamedov.taskmanager.model.DTO.ProjectProjection;
 import ru.rmamedov.taskmanager.model.Project;
 import ru.rmamedov.taskmanager.service.ProjectService;
 
@@ -41,12 +42,12 @@ public class ProjectController {
     }
 
     @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ProjectDTO> findById(@NotNull @PathVariable final String id) {
+    public ResponseEntity<ProjectDetailsProjection> findById(@NotNull @PathVariable final String id) {
         return new ResponseEntity<>(projectService.findDTOById(id), HttpStatus.OK);
     }
 
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Set<ProjectDTO>> findAllByUserId(@Nullable @AuthenticationPrincipal Authentication authentication) {
+    public ResponseEntity<Set<ProjectProjection>> findAllByUserId(@Nullable @AuthenticationPrincipal Authentication authentication) {
         return new ResponseEntity<>(projectService.findAllOfCurrentUser(authentication), HttpStatus.OK);
     }
 

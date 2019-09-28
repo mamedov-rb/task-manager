@@ -42,26 +42,26 @@ class Login extends Component {
     render() {
         let authenticated = this.props.isAuthenticated;
         return (
-            <div>
-                <div className="ui center aligned grid">
-                    {authenticated ? <div className="ui left floated warning basic button" onClick={this.performLogout}>Logout</div> :
-                    <div className="ui form">
+            <div className="login-form ui center floated segment">
+                {authenticated ?
+                    <div className="ui left floated warning basic button" onClick={this.performLogout}>Logout</div> :
+                    <div>
                         <div className="field">
                             <div className="ui large icon input">
                                 <i className="user icon"/>
-                                <input type="text" name="username" placeholder="Username" onChange={this.handleChange} />
+                                <input type="text" name="username" placeholder="Username" onChange={this.handleChange}/>
                             </div>
                         </div>
                         <div className="field">
                             <div className="ui large input">
-                                <input type="password" name="password" placeholder="Password" onChange={this.handleChange} />
+                                <input type="password" name="password" placeholder="Password"
+                                       onChange={this.handleChange}/>
                             </div>
                         </div>
                         <button className="ui left floated primary basic button" onClick={this.performLogin}>
                             Login
                         </button>
                     </div>}
-                </div>
             </div>
         )
     }

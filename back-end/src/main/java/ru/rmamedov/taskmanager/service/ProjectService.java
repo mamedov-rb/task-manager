@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.rmamedov.taskmanager.exception.ProjectNotFoundException;
 import ru.rmamedov.taskmanager.exception.UserNotAuthorizedException;
-import ru.rmamedov.taskmanager.model.DTO.ProjectDTO;
+import ru.rmamedov.taskmanager.model.DTO.ProjectDetailsProjection;
+import ru.rmamedov.taskmanager.model.DTO.ProjectProjection;
 import ru.rmamedov.taskmanager.model.Project;
 import ru.rmamedov.taskmanager.model.User;
 import ru.rmamedov.taskmanager.repository.ProjectRepository;
@@ -44,10 +45,9 @@ public class ProjectService {
 
     @NotNull
     @Transactional(readOnly = true)
-    public ProjectDTO findDTOById(final String id) throws ProjectNotFoundException {
-        final Project project = projectRepository.findById(id)
+    public ProjectDetailsProjection findDTOById(final String id) throws ProjectNotFoundException {
+        return projectRepository.findDetailsAsProjection(id)
                 .orElseThrow(() -> new ProjectNotFoundException("Project with id: " + id + " - Not found."));
-        return ProjectDTO.of(project);
     }
 
     @NotNull
@@ -57,12 +57,12 @@ public class ProjectService {
     }
 
     @NotNull
-    public Set<ProjectDTO> findAllOfCurrentUser(@Nullable final Authentication authentication) {
+    public Set<ProjectProjection> findAllOfCurrentUser(@Nullable final Authentication authentication) {
         if (authentication == null) {
             throw new UserNotAuthorizedException("User - Not authorized. Please login");
         }
         final User user = (User) userService.loadUserByUsername(authentication.getName());
-        return projectRepository.findAllAsDtoByUsername(user);
+        return projectRepository.findAllAsProjectionByUsername(user);
     }
 
     public void deleteProjectById(final String id) {
