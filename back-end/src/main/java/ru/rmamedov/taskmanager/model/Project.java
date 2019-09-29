@@ -22,10 +22,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -77,11 +78,8 @@ public class Project {
 
     @Column(name = "start_date")
     @FutureOrPresent
-    private LocalDateTime startDate;
-
-    @Column(name = "end_date")
-    @Future
-    private LocalDateTime endDate;
+    @NotNull
+    private LocalDate startDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by_id", nullable = false)
@@ -93,14 +91,12 @@ public class Project {
     @Builder
     private Project (String name,
                     String description,
-                    LocalDateTime startDate,
-                    LocalDateTime endDate,
+                    LocalDate startDate,
                     User createdBy) {
 
         this.name = name;
         this.description = description;
         this.startDate = startDate;
-        this.endDate = endDate;
         this.createdBy = createdBy;
     }
 

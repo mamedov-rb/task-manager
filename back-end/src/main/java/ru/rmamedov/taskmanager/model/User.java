@@ -167,4 +167,8 @@ public class User implements UserDetails {
         return project.removeUser(this) && projects.remove(project);
     }
 
+    public String getFullName() {
+        return String.format("%s %s", firstName, lastName.charAt(0) + ".");
+    }
+
 }

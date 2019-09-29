@@ -1,11 +1,10 @@
-package helper
-
 import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.sql.Sql
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import ru.rmamedov.taskmanager.Application
 import ru.rmamedov.taskmanager.repository.CommentRepository
@@ -18,15 +17,19 @@ import spock.lang.Specification
 
 import javax.sql.DataSource
 
-import static TestData.getProject
-import static TestData.getUser
+import static data.TestData.getProject
+import static data.TestData.getUser
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 
 /**
  * @author Rustam Mamedov
  */
 
-@SpringBootTest(classes = [Application.class])
+@ActiveProfiles("test")
+@SpringBootTest(
+        classes = [Application.class],
+        webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT
+)
 @AutoConfigureMockMvc
 class MockMvcHelper extends Specification {
 
@@ -49,6 +52,8 @@ class MockMvcHelper extends Specification {
     protected final static String REGISTER_USER = "/api/user/save"
 
     protected final static String FIND_USER_BY_USERNAME = "/api/user/find/{assignTo}"
+
+    protected final static String FIND_ALL_USERS_OF_PROJECT = "/api/manager/users/{projectId}"
 
     protected final static String DELETE_TASK_BY_ID = "/api/task/delete/{id}"
 
@@ -95,6 +100,8 @@ class MockMvcHelper extends Specification {
         sql.execute("DELETE FROM task")
         sql.execute("DELETE FROM users_projects")
         sql.execute("DELETE FROM project")
+        sql.execute("DELETE FROM users_roles")
+        sql.execute("DELETE FROM role")
         sql.execute("DELETE FROM app_user")
     }
 

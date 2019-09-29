@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Link, Route} from 'react-router-dom'
 import {ToastContainer} from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
 import Projects from './component/Projects'
@@ -28,14 +28,29 @@ class App extends Component {
     render() {
         return (
             <div className="App ui center aligned container">
+                <Header isAuthenticated={this.state.isAuthenticated}/>
                 <Router>
-                    <Header isAuthenticated={this.state.isAuthenticated} />
-                    <div>
-                        <Route exact path="/projects" component={Projects} />
-                        <Route path="/project/details/:projectId" component={ProjectDetails} />
-                        <Route path="/login" component={() => <Login
-                            isAuthenticated={this.state.isAuthenticated}
-                            setAuthenticated={this.setAuthenticated} />}
+                    <div className="ui top attached tabular menu">
+                        <Link to="/projects" className="item">
+                            Agile
+                        </Link>
+                        <Link to="/login" className="item">
+                            Login
+                        </Link>
+                        <div className="right menu">
+                            <div className="item">
+                                <div className="ui transparent icon input">
+                                    <input type="text" placeholder="Search anything..." />
+                                        <i className="search link icon" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="ui bottom container">
+                        <Route exact path="/projects" component={Projects}/>
+                        <Route path="/project/details/:projectId" component={ProjectDetails}/>
+                        <Route path="/login" component={() =>
+                            <Login isAuthenticated={this.state.isAuthenticated} setAuthenticated={this.setAuthenticated}/>}
                         />
                     </div>
                     <ToastContainer autoClose={3000}/>
@@ -44,4 +59,5 @@ class App extends Component {
         )
     }
 }
+
 export default App;

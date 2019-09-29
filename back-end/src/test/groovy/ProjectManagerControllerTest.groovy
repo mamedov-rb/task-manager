@@ -1,13 +1,10 @@
-package controller
-
-import helper.MockMvcHelper
 import org.hamcrest.Matchers
 import org.springframework.http.MediaType
 import org.springframework.security.test.context.support.WithMockUser
 import ru.rmamedov.taskmanager.model.Project
 
-import static TestData.getCreateTaskRequest
-import static TestData.getSaveCommentRequest
+import static data.TestData.getCreateTaskRequest
+import static data.TestData.getSaveCommentRequest
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
@@ -52,10 +49,15 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         performPatch(ASSIGN_USER_TO_PROJECT, developer_03, id)
 
         when:
-        def project = projectRepository.findByIdWithEagerUsers(id).get()
+        def result = performGet(FIND_ALL_USERS_OF_PROJECT, id)
 
         then:
-        project.users.size() == 3
+        result.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect((jsonPath('$', Matchers.hasSize(3))))
+                .andExpect((jsonPath('$.[0].fullName')).isNotEmpty())
+
         userRepository.findUserWithEagerProjects(developer_01).get().projects.size() == 1
         userRepository.findUserWithEagerProjects(developer_02).get().projects.size() == 1
         userRepository.findUserWithEagerProjects(developer_03).get().projects.size() == 1
@@ -91,7 +93,7 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         saveProjectWithCreatedBy("admin-user")
         saveProjectWithCreatedBy("admin-user")
         saveProjectWithCreatedBy("admin-user")
-        for(Project p : projectRepository.findAll()) {
+        for (Project p : projectRepository.findAll()) {
             performPatch(ASSIGN_USER_TO_PROJECT, developer_01, p.id)
             performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(p.id, developer_01))
         }
@@ -334,7 +336,7 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         saveProjectWithCreatedBy("admin-user")
         saveProjectWithCreatedBy("admin-user")
         saveProjectWithCreatedBy("admin-user")
-        for(Project p : projectRepository.findAll()) {
+        for (Project p : projectRepository.findAll()) {
             performPatch(ASSIGN_USER_TO_PROJECT, developer_01, p.id)
             performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(p.id, developer_01))
 

@@ -12,7 +12,10 @@ import ru.rmamedov.taskmanager.exception.UserNotFoundException;
 import ru.rmamedov.taskmanager.model.DTO.UserDTO;
 import ru.rmamedov.taskmanager.model.Project;
 import ru.rmamedov.taskmanager.model.User;
+import ru.rmamedov.taskmanager.model.DTO.UserMetaDTO;
 import ru.rmamedov.taskmanager.repository.UserRepository;
+
+import java.util.Set;
 
 /**
  * @author Rustam Mamedov
@@ -39,6 +42,11 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User with username: '" + username +
                         "' - Not found, or user not a member of project: '" + project.getName() + "'."));
 
+    }
+
+    @NotNull
+    public Set<UserMetaDTO> findAllByProjectWithRoles(final Project project) throws UserNotFoundException {
+        return userRepository.findAllByProjectWithEagerRolesAsProjection(project);
     }
 
     @NotNull

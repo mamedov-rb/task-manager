@@ -1,12 +1,9 @@
-package controller
-
-import helper.MockMvcHelper
 import org.hamcrest.Matchers
 import org.springframework.http.MediaType
 import org.springframework.security.test.context.support.WithMockUser
 import ru.rmamedov.taskmanager.model.Project
 
-import static TestData.getProject
+import static data.TestData.getProject
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
@@ -27,7 +24,6 @@ class ProjectControllerTest extends MockMvcHelper {
         then:
         result.andDo(print())
                 .andExpect(status().isCreated())
-        userRepository.findAll().size() == 1
     }
 
     @WithMockUser(username = "admin-user")
@@ -47,7 +43,6 @@ class ProjectControllerTest extends MockMvcHelper {
                 .andExpect(jsonPath('$.name').isNotEmpty())
                 .andExpect(jsonPath('$.description').isNotEmpty())
                 .andExpect(jsonPath('$.startDate').isNotEmpty())
-                .andExpect(jsonPath('$.endDate').isNotEmpty())
                 .andExpect(jsonPath('$.created').isNotEmpty())
                 .andExpect(jsonPath('$.updated').isNotEmpty())
     }
@@ -59,7 +54,7 @@ class ProjectControllerTest extends MockMvcHelper {
         saveProjectWithCreatedBy(developer)
         saveProjectWithCreatedBy(developer)
         saveProjectWithCreatedBy(developer)
-        for(Project p : projectRepository.findAll()) {
+        for (Project p : projectRepository.findAll()) {
             performPatch(ASSIGN_USER_TO_PROJECT, developer, p.id)
         }
 

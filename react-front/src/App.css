@@ -3,6 +3,10 @@
     margin-top: 15px;
 }
 
+.ui.grid.segment {
+    margin: 0 0;
+}
+
 .ui.segment.container {
     margin-top: 2%;
 }

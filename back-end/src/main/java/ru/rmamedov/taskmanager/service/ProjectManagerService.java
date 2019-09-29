@@ -14,6 +14,7 @@ import ru.rmamedov.taskmanager.model.DTO.SaveTaskRequest;
 import ru.rmamedov.taskmanager.model.Project;
 import ru.rmamedov.taskmanager.model.Task;
 import ru.rmamedov.taskmanager.model.User;
+import ru.rmamedov.taskmanager.model.DTO.UserMetaDTO;
 
 import javax.validation.Valid;
 import java.util.Iterator;
@@ -124,6 +125,12 @@ public class ProjectManagerService {
         final Comment comment = commentService.findByIdWithEagerCommentatorAndTask(id);
         final Task task = taskService.findByCommentWithEagerComments(comment);
         return task.removeComment(comment);
+    }
+
+    @Transactional(readOnly = true)
+    public Set<UserMetaDTO> findAllByProjectWithRoles(final String projectId) {
+        @NotNull final Project project = projectService.findById(projectId);
+        return userService.findAllByProjectWithRoles(project);
     }
 
 }

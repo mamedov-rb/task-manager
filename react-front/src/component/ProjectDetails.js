@@ -14,12 +14,17 @@ class ProjectDetails extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {projectDetails: {}, tasksSize: '', planned: [], inProgress: [], paused: [], done: []}
+        this.state = {
+            projectDetails: {},
+            tasksSize: '',
+            users: [{firstName: '', roles: [{id: '', name: ''}]}],
+            planned: [], inProgress: [], paused: [], done: []}
     }
 
     componentDidMount() {
         this.fetchProjectDetails()
         this.fetchTasks()
+        this.fetchUsers()
     }
 
     fetchTasks = () => {
@@ -38,6 +43,18 @@ class ProjectDetails extends Component {
         api.get('/project/find/' + this.props.match.params.projectId)
             .then(response => {
                 this.setState({projectDetails: response.data})
+            })
+            .catch(err => {
+                toast.error(err.message, {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+            })
+    }
+
+    fetchUsers = () => {
+        api.get('/manager/users/' + this.props.match.params.projectId)
+            .then(response => {
+                this.setState({users: response.data})
             })
             .catch(err => {
                 toast.error(err.message, {
@@ -76,27 +93,27 @@ class ProjectDetails extends Component {
 
     render() {
         return (
-            <div className="ui container segment">
+            <div>
                 <div className="ui grid">
-                    <div className="four wide column">
-                        <div className="ui top label">
-                            <h3 style={{marginTop: 4, paddingBottom: 5}}>Details</h3>
-                            <div className="ui segment container">
-                                {this.state.projectDetails.name}<br/>
-                                {this.state.projectDetails.description}<br/>
-                                {this.state.projectDetails.created}<br/>
-                                {this.state.projectDetails.updated}<br/>
-                                {this.state.projectDetails.startDate}<br/>
-                                {this.state.projectDetails.endDate}<br/>
-                                tasks: {this.state.tasksSize}
-                            </div>
-                            <div className="ui segment container">
-                                <UsersTable/>
-                            </div>
+                    <div className="three wide column">
+                        <div className="ui label">
+                            <h3>Details</h3>
+                        </div>
+                        <p className="ui segment left aligned">
+                            Name: <span>{this.state.projectDetails.name}</span><br/>
+                            Description: <span>{this.state.projectDetails.description}</span><br/>
+                            Created: <span>{this.state.projectDetails.created}</span><br/>
+                            Updated: <span>{this.state.projectDetails.updated}</span><br/>
+                            Start date: <span>{this.state.projectDetails.startDate}</span><br/>
+                            End date: <span>{this.state.projectDetails.endDate}</span><br/>
+                            Tasks: <span>{this.state.tasksSize}</span>
+                        </p>
+                        <div className="ui segment">
+                            <UsersTable users={this.state.users} />
                         </div>
                     </div>
-                    <div className="twelve wide column">
-                        <div className="ui grid">
+                    <div className="thirteen wide column">
+                        <div className="ui grid segment">
                             <div className="four wide column">
                                 <div className="ui grey label">
                                     <h3>{PLANNED}</h3>

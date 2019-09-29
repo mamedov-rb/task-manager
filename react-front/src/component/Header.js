@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
 
 class Header extends Component {
 
@@ -12,26 +11,9 @@ class Header extends Component {
                         Task manager
                     </div>
                 </h2>
-                <div className="ui pointing menu">
-                    <Link to="/projects" className="item">
-                        Agile
-                    </Link>
-                    <Link to="/login" className="item">
-                        Login
-                    </Link>
-                    <div className="right menu">
-                        <div className="item">
-                            <div className="ui transparent icon input">
-                                <input type="text" placeholder="Search..."/>
-                                    <i className="search link icon"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         )
     }
-
 }
 
 export default Header

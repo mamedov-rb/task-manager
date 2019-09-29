@@ -1,3 +1,5 @@
+package data
+
 import org.apache.commons.lang3.RandomStringUtils
 import ru.rmamedov.taskmanager.model.Comment
 import ru.rmamedov.taskmanager.model.DTO.SaveCommentRequest
@@ -7,6 +9,7 @@ import ru.rmamedov.taskmanager.model.Task
 import ru.rmamedov.taskmanager.model.User
 import ru.rmamedov.taskmanager.model.enums.Status
 
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 /**
@@ -30,8 +33,7 @@ class TestData {
         Project.builder()
                 .name(RandomStringUtils.randomAlphabetic(10))
                 .description(RandomStringUtils.randomAlphabetic(10))
-                .startDate(LocalDateTime.now().plusDays(1))
-                .endDate(LocalDateTime.now().plusMonths(1))
+                .startDate(LocalDate.now().plusDays(1))
                 .build()
     }
 

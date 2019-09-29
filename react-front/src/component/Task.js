@@ -28,11 +28,4 @@ class Task extends Component {
 
 }
 
-// description: "Some description of task 5"
-// endDate: "05.11.2016 11:44"
-// id: "taskId_05"
-// name: "task_05"
-// startDate: "05.11.2016 11:44"
-// status: "PAUSED"
-
 export default Task
