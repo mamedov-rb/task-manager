@@ -10,7 +10,6 @@ import ru.rmamedov.taskmanager.model.User
 import ru.rmamedov.taskmanager.model.enums.Status
 
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 /**
  * @author Rustam Mamedov
@@ -44,8 +43,6 @@ class TestData {
                 .name(RandomStringUtils.randomAlphabetic(10))
                 .description(RandomStringUtils.randomAlphabetic(50))
                 .status(Status.PLANNED)
-                .startDate(LocalDateTime.now().plusDays(10))
-                .endDate(LocalDateTime.now().plusDays(30))
                 .build()
         new SaveTaskRequest(task, projectId, assignTo)
     }

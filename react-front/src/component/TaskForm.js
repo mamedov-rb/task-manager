@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import SkyLight from 'react-skylight'
+import Faker from "faker"
+import TaskFormDropdown from './TaskFormDropdown'
 
 class TaskForm extends Component {
 
@@ -36,20 +38,23 @@ class TaskForm extends Component {
                     <h3>Create task</h3>
                     <form style={{marginTop: 50}}>
                         <div className="ui input">
-                            <input type="text" placeholder="Name" name="name" required="true" onChange={this.handleChange}/><br/>
+                            <input type="text" placeholder="Name" name="name" required="true"
+                                   onChange={this.handleChange}/><br/>
                         </div>
                         <div className="ui input">
-                            <input type="text" placeholder="Description" name="description" required="true" onChange={this.handleChange}/><br/>
+                            <input type="text" placeholder="Description" name="description" required="true"
+                                   onChange={this.handleChange}/><br/>
                         </div>
                         <div className="ui input">
                             <input type="date" name="startDate" required="true" onChange={this.handleChange}/><br/>
                         </div>
+                        <TaskFormDropdown />
                         <button className="ui positive basic button" onClick={this.handleSubmit}>Submit</button>
                         <button className="ui negative basic button" onClick={this.cancelSubmit}>Cancel</button>
                     </form>
                 </SkyLight>
                 <div className="ui left aligned segment">
-                    <button className= "ui positive basic button" onClick={() => this.refs.addDialog.show()}>
+                    <button className="ui positive basic button" onClick={() => this.refs.addDialog.show()}>
                         Add new
                     </button>
                 </div>

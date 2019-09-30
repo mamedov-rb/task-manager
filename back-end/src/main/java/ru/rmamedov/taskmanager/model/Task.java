@@ -26,8 +26,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -79,14 +77,6 @@ public class Task {
     @UpdateTimestamp
     private LocalDateTime updated;
 
-    @Column(name = "start_date")
-    @FutureOrPresent
-    private LocalDateTime startDate;
-
-    @Column(name = "end_date")
-    @Future
-    private LocalDateTime endDate;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
@@ -109,15 +99,11 @@ public class Task {
     @Builder
     private Task(String name,
                 String description,
-                Status status,
-                LocalDateTime startDate,
-                LocalDateTime endDate) {
+                Status status) {
 
         this.name = name;
         this.description = description;
         this.status = status;
-        this.startDate = startDate;
-        this.endDate = endDate;
     }
 
     public boolean addComment(final Comment comment) {

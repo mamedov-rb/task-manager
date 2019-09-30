@@ -32,21 +32,21 @@ INSERT INTO users_projects (user_id, project_id) VALUES ('uId-2', 'projectId_02'
 INSERT INTO users_projects (user_id, project_id) VALUES ('uId-3', 'projectId_03');
 INSERT INTO users_projects (user_id, project_id) VALUES ('uId-3', 'projectId_01');
 
-INSERT INTO task (id, created, description, end_date, name, start_date, status, updated, version, assigned_to_id, created_by_id, project_id)
-VALUES ('taskId_01', '2016-11-05T11:44:44.797', 'Some description of task 1', '2016-11-05T11:44:44.797', 'task_01',
+INSERT INTO task (id, description, name, created, status, updated, version, assigned_to_id, created_by_id, project_id)
+VALUES ('taskId_01', 'Some description of task 1', 'task_01',
         '2016-11-05T11:44:44.797', 'PLANNED', '2016-11-05T11:44:44.797', 0, 'uId-2', 'uId-2', 'projectId_01');
-INSERT INTO task (id, created, description, end_date, name, start_date, status, updated, version, assigned_to_id, created_by_id, project_id)
-VALUES ('taskId_02', '2016-11-05T11:44:44.797', 'Some description of task 2', '2016-11-05T11:44:44.797', 'task_02',
+INSERT INTO task (id, description, name, created, status, updated, version, assigned_to_id, created_by_id, project_id)
+VALUES ('taskId_02', 'Some description of task 2', 'task_02',
         '2016-11-05T11:44:44.797', 'PLANNED', '2016-11-05T11:44:44.797', 0, 'uId-2', 'uId-2', 'projectId_01');
-INSERT INTO task (id, created, description, end_date, name, start_date, status, updated, version, assigned_to_id, created_by_id, project_id)
-VALUES ('taskId_03', '2016-11-05T11:44:44.797', 'Some description of task 3', '2016-11-05T11:44:44.797', 'task_03',
-        '2016-11-05T11:44:44.797', 'IN_PROGRESS', '2016-11-05T11:44:44.797', 0, 'uId-2', 'uId-2', 'projectId_01');
-INSERT INTO task (id, created, description, end_date, name, start_date, status, updated, version, assigned_to_id, created_by_id, project_id)
-VALUES ('taskId_04', '2016-11-05T11:44:44.797', 'Some description of task 4', '2016-11-05T11:44:44.797', 'task_04',
-        '2016-11-05T11:44:44.797', 'PLANNED', '2016-11-05T11:44:44.797', 0, 'uId-2', 'uId-2', 'projectId_01');
-INSERT INTO task (id, created, description, end_date, name, start_date, status, updated, version, assigned_to_id, created_by_id, project_id)
-VALUES ('taskId_05', '2016-11-05T11:44:44.797', 'Some description of task 5', '2016-11-05T11:44:44.797', 'task_05',
-        '2016-11-05T11:44:44.797', 'PAUSED', '2016-11-05T11:44:44.797', 0, 'uId-2', 'uId-2', 'projectId_01');
+INSERT INTO task (id, created, description, name, status, updated, version, assigned_to_id, created_by_id, project_id)
+VALUES ('taskId_03', '2016-11-05T11:44:44.797', 'Some description of task 3', 'task_03',
+        'IN_PROGRESS', '2016-11-05T11:44:44.797', 0, 'uId-2', 'uId-2', 'projectId_01');
+INSERT INTO task (id, created, description, name, status, updated, version, assigned_to_id, created_by_id, project_id)
+VALUES ('taskId_04', '2016-11-05T11:44:44.797', 'Some description of task 4', 'task_04',
+        'PLANNED', '2016-11-05T11:44:44.797', 0, 'uId-2', 'uId-2', 'projectId_01');
+INSERT INTO task (id, created, description, name, status, updated, version, assigned_to_id, created_by_id, project_id)
+VALUES ('taskId_05', '2016-11-05T11:44:44.797', 'Some description of task 5', 'task_05',
+        'PAUSED', '2016-11-05T11:44:44.797', 0, 'uId-2', 'uId-2', 'projectId_01');
 
 INSERT INTO comment (id, created, version, commentator_id, task_id, text)
 VALUES ('commentId_01', '2016-11-05T11:44:44.797', 0, 'uId-2', 'taskId_01', 'some text 01');
