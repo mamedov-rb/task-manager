@@ -45,7 +45,6 @@ class Projects extends Component {
     render() {
         return (
             <div>
-                <ProjectForm addProject={this.addProject} fetchProjects={this.fetchProjects} />
                 <div className="ui cards">
                     {this.state.projects.map((el) => {
                         return (
@@ -53,6 +52,7 @@ class Projects extends Component {
                         )
                     })}
                 </div>
+                <ProjectForm addProject={this.addProject} fetchProjects={this.fetchProjects} />
             </div>
         )
     }

@@ -15,7 +15,7 @@ import java.util.Set;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, String> {
 
-    @Query("SELECT p FROM Project p WHERE :user MEMBER OF p.users")
+    @Query("SELECT p FROM Project p WHERE :user MEMBER OF p.users OR p.createdBy = :user")
     Set<ProjectProjection> findAllAsProjectionByUsername(@Param("user") User user);
 
     @Query("SELECT p FROM Project p WHERE p.id = :id")

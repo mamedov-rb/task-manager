@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import SkyLight from 'react-skylight'
 
-class ProjectForm extends Component {
+class TaskForm extends Component {
 
     constructor(props) {
         super(props)
@@ -10,7 +10,7 @@ class ProjectForm extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault()
-        this.props.addProject({
+        this.props.addTask({
             name: this.state.name,
             description: this.state.description,
             startDate: this.state.startDate
@@ -33,7 +33,7 @@ class ProjectForm extends Component {
         return (
             <div>
                 <SkyLight hideOnOverlayClicked ref="addDialog">
-                    <h3>Create project</h3>
+                    <h3>Create task</h3>
                     <form style={{marginTop: 50}}>
                         <div className="ui input">
                             <input type="text" placeholder="Name" name="name" required="true" onChange={this.handleChange}/><br/>
@@ -58,4 +58,4 @@ class ProjectForm extends Component {
     }
 }
 
-export default ProjectForm
+export default TaskForm

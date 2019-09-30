@@ -27,7 +27,7 @@ class ProjectControllerTest extends MockMvcHelper {
     }
 
     @WithMockUser(username = "admin-user")
-    def "Find project  by id"() {
+    def "Find project by id"() {
         given:
         saveProjectWithCreatedBy("admin-user")
         def id = projectRepository.findAll().stream().findFirst().get().id
@@ -47,15 +47,15 @@ class ProjectControllerTest extends MockMvcHelper {
                 .andExpect(jsonPath('$.updated').isNotEmpty())
     }
 
+    /**Finds all projects where current logged in user is member or creator*/
     @WithMockUser(username = "developer_01")
     def "Find all projects by current user"() {
-        def developer = "developer_01"
+        def developer_01 = "developer_01"
         given:
-        saveProjectWithCreatedBy(developer)
-        saveProjectWithCreatedBy(developer)
-        saveProjectWithCreatedBy(developer)
+        saveProjectWithCreatedBy(developer_01)
+        saveProjectWithCreatedBy(developer_01)
         for (Project p : projectRepository.findAll()) {
-            performPatch(ASSIGN_USER_TO_PROJECT, developer, p.id)
+            performPatch(ASSIGN_USER_TO_PROJECT, developer_01, p.id)
         }
 
         when:
@@ -65,7 +65,7 @@ class ProjectControllerTest extends MockMvcHelper {
         result.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect((jsonPath('$.[0].id')).isNotEmpty())
-                .andExpect((jsonPath('$', Matchers.hasSize(3))))
+                .andExpect((jsonPath('$', Matchers.hasSize(2))))
     }
 
     def "Create new project - 403"() {

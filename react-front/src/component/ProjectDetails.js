@@ -3,6 +3,7 @@ import api from '../axios-config'
 import {toast} from "react-toastify"
 import UsersTable from './UsersTable'
 import Task from './Task'
+import TaskForm from "./TaskForm";
 
 const PLANNED = 'PLANNED'
 const IN_PROGRESS = 'IN_PROGRESS'
@@ -31,6 +32,21 @@ class ProjectDetails extends Component {
         api.get('/task/all/projectId/' + this.props.match.params.projectId)
             .then(response => {
                 this.sortTasks(response.data)
+            })
+            .catch(err => {
+                toast.error(err.message, {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+            })
+    }
+
+    addTask = (task) => {
+        api.post('/task/save', task)
+            .then(res => {
+                toast.success("Task created.", {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+                this.fetchTasks()
             })
             .catch(err => {
                 toast.error(err.message, {
@@ -105,7 +121,6 @@ class ProjectDetails extends Component {
                             Created: <span>{this.state.projectDetails.created}</span><br/>
                             Updated: <span>{this.state.projectDetails.updated}</span><br/>
                             Start date: <span>{this.state.projectDetails.startDate}</span><br/>
-                            End date: <span>{this.state.projectDetails.endDate}</span><br/>
                             Tasks: <span>{this.state.tasksSize}</span>
                         </p>
                         <div className="ui segment">
@@ -163,6 +178,7 @@ class ProjectDetails extends Component {
                                 </div>
                             </div>
                         </div>
+                        <TaskForm addTask={this.addTask} fetchProjects={this.fetchTasks} />
                     </div>
                 </div>
             </div>
