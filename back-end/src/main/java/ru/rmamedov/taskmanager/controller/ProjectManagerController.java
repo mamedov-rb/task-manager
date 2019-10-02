@@ -39,7 +39,7 @@ public class ProjectManagerController {
 
     private final UserService userService;
 
-    @GetMapping(value = "/users/{projectId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)// TODO: 2019-09-29 add tasks
+    @GetMapping(value = "/users/{projectId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Set<UserMetaDTO>> findAllByProject(@PathVariable final String projectId) {
         return ResponseEntity.status(HttpStatus.OK).body(projectManagerService.findAllByProjectWithRoles(projectId));
     }

@@ -54,7 +54,7 @@ public class TaskService {
         if (authentication == null) {
             throw new UserNotAuthorizedException("User - Not authorized. Please login");
         }
-        return taskRepository.findAllByAssignedToUsernameAndProjectId(authentication.getName(), projectId);
+        return taskRepository.findAllByProjectIdAndAssignedToUsernameOrCreatedByUsername(projectId, authentication.getName(), authentication.getName());
     }
 
     public long deleteAllByAssignedToAndProject(final User user, final Project project) {

@@ -42,6 +42,11 @@ class UserControllerTest extends MockMvcHelper {
                 .andExpect(jsonPath('$.email').value("user@gmail.com"))
     }
 
+    @WithMockUser(username = "admin-user") // fix
+    def "Find all users of project"() {
+
+    }
+
     def "Find user by username - 403"() {
         given:
         saveUser("admin-user")

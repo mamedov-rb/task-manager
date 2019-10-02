@@ -15,7 +15,7 @@ class ProjectDetails extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
+            this.state = {
             projectDetails: {},
             tasksSize: '',
             users: [{firstName: '', roles: [{id: '', name: ''}]}],
@@ -41,7 +41,7 @@ class ProjectDetails extends Component {
     }
 
     addTask = (task) => {
-        api.post('/task/save', task)
+        api.post('/manager/assign/task/to/user', task)
             .then(res => {
                 toast.success("Task created.", {
                     position: toast.POSITION.TOP_RIGHT
@@ -178,7 +178,7 @@ class ProjectDetails extends Component {
                                 </div>
                             </div>
                         </div>
-                        <TaskForm addTask={this.addTask} fetchProjects={this.fetchTasks} />
+                        <TaskForm projectId={this.props.match.params.projectId} addTask={this.addTask} fetchTasks={this.fetchTasks} />
                     </div>
                 </div>
             </div>

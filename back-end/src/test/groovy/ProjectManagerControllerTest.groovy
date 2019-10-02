@@ -133,26 +133,41 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         task.assignedTo.username == developer
     }
 
-    @WithMockUser(username = "developer-user")
-    def "Find all tasks of project"() {
+    /**
+     * Save one project with createdBy user;
+     * Save three developers;
+     * Assign two developers to project;
+     * When search only two assigned developers or createdBy user can se tasks;
+     * For this test searching by projectId and createdBy
+     * */
+    @WithMockUser(username = "admin-user")
+    def "Find all tasks by assigned to or createdBy and project "() {
         given:
-        def developer = "developer-user"
-        saveProjectWithCreatedBy(developer)
-        saveUser(developer)
+        saveProjectWithCreatedBy("admin-user")
+        def developer_01 = "developer_01"
+        def developer_02 = "developer_02"
+        def developer_03 = "developer_03"
+        saveUser(developer_01)
+        saveUser(developer_02)
+        saveUser(developer_03)
         def projectId = projectRepository.findAll().stream().findFirst().get().id
-        performPatch(ASSIGN_USER_TO_PROJECT, developer, projectId)
-        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer))
-        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer))
-        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer))
+        performPatch(ASSIGN_USER_TO_PROJECT, developer_01, projectId)
+        performPatch(ASSIGN_USER_TO_PROJECT, developer_02, projectId)
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer_01))
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer_01))
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer_01))
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer_02))
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer_02))
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer_02))
 
         when:
-        def result = performGet(FIND_ALL_TASKS_OF_PROJECT, projectId)
+        def result = performGet(FIND_ALL_TASKS_BY_ASSIGNED_TO_AND_PROJECT, projectId)
 
         then:
         result.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect((jsonPath('$', Matchers.hasSize(3))))
+                .andExpect((jsonPath('$', Matchers.hasSize(6))))
     }
 
     @WithMockUser(username = "admin-user")

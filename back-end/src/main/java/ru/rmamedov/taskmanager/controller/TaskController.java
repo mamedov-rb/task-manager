@@ -35,7 +35,7 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @GetMapping(value = "/all/projectId/{projectId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/all/by/assignedTo/projectId/{projectId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE) // TODO: unused.
     public ResponseEntity<Set<TaskProjection>> findAllByUserId(@Nullable @AuthenticationPrincipal Authentication authentication,
                                                                @PathVariable final String projectId) {
 

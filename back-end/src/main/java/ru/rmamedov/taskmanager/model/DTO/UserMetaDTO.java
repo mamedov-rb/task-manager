@@ -12,6 +12,8 @@ public interface UserMetaDTO {
 
     String getFullName();
 
+    String getUsername();
+
     Set<Role> getRoles();
 
 }

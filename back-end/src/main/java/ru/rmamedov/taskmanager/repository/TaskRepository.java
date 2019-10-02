@@ -18,7 +18,7 @@ public interface TaskRepository extends JpaRepository<Task, String> {
 
     Set<Task> findAllByAssignedToAndProject(User assignedTo, Project project);
 
-    Set<TaskProjection> findAllByAssignedToUsernameAndProjectId(String assignedTo, String projectId);
+    Set<TaskProjection> findAllByProjectIdAndAssignedToUsernameOrCreatedByUsername(String projectId, String assignedTo, String createdBy);
 
     long deleteAllByAssignedToAndProject(User assignedTo, Project project);
 

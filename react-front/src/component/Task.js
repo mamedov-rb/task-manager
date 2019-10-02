@@ -14,10 +14,6 @@ class Task extends Component {
                     </div>
                 </div>
                 <div className="extra content">
-                    <div className="left floated left aligned">
-                        started:<br/>
-                        {this.props.el.startDate}
-                    </div>
                     <div className="right floated author">
                         <img className="ui avatar image" src={Faker.image.avatar()} />
                     </div>

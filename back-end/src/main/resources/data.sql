@@ -29,8 +29,8 @@ VALUES ('projectId_03', '2016-11-05T11:44:44.797', 'Some description of project 
 
 INSERT INTO users_projects (user_id, project_id) VALUES ('uId-2', 'projectId_01');
 INSERT INTO users_projects (user_id, project_id) VALUES ('uId-2', 'projectId_02');
-INSERT INTO users_projects (user_id, project_id) VALUES ('uId-3', 'projectId_03');
 INSERT INTO users_projects (user_id, project_id) VALUES ('uId-3', 'projectId_01');
+INSERT INTO users_projects (user_id, project_id) VALUES ('uId-3', 'projectId_03');
 
 INSERT INTO task (id, description, name, created, status, updated, version, assigned_to_id, created_by_id, project_id)
 VALUES ('taskId_01', 'Some description of task 1', 'task_01',

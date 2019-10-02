@@ -40,7 +40,7 @@ public class UserService implements UserDetailsService {
     public User findByUsernameAndProject(final String username, final Project project) throws UserNotFoundException {
         return userRepository.findByUsernameAndProject(username, project)
                 .orElseThrow(() -> new UsernameNotFoundException("User with username: '" + username +
-                        "' - Not found, or user not a member of project: '" + project.getName() + "'."));
+                        "' - Not found, or user not a member of project with name: '" + project.getName() + "'."));
 
     }
 

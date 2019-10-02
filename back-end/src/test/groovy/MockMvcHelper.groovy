@@ -65,7 +65,7 @@ class MockMvcHelper extends Specification {
 
     protected final static String DELETE_USER_UNDER_PROJECTS_TASKS = "/api/manager/user/delete/{username}"
 
-    protected final static String FIND_ALL_TASKS_OF_PROJECT = "/api/task//all/projectId/{projectId}"
+    protected final static String FIND_ALL_TASKS_BY_ASSIGNED_TO_AND_PROJECT = "/api/task/all/by/assignedTo/projectId/{projectId}"
 
     @Autowired
     private MockMvc mockMvc
