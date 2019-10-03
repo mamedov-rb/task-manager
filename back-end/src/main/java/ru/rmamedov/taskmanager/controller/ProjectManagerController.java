@@ -53,6 +53,15 @@ public class ProjectManagerController {
         return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
 
+    @PatchMapping("/assign/yourself/projectId/{id}") // TODO: 2019-10-03 join this with assign-by-username controller with optional request param.
+    public ResponseEntity assignYourselfToProject(@PathVariable String id, @AuthenticationPrincipal Authentication authentication) {
+        final boolean assigned = projectManagerService.assignYourselfToProject(id, authentication);
+        if (assigned) {
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+    }
+
     @PatchMapping("/leave/username/{username}/projectId/{id}")
     public ResponseEntity leaveProjectWithTasksUnderUser(@PathVariable final String username, @PathVariable String id) {
         final boolean assigned = projectManagerService.leaveProjectUnderUser(username, id);

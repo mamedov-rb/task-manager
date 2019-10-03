@@ -29,7 +29,7 @@ class ProjectDetails extends Component {
     }
 
     fetchTasks = () => {
-        api.get('/task/all/projectId/' + this.props.match.params.projectId)
+        api.get('/task/all/by/assignedTo/projectId/' + this.props.match.params.projectId)
             .then(response => {
                 this.sortTasks(response.data)
             })
@@ -79,6 +79,18 @@ class ProjectDetails extends Component {
             })
     }
 
+    joinToProject = () => {
+        api.patch('/manager/assign/yourself/projectId/' + this.props.match.params.projectId)
+            .then(response => {
+                toast.success("Joined to project.")
+            })
+            .catch(err => {
+                toast.error(err.message, {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+            })
+    }
+
     sortTasks = (tasks) => {
         const planned = []
         const inProgress = []
@@ -116,7 +128,7 @@ class ProjectDetails extends Component {
                             <h3>Details</h3>
                         </div>
                         <p className="ui segment left aligned">
-                            Name: <span>{this.state.projectDetails.name}</span><br/>
+                           <h3>{this.state.projectDetails.name}</h3>
                             Description: <span>{this.state.projectDetails.description}</span><br/>
                             Created: <span>{this.state.projectDetails.created}</span><br/>
                             Updated: <span>{this.state.projectDetails.updated}</span><br/>
@@ -125,6 +137,11 @@ class ProjectDetails extends Component {
                         </p>
                         <div className="ui segment">
                             <UsersTable users={this.state.users} />
+                        </div>
+                        <div className="ui segment">
+                            <button className="ui primary center floated button" onClick={this.joinToProject}>
+                                Join to project
+                            </button>
                         </div>
                     </div>
                     <div className="thirteen wide column">

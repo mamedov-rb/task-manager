@@ -110,7 +110,7 @@ class TaskForm extends Component {
                 </SkyLight>
                 <div className="ui left aligned segment">
                     <button className="ui positive basic button" onClick={() => this.refs.addDialog.show()}>
-                        Add new
+                        New task
                     </button>
                 </div>
             </div>
