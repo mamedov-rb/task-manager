@@ -12,7 +12,6 @@ const DONE = 'DONE'
 
 class ProjectDetails extends Component {
 
-
     constructor(props) {
         super(props);
             this.state = {
