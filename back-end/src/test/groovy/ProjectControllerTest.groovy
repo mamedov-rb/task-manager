@@ -14,19 +14,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ProjectControllerTest extends MockMvcHelper {
 
     @WithMockUser(username = "admin-user")
-    def "Save new project"() {
-        given:
-        saveUser("admin-user")
-
-        when:
-        def result = performPost(SAVE_PROJECT, getProject())
-
-        then:
-        result.andDo(print())
-                .andExpect(status().isCreated())
-    }
-
-    @WithMockUser(username = "admin-user")
     def "Find project by id"() {
         given:
         saveProjectWithCreatedBy("admin-user")

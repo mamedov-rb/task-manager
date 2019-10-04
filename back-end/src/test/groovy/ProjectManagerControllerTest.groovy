@@ -4,6 +4,7 @@ import org.springframework.security.test.context.support.WithMockUser
 import ru.rmamedov.taskmanager.model.Project
 
 import static data.TestData.getCreateTaskRequest
+import static data.TestData.getProject
 import static data.TestData.getSaveCommentRequest
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
@@ -13,6 +14,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 
 class ProjectManagerControllerTest extends MockMvcHelper {
+
+    @WithMockUser(username = "developer_01")
+    def "Save new project and assign yourself to it"() {
+        given:
+        saveUser("developer_01")
+
+        when:
+        def result = performPost(SAVE_PROJECT, getProject())
+
+        then:
+        result.andDo(print())
+                .andExpect(status().isCreated())
+
+        userRepository.findUserWithEagerProjects("developer_01").get().projects.size() == 1
+    }
 
     @WithMockUser(username = "admin-user")
     def "Assign user to project"() {
@@ -30,7 +46,7 @@ class ProjectManagerControllerTest extends MockMvcHelper {
                 .andExpect(status().isCreated())
 
         userRepository.findUserWithEagerProjects(developer).get().projects.size() == 1
-        projectRepository.findByIdWithEagerUsers(id).get().users.size() == 1
+        projectRepository.findByIdWithEagerUsers(id).get().users.size() == 2
     }
 
     @WithMockUser(username = "admin-user")
@@ -55,7 +71,7 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         result.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect((jsonPath('$', Matchers.hasSize(3))))
+                .andExpect((jsonPath('$', Matchers.hasSize(4))))
                 .andExpect((jsonPath('$.[0].fullName')).isNotEmpty())
 
         userRepository.findUserWithEagerProjects(developer_01).get().projects.size() == 1
@@ -81,7 +97,7 @@ class ProjectManagerControllerTest extends MockMvcHelper {
                 .andExpect(status().isCreated())
 
         userRepository.findUserWithEagerProjects(developer_01).get().projects.size() == 0
-        projectRepository.findByIdWithEagerUsers(projectId).get().users.size() == 0
+        projectRepository.findByIdWithEagerUsers(projectId).get().users.size() == 1
         taskRepository.findAll().size() == 0
     }
 
@@ -235,6 +251,7 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         performPatch(ASSIGN_USER_TO_PROJECT, developer_01, id)
 
         when:
+        performDelete(DELETE_PROJECT_BY_ID, id, "admin-user")
         def result = performDelete(DELETE_PROJECT_BY_ID, id, developer_01) //TODO: delete by username or authentication?
 
         then:

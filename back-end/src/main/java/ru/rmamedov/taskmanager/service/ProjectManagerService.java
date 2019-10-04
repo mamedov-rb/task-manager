@@ -38,6 +38,17 @@ public class ProjectManagerService {
     private final CommentService commentService;
 
     @Transactional
+    public boolean saveProjectAndAssignUserToIt(final Project project, final Authentication authentication) {
+        if (authentication == null) {
+            throw new UserNotAuthorizedException("User - Not authorized. Please login");
+        }
+        @NotNull final User createdBy = userService.findByUsernameWithEagerProject(authentication.getName());
+        project.setCreatedBy(createdBy);
+        createdBy.addProject(project);
+        return projectService.save(project).getId() != null;
+    }
+
+    @Transactional
     public boolean assignUserToProject(final String username, final String projectId) {
         @NotNull final User user = userService.findByUsernameWithEagerProject(username);
         @NotNull final Project project = projectService.findByIdWithEagerUsers(projectId);

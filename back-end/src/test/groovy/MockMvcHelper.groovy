@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @AutoConfigureMockMvc
 class MockMvcHelper extends Specification {
 
-    protected final static String SAVE_PROJECT = "/api/project/save"
+    protected final static String SAVE_PROJECT = "/api/manager/project/save"
 
     protected final static String FIND_PROJECT_BY_ID = "/api/project/find/{id}"
 

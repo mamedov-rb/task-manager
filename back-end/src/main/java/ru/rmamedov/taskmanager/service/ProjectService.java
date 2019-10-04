@@ -25,16 +25,8 @@ public class ProjectService {
     private final UserService userService;
 
     @Transactional
-    public void save(@NotNull final Project project,
-                     @Nullable final Authentication authentication) throws UserNotAuthorizedException {
-
-        if (authentication == null) {
-            throw new UserNotAuthorizedException("User - Not authorized. Please login");
-        }
-        final User createdBy = (User) userService.loadUserByUsername(authentication.getName());
-        project.setCreatedBy(createdBy);
-        projectRepository.save(project);
-
+    public Project save(@NotNull final Project project) throws UserNotAuthorizedException {
+        return projectRepository.save(project);
     }
 
     @NotNull

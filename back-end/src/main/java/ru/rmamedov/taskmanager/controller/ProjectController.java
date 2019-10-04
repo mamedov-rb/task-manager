@@ -10,16 +10,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.rmamedov.taskmanager.model.DTO.ProjectDetailsProjection;
 import ru.rmamedov.taskmanager.model.DTO.ProjectProjection;
-import ru.rmamedov.taskmanager.model.Project;
 import ru.rmamedov.taskmanager.service.ProjectService;
 
-import javax.validation.Valid;
 import java.util.Set;
 
 /**
@@ -32,14 +28,6 @@ import java.util.Set;
 public class ProjectController {
 
     private final ProjectService projectService;
-
-    @PostMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity create(@RequestBody @Valid final Project project,
-                                 @Nullable @AuthenticationPrincipal Authentication authentication) {
-
-        projectService.save(project, authentication);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
 
     @GetMapping(value = "/find/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ProjectDetailsProjection> findById(@NotNull @PathVariable final String id) {

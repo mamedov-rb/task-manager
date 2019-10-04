@@ -1,6 +1,7 @@
 package ru.rmamedov.taskmanager.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.rmamedov.taskmanager.model.DTO.SaveCommentRequest;
 import ru.rmamedov.taskmanager.model.DTO.SaveTaskRequest;
 import ru.rmamedov.taskmanager.model.DTO.UserMetaDTO;
+import ru.rmamedov.taskmanager.model.Project;
 import ru.rmamedov.taskmanager.service.ProjectManagerService;
 import ru.rmamedov.taskmanager.service.ProjectService;
 import ru.rmamedov.taskmanager.service.UserService;
@@ -38,6 +40,17 @@ public class ProjectManagerController {
     private final ProjectService projectService;
 
     private final UserService userService;
+
+    @PostMapping(value = "/project/save", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity create(@RequestBody @Valid final Project project,
+                                 @Nullable @AuthenticationPrincipal Authentication authentication) {
+
+        final boolean created = projectManagerService.saveProjectAndAssignUserToIt(project, authentication);
+        if (created) {
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+    }
 
     @GetMapping(value = "/users/{projectId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Set<UserMetaDTO>> findAllByProject(@PathVariable final String projectId) {
