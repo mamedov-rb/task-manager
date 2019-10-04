@@ -28,7 +28,7 @@ class Projects extends Component {
     }
 
     addProject = (project) => {
-        api.post('/project/save', project)
+        api.post('/manager/project/save', project)
             .then(res => {
                 toast.success("Project created.", {
                     position: toast.POSITION.TOP_RIGHT

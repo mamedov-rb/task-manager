@@ -35,11 +35,9 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @GetMapping(value = "/all/by/assignedTo/projectId/{projectId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE) // TODO: unused.
-    public ResponseEntity<Set<TaskProjection>> findAllByUserId(@Nullable @AuthenticationPrincipal Authentication authentication,
-                                                               @PathVariable final String projectId) {
-
-        return new ResponseEntity<>(taskService.findAllByAssignedToAndProjectAsDTO(authentication, projectId), HttpStatus.OK);
+    @GetMapping(value = "/all/by/assignedTo/projectId/{projectId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<Set<TaskProjection>> findAllByUserId(@PathVariable final String projectId) {
+        return new ResponseEntity<>(taskService.findAllByAssignedToAndProjectAsDTO(projectId), HttpStatus.OK);
     }
 
 }

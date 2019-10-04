@@ -126,14 +126,18 @@ class ProjectDetails extends Component {
                         <div className="ui label">
                             <h3>Details</h3>
                         </div>
-                        <p className="ui segment left aligned">
-                           <h3>{this.state.projectDetails.name}</h3>
-                            Description: <span>{this.state.projectDetails.description}</span><br/>
-                            Created: <span>{this.state.projectDetails.created}</span><br/>
-                            Updated: <span>{this.state.projectDetails.updated}</span><br/>
-                            Start date: <span>{this.state.projectDetails.startDate}</span><br/>
-                            Tasks: <span>{this.state.tasksSize}</span>
-                        </p>
+                        <div className="ui card">
+                            <div className="content">
+                                <h3>{this.state.projectDetails.name}</h3>
+                            </div>
+                            <div className="extra content left aligned">
+                                Description: <span>{this.state.projectDetails.description}</span><br/>
+                                Created: <span>{this.state.projectDetails.created}</span><br/>
+                                Updated: <span>{this.state.projectDetails.updated}</span><br/>
+                                Start date: <span>{this.state.projectDetails.startDate}</span><br/>
+                                Tasks: <span>{this.state.tasksSize}</span>
+                            </div>
+                        </div>
                         <div className="ui segment">
                             <UsersTable users={this.state.users} />
                         </div>

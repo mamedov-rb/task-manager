@@ -5,6 +5,7 @@ import {ToastContainer} from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
 import Projects from './component/Projects'
 import ProjectDetails from './component/ProjectDetails'
+import TaskDetails from './component/TaskDetails'
 import Header from './component/Header'
 import Login from './component/Login'
 
@@ -49,6 +50,7 @@ class App extends Component {
                     <div className="ui bottom container">
                         <Route exact path="/projects" component={Projects}/>
                         <Route path="/project/details/:projectId" component={ProjectDetails}/>
+                        <Route path="/task/details/:taskId" component={TaskDetails}/>
                         <Route path="/login" component={() =>
                             <Login isAuthenticated={this.state.isAuthenticated} setAuthenticated={this.setAuthenticated}/>}
                         />

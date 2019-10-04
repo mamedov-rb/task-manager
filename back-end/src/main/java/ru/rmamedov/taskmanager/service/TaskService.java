@@ -50,11 +50,8 @@ public class TaskService {
     }
 
     @NotNull
-    public Set<TaskProjection> findAllByAssignedToAndProjectAsDTO(final Authentication authentication, final String projectId) {
-        if (authentication == null) {
-            throw new UserNotAuthorizedException("User - Not authorized. Please login");
-        }
-        return taskRepository.findAllByProjectIdAndAssignedToUsernameOrCreatedByUsername(projectId, authentication.getName(), authentication.getName());
+    public Set<TaskProjection> findAllByAssignedToAndProjectAsDTO(final String projectId) {
+        return taskRepository.findAllByProject(projectId);
     }
 
     public long deleteAllByAssignedToAndProject(final User user, final Project project) {

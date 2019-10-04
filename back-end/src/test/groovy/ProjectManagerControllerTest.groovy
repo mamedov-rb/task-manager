@@ -153,8 +153,8 @@ class ProjectManagerControllerTest extends MockMvcHelper {
      * Save one project with createdBy user;
      * Save three developers;
      * Assign two developers to project;
-     * When search only two assigned developers or createdBy user can se tasks;
-     * For this test searching by projectId and createdBy
+     * When search, only two assigned developers or createdBy user can se tasks;
+     * For this test searching is by projectId and createdBy
      * */
     @WithMockUser(username = "admin-user")
     def "Find all tasks by assigned to or createdBy and project "() {
@@ -162,10 +162,8 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         saveProjectWithCreatedBy("admin-user")
         def developer_01 = "developer_01"
         def developer_02 = "developer_02"
-        def developer_03 = "developer_03"
         saveUser(developer_01)
         saveUser(developer_02)
-        saveUser(developer_03)
         def projectId = projectRepository.findAll().stream().findFirst().get().id
         performPatch(ASSIGN_USER_TO_PROJECT, developer_01, projectId)
         performPatch(ASSIGN_USER_TO_PROJECT, developer_02, projectId)
