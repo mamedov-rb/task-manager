@@ -3,9 +3,7 @@ import org.springframework.http.MediaType
 import org.springframework.security.test.context.support.WithMockUser
 import ru.rmamedov.taskmanager.model.Project
 
-import static data.TestData.getCreateTaskRequest
-import static data.TestData.getProject
-import static data.TestData.getSaveCommentRequest
+import static data.TestData.*
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
@@ -47,6 +45,24 @@ class ProjectManagerControllerTest extends MockMvcHelper {
 
         userRepository.findUserWithEagerProjects(developer).get().projects.size() == 1
         projectRepository.findByIdWithEagerUsers(id).get().users.size() == 2
+    }
+
+    @WithMockUser(username = "admin-user")
+    def "Is member of project"() {
+        given:
+        def developer = "developer"
+        saveUser(developer)
+        saveProjectWithCreatedBy("admin-user")
+        def id = projectRepository.findAll().stream().findFirst().get().id
+        performPatch(ASSIGN_USER_TO_PROJECT, developer, id)
+        when:
+        def result = performGet(IS_ASSIGNED_TO_PROJECT, id)
+
+        then:
+        result.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string("true"))
+
     }
 
     @WithMockUser(username = "admin-user")
@@ -306,6 +322,29 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         then:
         task.comments.size() == 3
         commentRepository.findAll().size() == 3
+    }
+
+    @WithMockUser(username = "developer_01")
+    def "Find all comments"() {
+        given:
+        def developer_01 = "developer_01"
+        saveProjectWithCreatedBy(developer_01)
+        def projectId = projectRepository.findAll().stream().findFirst().get().id
+        performPatch(ASSIGN_USER_TO_PROJECT, developer_01, projectId)
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer_01))
+        def taskId = taskRepository.findAll().stream().findFirst().get().id
+        performPost(SAVE_COMMENT_UNDER_USER_TASK, getSaveCommentRequest(taskId))
+        performPost(SAVE_COMMENT_UNDER_USER_TASK, getSaveCommentRequest(taskId))
+
+        when:
+        def result = performGet(FIND_ALL_COMMENTS_OF_TASK, taskId)
+
+        then:
+        result.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect((jsonPath('$', Matchers.hasSize(2))))
+
     }
 
     @WithMockUser(username = "admin-user")

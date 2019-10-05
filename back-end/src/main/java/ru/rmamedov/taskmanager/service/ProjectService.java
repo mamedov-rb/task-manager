@@ -61,4 +61,12 @@ public class ProjectService {
         projectRepository.deleteById(id);
     }
 
+    public boolean isMemberOf(@Nullable final Authentication authentication) {
+        if (authentication == null) {
+            throw new UserNotAuthorizedException("User - Not authorized. Please login");
+        }
+        final User user = (User) userService.loadUserByUsername(authentication.getName());
+        return projectRepository.findByUser(user).isPresent();
+    }
+
 }

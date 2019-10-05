@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.rmamedov.taskmanager.model.Comment;
+import ru.rmamedov.taskmanager.model.DTO.TaskDetailsProjection;
 import ru.rmamedov.taskmanager.model.DTO.TaskProjection;
 import ru.rmamedov.taskmanager.model.Project;
 import ru.rmamedov.taskmanager.model.Task;
@@ -15,6 +16,9 @@ import java.util.Set;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, String> {
+
+    @Query("SELECT t FROM Task t WHERE t.id = :id")
+    Optional<TaskDetailsProjection> getDetails(@Param("id") String id);
 
     Set<Task> findAllByAssignedToAndProject(User assignedTo, Project project);
 

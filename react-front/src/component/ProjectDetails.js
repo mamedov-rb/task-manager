@@ -14,17 +14,20 @@ class ProjectDetails extends Component {
 
     constructor(props) {
         super(props);
-            this.state = {
+        this.state = {
+            isMemberOf: false,
             projectDetails: {},
             tasksSize: '',
             users: [{firstName: '', roles: [{id: '', name: ''}]}],
-            planned: [], inProgress: [], paused: [], done: []}
+            planned: [], inProgress: [], paused: [], done: []
+        }
     }
 
     componentDidMount() {
         this.fetchProjectDetails()
         this.fetchTasks()
         this.fetchUsers()
+        this.isMemberOf()
     }
 
     fetchTasks = () => {
@@ -78,10 +81,23 @@ class ProjectDetails extends Component {
             })
     }
 
+    isMemberOf = () => {
+        api.get('/project/contains-user')
+            .then(response => {
+                this.setState({isMemberOf: Boolean(response.data)})
+            })
+            .catch(err => {
+                toast.error(err.message, {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+            })
+    }
+
     joinToProject = () => {
         api.patch('/manager/assign/yourself/projectId/' + this.props.match.params.projectId)
             .then(response => {
                 toast.success("Joined to project.")
+                this.fetchUsers()
             })
             .catch(err => {
                 toast.error(err.message, {
@@ -139,12 +155,17 @@ class ProjectDetails extends Component {
                             </div>
                         </div>
                         <div className="ui segment">
-                            <UsersTable users={this.state.users} />
+                            <UsersTable users={this.state.users}/>
                         </div>
                         <div className="ui segment">
-                            <button className="ui primary center floated button" onClick={this.joinToProject}>
-                                Join to project
-                            </button>
+                            {!this.state.isMemberOf ?
+                                <button className="ui primary center floated button" onClick={this.joinToProject}>
+                                    Join to project
+                                </button> :
+                                <button className="ui red center floated button" onClick={this.joinToProject}>
+                                    Leave project
+                                </button>
+                            }
                         </div>
                     </div>
                     <div className="thirteen wide column">
@@ -198,7 +219,8 @@ class ProjectDetails extends Component {
                                 </div>
                             </div>
                         </div>
-                        <TaskForm projectId={this.props.match.params.projectId} addTask={this.addTask} fetchTasks={this.fetchTasks} />
+                        <TaskForm projectId={this.props.match.params.projectId} addTask={this.addTask}
+                                  fetchTasks={this.fetchTasks}/>
                     </div>
                 </div>
             </div>

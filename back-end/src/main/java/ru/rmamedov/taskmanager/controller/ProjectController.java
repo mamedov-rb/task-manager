@@ -39,4 +39,13 @@ public class ProjectController {
         return new ResponseEntity<>(projectService.findAllOfCurrentUser(authentication), HttpStatus.OK);
     }
 
+    @GetMapping("/contains-user")
+    public String containsUser(@Nullable @AuthenticationPrincipal Authentication authentication) {
+        final boolean memberOf = projectService.isMemberOf(authentication);
+        if (memberOf) {
+            return Boolean.TRUE.toString();
+        }
+        return Boolean.FALSE.toString();
+    }
+
 }

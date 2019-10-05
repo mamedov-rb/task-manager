@@ -5,7 +5,10 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import ru.rmamedov.taskmanager.exception.CommentNotFoundException;
 import ru.rmamedov.taskmanager.model.Comment;
+import ru.rmamedov.taskmanager.model.DTO.CommentProjection;
 import ru.rmamedov.taskmanager.repository.CommentRepository;
+
+import java.util.Set;
 
 /**
  * @author Rustam Mamedov
@@ -16,6 +19,10 @@ import ru.rmamedov.taskmanager.repository.CommentRepository;
 public class CommentService {
 
     private final CommentRepository commentRepository;
+
+    public Set<CommentProjection> findAll(final String taskId) {
+        return commentRepository.findAllByTaskId(taskId);
+    }
 
     @NotNull
     public Comment findByIdWithEagerCommentatorAndTask(final String id) {
