@@ -159,10 +159,10 @@ class ProjectDetails extends Component {
                         </div>
                         <div className="ui segment">
                             {!this.state.isMemberOf ?
-                                <button className="ui primary center floated button" onClick={this.joinToProject}>
+                                <button className="ui blue basic button center floated" onClick={this.joinToProject}>
                                     Join to project
                                 </button> :
-                                <button className="ui red center floated button" onClick={this.joinToProject}>
+                                <button className="ui red basic button center floate" onClick={this.joinToProject}>
                                     Leave project
                                 </button>
                             }

@@ -37,6 +37,7 @@ class Comments extends Component {
                     position: toast.POSITION.TOP_RIGHT
                 })
                 this.fetchComments()
+                this.setState({text: ''})
             })
             .catch(err => {
                 toast.error(err.message, {

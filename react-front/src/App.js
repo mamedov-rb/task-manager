@@ -36,7 +36,7 @@ class App extends Component {
                             Agile
                         </Link>
                         <Link to="/login" className="item">
-                            Login
+                            {this.state.isAuthenticated ? 'Logout' : 'Login'}
                         </Link>
                         <div className="right menu">
                             <div className="item">
@@ -49,10 +49,12 @@ class App extends Component {
                     </div>
                     <div className="ui bottom container">
                         <Route exact path="/projects" component={Projects}/>
-                        <Route path="/project/details/:projectId" component={ProjectDetails}/>
+                        <Route path="/project/details/:projectId" render={(props) =>
+                            <ProjectDetails globalStore={this.state.isAuthenticated} {...props} />}
+                        />
                         <Route path="/task/details/:taskId" component={TaskDetails}/>
                         <Route path="/login" component={() =>
-                            <Login isAuthenticated={this.state.isAuthenticated} setAuthenticated={this.setAuthenticated}/>}
+                            <Login isAuthenticated={this.state.isAuthenticated} setAuthenticated={this.setAuthenticated} />}
                         />
                     </div>
                     <ToastContainer autoClose={3000}/>
