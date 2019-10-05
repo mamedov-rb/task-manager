@@ -9,7 +9,6 @@ spring:
 
   jpa:
     generate-ddl: true
-    open-in-view: false
     hibernate:
       ddl-auto: create-drop
     properties:
@@ -18,17 +17,6 @@ spring:
         show_sql: true
         use_sql_comments: true
         format_sql: true
-        current_session_context_class: thread
-        jdbc:
-          lob:
-            non_contextual_creation: true
-
-  datasource:
-    initialization-mode: never
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:~/test
-    username: test
-    password: test
 
 
 ---
@@ -40,7 +28,7 @@ server:
 logging.level.root: INFO
 
 spring:
-  profiles.active: development
+  profiles: development
 
   jpa:
     generate-ddl: true
