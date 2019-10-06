@@ -13,7 +13,6 @@ spring:
       ddl-auto: create-drop
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
         show_sql: true
         use_sql_comments: true
         format_sql: true
@@ -23,7 +22,7 @@ spring:
 
 
 server:
-  port: 8080
+  port: 9090
 
 logging.level.root: INFO
 
@@ -48,10 +47,10 @@ spring:
 
   datasource:
     initialization-mode: always
-    username: tracker_admin
+    username: task_manager_admin
     password: 123qwe
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/tracker_db
+    url: jdbc:postgresql://postgres-container:5432/task_manager_db
 
 
 ---
