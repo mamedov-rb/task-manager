@@ -47,7 +47,7 @@ class UserControllerTest extends MockMvcHelper {
 
     }
 
-    def "Find user by username - 403"() {
+    def "Find user by username - 401"() {
         given:
         saveUser("admin-user")
 
@@ -56,7 +56,7 @@ class UserControllerTest extends MockMvcHelper {
 
         then:
         result.andDo(print())
-                .andExpect(status().isForbidden())
+                .andExpect(status().isUnauthorized())
     }
 
 }

@@ -55,22 +55,22 @@ class ProjectControllerTest extends MockMvcHelper {
                 .andExpect((jsonPath('$', Matchers.hasSize(2))))
     }
 
-    def "Create new project - 403"() {
+    def "Create new project - 401"() {
         when:
         def result = performPost(SAVE_PROJECT, getProject())
 
         then:
         result.andDo(print())
-                .andExpect(status().isForbidden())
+                .andExpect(status().isUnauthorized())
     }
 
-    def "Find project by id - 403"() {
+    def "Find project by id - 401"() {
         when:
         def result = performGet(FIND_PROJECT_BY_ID, "123")
 
         then:
         result.andDo(print())
-                .andExpect(status().isForbidden())
+                .andExpect(status().isUnauthorized())
     }
 
 }
