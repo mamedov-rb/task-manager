@@ -241,3 +241,5 @@ test/fixtures/**/.fbkpm
 package-lock.json
 client/node_modules/**
 back-end/build/**
+
+.DS_Store
