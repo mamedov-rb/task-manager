@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
 
-  postgres:
+  db:
     build: ./postgres      
     restart: always
     expose:
@@ -15,19 +15,41 @@ services:
       - TASK_MANAGER_USER=task_manager_admin
       - TASK_MANAGER_PASSWORD=123qwe
       - TASK_MANAGER_DATABASE=task_manager_db
+    networks:
+      - backend    
     volumes:
     - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql          
 
-  task-manager:
+  server:
     build: ./server
+    restart: always
     image: task-manager-image
     container_name: task-manager-container
     expose:
       - 9090
     ports:
       - 9090:9090
-    links:
-      - postgres    
+    depends_on: 
+      - db    
+        #links:
+        #- postgres
+    networks:
+      - backend
+      - frontend    
 
+        # client:
+        # build: ./client
+        # restart: always
+        # expose:
+        # - 3000
+        # ports:
+        #  - 3000:3000     
+        # depends_on:
+        # - server
+        # networks:
+            #      - frontend
+            
+        
 networks:
-  infranet:   
+  backend:
+  frontend:      
