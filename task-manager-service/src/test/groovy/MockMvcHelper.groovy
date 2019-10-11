@@ -43,7 +43,7 @@ class MockMvcHelper extends Specification {
 
     protected final static String ASSIGN_USER_TO_PROJECT = "/api/manager/assign/username/{username}/projectId/{id}"
 
-    protected final static String LEAVE_PROJECT_UNDER_USER = "/api/manager/leave/username/{username}/projectId/{id}"
+    protected final static String LEAVE_PROJECT_UNDER_USER = "/api/manager/leave/projectId/{id}"
 
     protected final static String LEAVE_ALL_PROJECTS = "/api/manager/leave/all/projects/user/{username}"
 
@@ -59,7 +59,7 @@ class MockMvcHelper extends Specification {
 
     protected final static String DELETE_TASK_BY_ID = "/api/task/delete/{id}"
 
-    protected final static String DELETE_PROJECT_BY_ID = "/api/manager/delete/project/id/{id}/user/{username}"
+    protected final static String DELETE_PROJECT_BY_ID = "/api/manager/delete/project/{id}"
 
     protected final static String SAVE_COMMENT_UNDER_USER_TASK = "/api/manager/comment/save"
 

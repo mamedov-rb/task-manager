@@ -66,8 +66,11 @@ public class ProjectManagerService {
     }
 
     @Transactional
-    public boolean leaveProjectUnderUser(final String username, final String projectId) {
-        @NotNull final User user = userService.findByUsernameWithEagerProject(username);
+    public boolean leaveProjectUnderUser(@NotNull final String projectId, @Nullable final Authentication authentication) {
+        if (authentication == null) {
+            throw new UserNotAuthorizedException("User - Not authorized. Please login");
+        }
+        @NotNull final User user = userService.findByUsernameWithEagerProject(authentication.getName());
         @NotNull final Project project = projectService.findByIdWithEagerUsers(projectId);
         final Set<Task> tasks = taskService.findAllByAssignedToAndProject(user, project);
         if (!tasks.isEmpty()) {
