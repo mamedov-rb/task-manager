@@ -106,6 +106,19 @@ class ProjectDetails extends Component {
             })
     }
 
+    leaveProject = () => {
+        api.patch('/manager/leave/projectId/' + this.props.match.params.projectId)
+            .then(response => {
+                toast.success("Project was leave.")
+                this.fetchUsers()
+            })
+            .catch(err => {
+                toast.error(err.message, {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+            })
+    }
+
     sortTasks = (tasks) => {
         const planned = []
         const inProgress = []
@@ -162,7 +175,7 @@ class ProjectDetails extends Component {
                                 <button className="ui blue basic button center floated" onClick={this.joinToProject}>
                                     Join to project
                                 </button> :
-                                <button className="ui red basic button center floate" onClick={this.joinToProject}>
+                                <button className="ui red basic button center floate" onClick={this.leaveProject}>
                                     Leave project
                                 </button>
                             }
