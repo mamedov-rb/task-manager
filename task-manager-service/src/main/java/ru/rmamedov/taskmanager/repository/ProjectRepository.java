@@ -19,7 +19,7 @@ public interface ProjectRepository extends JpaRepository<Project, String> {
     Set<ProjectProjection> findAllAsProjectionByUsername(@Param("user") User user);
 
     @Query("SELECT p FROM Project p WHERE :user MEMBER OF p.users")
-    Optional<Project> findByUser(@Param("user") User user);
+    Set<Project> findByUser(@Param("user") User user);
 
     @Query("SELECT p FROM Project p WHERE p.id = :id")
     Optional<ProjectDetailsProjection> findDetailsAsProjection(@Param("id")String id);

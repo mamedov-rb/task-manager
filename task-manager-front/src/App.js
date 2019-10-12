@@ -8,6 +8,7 @@ import ProjectDetails from './component/ProjectDetails'
 import TaskDetails from './component/TaskDetails'
 import Header from './component/Header'
 import Login from './component/Login'
+import Register from './component/Register'
 
 class App extends Component {
     constructor(props) {
@@ -38,6 +39,9 @@ class App extends Component {
                         <Link to="/login" className="item">
                             {this.state.isAuthenticated ? 'Logout' : 'Login'}
                         </Link>
+                        <Link to="/register" className="item">
+                            Register
+                        </Link>
                         <div className="right menu">
                             <div className="item">
                                 <div className="ui transparent icon input">
@@ -53,6 +57,7 @@ class App extends Component {
                             <ProjectDetails globalStore={this.state.isAuthenticated} {...props} />}
                         />
                         <Route path="/task/details/:taskId" component={TaskDetails}/>
+                        <Route path="/register" component={Register}/>
                         <Route path="/login" component={() =>
                             <Login isAuthenticated={this.state.isAuthenticated} setAuthenticated={this.setAuthenticated} />}
                         />

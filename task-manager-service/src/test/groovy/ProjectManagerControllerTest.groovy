@@ -50,13 +50,10 @@ class ProjectManagerControllerTest extends MockMvcHelper {
     @WithMockUser(username = "admin-user")
     def "Is member of project"() {
         given:
-        def developer = "developer"
-        saveUser(developer)
         saveProjectWithCreatedBy("admin-user")
         def id = projectRepository.findAll().stream().findFirst().get().id
-        performPatch(ASSIGN_USER_TO_PROJECT, developer, id)
         when:
-        def result = performGet(IS_ASSIGNED_TO_PROJECT, id)
+        def result = performGet(IS_MEMBER, id)
 
         then:
         result.andDo(print())

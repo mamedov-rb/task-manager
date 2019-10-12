@@ -78,7 +78,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         res.addHeader(TOKEN_HEADER, TOKEN_PREFIX + token);
         res.addHeader("Access-Control-Expose-Headers", "Authorization");
         res.addHeader("Username", user.getUsername());
-//        res.addHeader("User-Roles", roleNames.collect(Collectors.joining(", ", "[", "]")));
     }
 
 }

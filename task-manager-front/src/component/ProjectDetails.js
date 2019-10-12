@@ -82,7 +82,7 @@ class ProjectDetails extends Component {
     }
 
     isMemberOf = () => {
-        api.get('/project/contains-user')
+        api.get('/project/is-member')
             .then(response => {
                 this.setState({isMemberOf: Boolean(response.data)})
             })
@@ -98,6 +98,7 @@ class ProjectDetails extends Component {
             .then(response => {
                 toast.success("Joined to project.")
                 this.fetchUsers()
+                this.setState({isMemberOf: true})
             })
             .catch(err => {
                 toast.error(err.message, {
@@ -111,6 +112,7 @@ class ProjectDetails extends Component {
             .then(response => {
                 toast.success("Project was leave.")
                 this.fetchUsers()
+                this.setState({isMemberOf: false})
             })
             .catch(err => {
                 toast.error(err.message, {

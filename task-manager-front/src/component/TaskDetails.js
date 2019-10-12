@@ -3,7 +3,6 @@ import api from '../axios-config'
 import {toast} from "react-toastify"
 import Comments from "./Comments"
 import {Dropdown} from 'semantic-ui-react'
-import Faker from "faker";
 
 class TaskDetails extends Component {
     constructor(props) {
@@ -35,6 +34,21 @@ class TaskDetails extends Component {
         api.put('/task/' + this.props.match.params.taskId + '/status/' + status)
             .then(response => {
                 toast.success("Status changed.", {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+                this.fetchTaskDetails()
+            })
+            .catch(err => {
+                toast.error(err.message, {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+            })
+    }
+
+    deleteTask = () => {
+        api.delete('/task/delete/' + this.props.match.params.taskId)
+            .then(response => {
+                toast.success("Task deleted.", {
                     position: toast.POSITION.TOP_RIGHT
                 })
             })
@@ -75,10 +89,8 @@ class TaskDetails extends Component {
                             <div className="header">
                                 {this.state.task.name}
                             </div>
-                            <p>{this.state.task.description}</p>
-                            <p>status: {this.state.task.status}</p>
-                            <p>created: {this.state.task.created}</p>
-                            <p>changed: {this.state.task.updated}</p>
+                            <span>{this.state.task.description}</span> <span>status: {this.state.task.status}</span><br/>
+                            <span>created: {this.state.task.created}</span> <span>changed: {this.state.task.updated}</span>
                         </div>
                     </div>
                     <div className="ui grid">
@@ -89,7 +101,7 @@ class TaskDetails extends Component {
                             <div className="ui segment">
                                 <div className="ui form">
                                     <div className="two fields">
-                                        <button className="ui negative basic button">
+                                        <button className="ui negative basic button" onClick={this.deleteTask}>
                                             Drop
                                         </button>
                                         <div className="field">

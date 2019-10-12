@@ -66,7 +66,7 @@ public class ProjectService {
             throw new UserNotAuthorizedException("User - Not authorized. Please login");
         }
         final User user = (User) userService.loadUserByUsername(authentication.getName());
-        return projectRepository.findByUser(user).isPresent();
+        return !projectRepository.findByUser(user).isEmpty();
     }
 
 }
