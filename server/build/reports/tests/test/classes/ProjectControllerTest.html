@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - Class ProjectControllerTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class ProjectControllerTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/default-package.html">default-package</a> &gt; ProjectControllerTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">4</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.495s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">Create new project - 401</td>
+<td class="success">0.010s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Find all projects by current user</td>
+<td class="success">0.299s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Find project by id</td>
+<td class="success">0.175s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Find project by id - 401</td>
+<td class="success">0.011s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2019-10-12 20:27:16.436  INFO 19263 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [ProjectControllerTest], using SpringBootContextLoader
+2019-10-12 20:27:16.437  INFO 19263 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [ProjectControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2019-10-12 20:27:16.444  INFO 19263 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.spockframework.spring.SpringMockTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+2019-10-12 20:27:16.445  INFO 19263 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@5d79e928, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@4abce726, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@6ec512b6, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@54f5b3cc, org.springframework.test.context.support.DirtiesContextTestExecutionListener@46d720d3, org.springframework.test.context.transaction.TransactionalTestExecutionListener@6bff7af8, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@2de99593, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@547b3831, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@2b555bd5, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@3b6ddcfd, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@5ac9830e, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@57fe82d6, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@5674e00f, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@32b4408, org.spockframework.spring.SpringMockTestExecutionListener@15ec6690]
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/project/find/9c580845-0dec-4f7c-8323-312722ca83f2
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = ru.rmamedov.taskmanager.controller.ProjectController
+           Method = public org.springframework.http.ResponseEntity&lt;ru.rmamedov.taskmanager.model.DTO.ProjectDetailsProjection&gt; ru.rmamedov.taskmanager.controller.ProjectController.findById(java.lang.String)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;1; mode=block&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
+     Content type = application/json;charset=UTF-8
+             Body = {&quot;created&quot;:&quot;12/10/2019 20:27&quot;,&quot;updated&quot;:&quot;12/10/2019 20:27&quot;,&quot;startDate&quot;:&quot;13/10/2019&quot;,&quot;description&quot;:&quot;VsBSweRubq&quot;,&quot;name&quot;:&quot;zOhlSCloaJ&quot;,&quot;id&quot;:&quot;9c580845-0dec-4f7c-8323-312722ca83f2&quot;}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2019-10-12 20:27:16.873  WARN 19263 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 23001, SQLState: 23001
+2019-10-12 20:27:16.873 ERROR 19263 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : Unique index or primary key violation: &quot;UK_3K4CPLVH82SRUEUTTFKWNYLQ0_INDEX_7 ON PUBLIC.APP_USER(USERNAME)&quot;; SQL statement:
+insert into app_user (created, email, first_name, last_name, password, phone, updated, username, version, id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [23001-148]
+2019-10-12 20:27:16.874 ERROR 19263 --- [    Test worker] o.h.i.ExceptionMapperStandardImpl        : HHH000346: Error during managed flush [org.hibernate.exception.ConstraintViolationException: could not execute statement]
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/project/all
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = ru.rmamedov.taskmanager.controller.ProjectController
+           Method = public org.springframework.http.ResponseEntity&lt;java.util.Set&lt;ru.rmamedov.taskmanager.model.DTO.ProjectProjection&gt;&gt; ru.rmamedov.taskmanager.controller.ProjectController.findAllByUserId(org.springframework.security.core.Authentication)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;1; mode=block&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
+     Content type = application/json;charset=UTF-8
+             Body = [{&quot;description&quot;:&quot;mcaVChYZbT&quot;,&quot;name&quot;:&quot;TISVrZbUlD&quot;,&quot;id&quot;:&quot;d2d245e6-17f4-4e56-9bbd-2750b6a82acf&quot;},{&quot;description&quot;:&quot;NGVMjlpKjS&quot;,&quot;name&quot;:&quot;PGoqisVeMZ&quot;,&quot;id&quot;:&quot;8282ebc9-e4a8-49d7-b88f-3baa05a7143f&quot;}]
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/manager/project/save
+       Parameters = {}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+             Body = {&quot;id&quot;:null,&quot;name&quot;:&quot;BiyoOnPNTG&quot;,&quot;description&quot;:&quot;icxFdzPPgv&quot;,&quot;created&quot;:null,&quot;updated&quot;:null,&quot;startDate&quot;:&quot;2019-10-13&quot;,&quot;createdBy&quot;:null,&quot;users&quot;:[]}
+    Session Attrs = {}
+
+Handler:
+             Type = null
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 401
+    Error message = Unauthorized
+          Headers = [WWW-Authenticate:&quot;Basic realm=&quot;Realm&quot;&quot;, X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;1; mode=block&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/project/find/123
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = null
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 401
+    Error message = Unauthorized
+          Headers = [WWW-Authenticate:&quot;Basic realm=&quot;Realm&quot;&quot;, X-Content-Type-Options:&quot;nosniff&quot;, X-XSS-Protection:&quot;1; mode=block&quot;, Cache-Control:&quot;no-cache, no-store, max-age=0, must-revalidate&quot;, Pragma:&quot;no-cache&quot;, Expires:&quot;0&quot;, X-Frame-Options:&quot;DENY&quot;]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 5.4.1</a> at Oct 12, 2019, 8:27:17 PM</p>
+</div>
+</div>
+</body>
+</html>

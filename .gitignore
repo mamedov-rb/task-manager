@@ -243,3 +243,4 @@ client/node_modules/**
 back-end/build/**
 
 .DS_Store
+/pg_data

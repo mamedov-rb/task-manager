@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ProjectManagerControllerTest" tests="17" skipped="0" failures="0" errors="0" timestamp="2019-10-12T20:26:52" hostname="rustam" time="23.31">
+  <properties/>
+  <testcase name="Save new project and assign yourself to it" classname="ProjectManagerControllerTest" time="16.5"/>
+  <testcase name="Assign user to project" classname="ProjectManagerControllerTest" time="0.384"/>
+  <testcase name="Is member of project" classname="ProjectManagerControllerTest" time="0.2"/>
+  <testcase name="Assign project to multiple users" classname="ProjectManagerControllerTest" time="0.723"/>
+  <testcase name="Leave project with tasks under user" classname="ProjectManagerControllerTest" time="0.369"/>
+  <testcase name="Leave all projects with tasks under user" classname="ProjectManagerControllerTest" time="0.835"/>
+  <testcase name="Create and assign task to user and project" classname="ProjectManagerControllerTest" time="0.348"/>
+  <testcase name="Find all tasks by assigned to or createdBy and project " classname="ProjectManagerControllerTest" time="0.601"/>
+  <testcase name="Reassign task to another user" classname="ProjectManagerControllerTest" time="0.485"/>
+  <testcase name="Delete task under user and project" classname="ProjectManagerControllerTest" time="0.313"/>
+  <testcase name="Delete project with tasks under user" classname="ProjectManagerControllerTest" time="0.198"/>
+  <testcase name="Create comment under user project task" classname="ProjectManagerControllerTest" time="0.348"/>
+  <testcase name="Create multiple comments under user project task" classname="ProjectManagerControllerTest" time="0.386"/>
+  <testcase name="Find all comments" classname="ProjectManagerControllerTest" time="0.219"/>
+  <testcase name="Delete comment under user project task" classname="ProjectManagerControllerTest" time="0.319"/>
+  <testcase name="Delete task with all comments cascaded" classname="ProjectManagerControllerTest" time="0.386"/>
+  <testcase name="Delete user with projects tasks" classname="ProjectManagerControllerTest" time="0.692"/>
+  <system-out><![CDATA[20:26:51.638 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [ProjectManagerControllerTest]
+20:26:51.644 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [ProjectManagerControllerTest]
+20:26:51.646 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [ProjectManagerControllerTest]
+20:26:51.647 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [ProjectManagerControllerTest]
+20:26:51.664 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [ProjectManagerControllerTest]
+20:26:51.664 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [ProjectManagerControllerTest]
+20:26:51.665 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [ProjectManagerControllerTest]
+20:26:51.665 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [ProjectManagerControllerTest]
+20:26:51.667 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [ProjectManagerControllerTest]
+20:26:51.668 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [ProjectManagerControllerTest]
+20:26:51.669 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [ProjectManagerControllerTest]
+20:26:51.669 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [ProjectManagerControllerTest]
+20:26:51.670 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [ProjectManagerControllerTest]
+20:26:51.671 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [ProjectManagerControllerTest]
+20:26:51.672 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [ProjectManagerControllerTest]
+20:26:51.672 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [ProjectManagerControllerTest]
+20:26:51.673 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [ProjectManagerControllerTest]
+20:26:51.674 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [ProjectManagerControllerTest]
+20:26:51.675 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [ProjectManagerControllerTest]
+20:26:51.675 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [ProjectManagerControllerTest]
+20:26:51.676 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [ProjectManagerControllerTest]
+20:26:51.677 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [ProjectManagerControllerTest]
+20:26:51.678 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [ProjectManagerControllerTest]
+20:26:51.679 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [ProjectManagerControllerTest]
+20:26:51.680 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [ProjectManagerControllerTest]
+20:26:51.681 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [ProjectManagerControllerTest]
+20:26:51.682 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [ProjectManagerControllerTest]
+20:26:51.682 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [ProjectManagerControllerTest]
+20:26:51.684 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [ProjectManagerControllerTest]
+20:26:51.685 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [ProjectManagerControllerTest]
+20:26:51.686 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [ProjectManagerControllerTest]
+20:26:51.686 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [ProjectManagerControllerTest]
+20:26:51.687 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [ProjectManagerControllerTest]
+20:26:51.688 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [ProjectManagerControllerTest]
+20:26:51.689 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved @ProfileValueSourceConfiguration [null] for test class [ProjectManagerControllerTest]
+20:26:51.690 [Test worker] DEBUG org.springframework.test.annotation.ProfileValueUtils - Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [ProjectManagerControllerTest]
+20:26:51.697 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+20:26:51.708 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+20:26:51.712 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [ProjectManagerControllerTest] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+20:26:51.725 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [ProjectManagerControllerTest], using SpringBootContextLoader
+20:26:51.730 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [ProjectManagerControllerTest]: class path resource [ProjectManagerControllerTest-context.xml] does not exist
+20:26:51.731 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [ProjectManagerControllerTest]: class path resource [ProjectManagerControllerTestContext.groovy] does not exist
+20:26:51.731 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [ProjectManagerControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+20:26:52.021 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [ProjectManagerControllerTest]: using defaults.
+20:26:52.021 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.spockframework.spring.SpringMockTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+20:26:52.056 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@456b5ad6, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@51be457e, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@c527ae8, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@1b23a968, org.springframework.test.context.support.DirtiesContextTestExecutionListener@401fd30, org.springframework.test.context.transaction.TransactionalTestExecutionListener@27b7cd7b, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@382d665f, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@3e43f0db, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@3520725e, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@2ce5bd94, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@7f2939c9, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@5e4dcbdf, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@68c9f0ca, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@69c1e95a, org.spockframework.spring.SpringMockTestExecutionListener@5f9072da]
+20:26:52.591 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@1197ad62 testClass = ProjectManagerControllerTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@38d57eff testClass = ProjectManagerControllerTest, locations = '{}', classes = '{class ru.rmamedov.taskmanager.Application, class ru.rmamedov.taskmanager.Application}', contextInitializerClasses = '[]', activeProfiles = '{test}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.spockframework.spring.mock.SpockContextCustomizer@0, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@e7e8512, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@14867f6c, [ImportsContextCustomizer@38e46c43 key = [org.springframework.boot.test.autoconfigure.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcSecurityAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebDriverAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@16c48dd, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@6d52f2f3, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@36f13f89], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> false]], class annotated with @DirtiesContext [false] with mode [null].
+20:26:52.604 [Test worker] DEBUG org.springframework.test.context.support.DependencyInjectionTestExecutionListener - Performing dependency injection for test context [[DefaultTestContext@1197ad62 testClass = ProjectManagerControllerTest, testInstance = ProjectManagerControllerTest@19e6f713, testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@38d57eff testClass = ProjectManagerControllerTest, locations = '{}', classes = '{class ru.rmamedov.taskmanager.Application, class ru.rmamedov.taskmanager.Application}', contextInitializerClasses = '[]', activeProfiles = '{test}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.spockframework.spring.mock.SpockContextCustomizer@0, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@e7e8512, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@14867f6c, [ImportsContextCustomizer@38e46c43 key = [org.springframework.boot.test.autoconfigure.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcSecurityAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebDriverAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@16c48dd, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@6d52f2f3, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@36f13f89], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> false]]].
+20:26:52.659 [Test worker] DEBUG org.springframework.test.context.support.TestPropertySourceUtils - Adding inlined properties to environment: {spring.jmx.enabled=false, org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.1.6.RELEASE)
+
+2019-10-12 20:26:53.517  INFO 19263 --- [    Test worker] ProjectManagerControllerTest             : Starting ProjectManagerControllerTest on rustam with PID 19263 (/home/rmamedov/projects/task-manager/task-manager-service/build/classes/groovy/test started by rmamedov in /home/rmamedov/projects/task-manager/task-manager-service)
+2019-10-12 20:26:53.519  INFO 19263 --- [    Test worker] ProjectManagerControllerTest             : The following profiles are active: test
+2019-10-12 20:26:55.731  INFO 19263 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-10-12 20:26:55.930  INFO 19263 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 182ms. Found 5 repository interfaces.
+2019-10-12 20:26:57.112  INFO 19263 --- [    Test worker] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$968bff26] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-10-12 20:26:57.906  INFO 19263 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2019-10-12 20:26:57.985  INFO 19263 --- [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-10-12 20:26:57.986  INFO 19263 --- [    Test worker] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.21]
+2019-10-12 20:26:58.278  INFO 19263 --- [    Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-10-12 20:26:58.278  INFO 19263 --- [    Test worker] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 4679 ms
+2019-10-12 20:26:59.380  INFO 19263 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-10-12 20:26:59.574  INFO 19263 --- [    Test worker] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Driver does not support get/set network timeout for connections. (Method org/h2/jdbc/JdbcConnection.getNetworkTimeout()I is abstract)
+2019-10-12 20:26:59.593  INFO 19263 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-10-12 20:26:59.765  INFO 19263 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-10-12 20:26:59.885  INFO 19263 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.10.Final}
+2019-10-12 20:26:59.888  INFO 19263 --- [    Test worker] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2019-10-12 20:27:00.253  INFO 19263 --- [    Test worker] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2019-10-12 20:27:00.564  INFO 19263 --- [    Test worker] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2019-10-12 20:27:00.689  INFO 19263 --- [    Test worker] o.h.e.j.e.i.LobCreatorBuilderImpl        : HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2019-10-12 20:27:02.456  INFO 19263 --- [    Test worker] o.h.t.schema.internal.SchemaCreatorImpl  : HHH000476: Executing import script 'org.hibernate.tool.schema.internal.exec.ScriptSourceInputNonExistentImpl@1943ab22'
+2019-10-12 20:27:02.462  INFO 19263 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-10-12 20:27:03.000  INFO 19263 --- [    Test worker] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+2019-10-12 20:27:05.226  WARN 19263 --- [    Test worker] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-10-12 20:27:05.597  INFO 19263 --- [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2019-10-12 20:27:05.683  INFO 19263 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5c1a20f0, org.springframework.security.web.context.SecurityContextPersistenceFilter@255b5c96, org.springframework.security.web.header.HeaderWriterFilter@10fb15c5, org.springframework.web.filter.CorsFilter@21ad454b, org.springframework.security.web.authentication.logout.LogoutFilter@6e73b77e, ru.rmamedov.taskmanager.auth.JwtAuthenticationFilter@75234c41, ru.rmamedov.taskmanager.auth.JwtAuthorizationFilter@317d305e, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@22d12aba, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6b149ae, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@110861e1, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3ced9b21, org.springframework.security.web.session.SessionManagementFilter@2517da13, org.springframework.security.web.access.ExceptionTranslationFilter@2046520e, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@760bf7b6]
+2019-10-12 20:27:06.163  INFO 19263 --- [    Test worker] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-10-12 20:27:06.737  WARN 19263 --- [    Test worker] .b.a.g.t.GroovyTemplateAutoConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Groovy configuration, or set spring.groovy.template.check-template-location=false)
+2019-10-12 20:27:07.554  INFO 19263 --- [    Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring TestDispatcherServlet ''
+2019-10-12 20:27:07.555  INFO 19263 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2019-10-12 20:27:07.582  INFO 19263 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 26 ms
+2019-10-12 20:27:07.747  INFO 19263 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 45369 (http) with context path ''
+2019-10-12 20:27:07.754  INFO 19263 --- [    Test worker] ProjectManagerControllerTest             : Started ProjectManagerControllerTest in 15.089 seconds (JVM running for 17.369)
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/manager/project/save
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8"]
+             Body = {"id":null,"name":"hlOHfWjewF","description":"FIngZojCIj","created":null,"updated":null,"startDate":"2019-10-13","createdBy":null,"users":[]}
+    Session Attrs = {}
+
+Handler:
+             Type = ru.rmamedov.taskmanager.controller.ProjectManagerController
+           Method = public org.springframework.http.ResponseEntity ru.rmamedov.taskmanager.controller.ProjectManagerController.create(ru.rmamedov.taskmanager.model.Project,org.springframework.security.core.Authentication)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = PATCH
+      Request URI = /api/manager/assign/username/developer-user/projectId/2d9fa601-96cb-4b47-8b10-48b8798768b9
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = ru.rmamedov.taskmanager.controller.ProjectManagerController
+           Method = public org.springframework.http.ResponseEntity ru.rmamedov.taskmanager.controller.ProjectManagerController.assignUserToProject(java.lang.String,java.lang.String)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/project/is-member
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = ru.rmamedov.taskmanager.controller.ProjectController
+           Method = public java.lang.String ru.rmamedov.taskmanager.controller.ProjectController.containsUser(org.springframework.security.core.Authentication)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"text/plain;charset=UTF-8", Content-Length:"4", X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = text/plain;charset=UTF-8
+             Body = true
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/manager/users/c39f5f44-a1e6-4798-8d47-c02aff76dc7c
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = ru.rmamedov.taskmanager.controller.ProjectManagerController
+           Method = public org.springframework.http.ResponseEntity<java.util.Set<ru.rmamedov.taskmanager.model.DTO.UserMetaDTO>> ru.rmamedov.taskmanager.controller.ProjectManagerController.findAllByProject(java.lang.String)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json;charset=UTF-8
+             Body = [{"roles":[],"username":"admin-user","fullName":"HZJLzgdNuy y."},{"roles":[],"username":"developer_01","fullName":"XLXSAskhoD B."},{"roles":[],"username":"developer_02","fullName":"qCIqUaNEpB G."},{"roles":[],"username":"developer_03","fullName":"lzqvAucJsG P."}]
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2019-10-12 20:27:10.730  INFO 19263 --- [    Test worker] r.r.t.service.ProjectManagerService      : While user 'admin-user' were leaving project 'WMuFXxZVDC', he removed: '1' tasks.
+
+MockHttpServletRequest:
+      HTTP Method = PATCH
+      Request URI = /api/manager/leave/projectId/8ed7156f-2720-4410-a0be-a3882571cb70
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = ru.rmamedov.taskmanager.controller.ProjectManagerController
+           Method = public org.springframework.http.ResponseEntity ru.rmamedov.taskmanager.controller.ProjectManagerController.leaveProjectWithTasksUnderUser(java.lang.String,org.springframework.security.core.Authentication)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2019-10-12 20:27:11.256  WARN 19263 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 23001, SQLState: 23001
+2019-10-12 20:27:11.257 ERROR 19263 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : Unique index or primary key violation: "UK_3K4CPLVH82SRUEUTTFKWNYLQ0_INDEX_7 ON PUBLIC.APP_USER(USERNAME)"; SQL statement:
+insert into app_user (created, email, first_name, last_name, password, phone, updated, username, version, id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [23001-148]
+2019-10-12 20:27:11.260 ERROR 19263 --- [    Test worker] o.h.i.ExceptionMapperStandardImpl        : HHH000346: Error during managed flush [org.hibernate.exception.ConstraintViolationException: could not execute statement]
+2019-10-12 20:27:11.406  WARN 19263 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 23001, SQLState: 23001
+2019-10-12 20:27:11.406 ERROR 19263 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : Unique index or primary key violation: "UK_3K4CPLVH82SRUEUTTFKWNYLQ0_INDEX_7 ON PUBLIC.APP_USER(USERNAME)"; SQL statement:
+insert into app_user (created, email, first_name, last_name, password, phone, updated, username, version, id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [23001-148]
+2019-10-12 20:27:11.407 ERROR 19263 --- [    Test worker] o.h.i.ExceptionMapperStandardImpl        : HHH000346: Error during managed flush [org.hibernate.exception.ConstraintViolationException: could not execute statement]
+2019-10-12 20:27:11.551  INFO 19263 --- [    Test worker] r.r.t.service.ProjectManagerService      : While user 'developer_01' were leaving project 'jUTUmfxjWi', he removed: '1' tasks.
+2019-10-12 20:27:11.567  INFO 19263 --- [    Test worker] r.r.t.service.ProjectManagerService      : While user 'developer_01' were leaving project 'gQQwEjlXGu', he removed: '1' tasks.
+2019-10-12 20:27:11.579  INFO 19263 --- [    Test worker] r.r.t.service.ProjectManagerService      : While user 'developer_01' were leaving project 'bhjmkxhzfv', he removed: '1' tasks.
+
+MockHttpServletRequest:
+      HTTP Method = PATCH
+      Request URI = /api/manager/leave/all/projects/user/developer_01
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = ru.rmamedov.taskmanager.controller.ProjectManagerController
+           Method = public org.springframework.http.ResponseEntity ru.rmamedov.taskmanager.controller.ProjectManagerController.leaveAllProjectsWithTasks(java.lang.String)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/manager/assign/task/to/user
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8"]
+             Body = {"task":{"id":null,"name":"nmMMedLgeW","description":"QFVWUHZlBcZueEytjUPoRotXvMjYHivcmnROWOIlWRNfzGYdbR","status":"PLANNED","created":null,"updated":null,"project":null,"createdBy":null,"assignedTo":null,"comments":[]},"projectId":"74bd4d5c-2c3b-4498-8ecb-2d12b2342fbe","assignTo":"developer-user"}
+    Session Attrs = {}
+
+Handler:
+             Type = ru.rmamedov.taskmanager.controller.ProjectManagerController
+           Method = public org.springframework.http.ResponseEntity ru.rmamedov.taskmanager.controller.ProjectManagerController.createTaskAndAssignToYourself(ru.rmamedov.taskmanager.model.DTO.SaveTaskRequest,org.springframework.security.core.Authentication)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/task/all/by/assignedTo/projectId/f37c3bfd-542e-4d9e-8ed4-c6d261d2e09d
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = ru.rmamedov.taskmanager.controller.TaskController
+           Method = public org.springframework.http.ResponseEntity<java.util.Set<ru.rmamedov.taskmanager.model.DTO.TaskProjection>> ru.rmamedov.taskmanager.controller.TaskController.findAllByUserId(java.lang.String)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json;charset=UTF-8
+             Body = [{"status":"PLANNED","description":"ObOxKKiPrfMRvpwhiFPYlAdUZoJcaQwrtFUxwGjfmQFYEaLfsx","name":"nreDRpXakL","id":"36a853a8-ceb1-41dd-9420-db1c7bc661e6"},{"status":"PLANNED","description":"ZGZntYYvbNPpWciXFZvvHBVLiVyXVcYfxGyKVszvTGCbjjeVgh","name":"zxlcxuObjN","id":"ed911454-72ae-4c95-95ce-b40a4090da73"},{"status":"PLANNED","description":"HMGaZNYuCFFEViZytyoqHOLuzPuWyJjDoucfNIbaCaZzzBKclW","name":"RhQZPBVKaY","id":"057a944c-a315-4a0a-b002-da33a60f17f1"},{"status":"PLANNED","description":"MigYFqKxACWwKyyolPZuersjRUcFcQyRnZvuVlsSYvqGiRsLOI","name":"OgjLkUteBI","id":"a9c5a5b1-832c-4467-9898-f7cd00f27607"},{"status":"PLANNED","description":"sdPbeBahnTMHWpYOBcTQQddoSaarKtlfRrnCoMEeVKTSFLXTrI","name":"pLPVreEOnk","id":"420e52db-d212-4652-910a-2362a24e989a"},{"status":"PLANNED","description":"TwdoUofVFSNItlcyUNQNlCcKHWnBMshHZPZbcsDUFoTbnlkHgT","name":"ELyogbButu","id":"8650f44c-b648-44f1-a73a-b4e0a861f367"}]
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = PATCH
+      Request URI = /api/manager/reassign/task/7f22006f-9a0b-4363-b450-b38f95302464/user/developer_02/by-project/40ef2214-fcc6-425d-bbcf-2598fb954f83
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = ru.rmamedov.taskmanager.controller.ProjectManagerController
+           Method = public org.springframework.http.ResponseEntity ru.rmamedov.taskmanager.controller.ProjectManagerController.reassignTaskToAnotherUser(java.lang.String,java.lang.String,java.lang.String)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = DELETE
+      Request URI = /api/task/delete/bd8ae41c-e4ac-4f8e-9779-fa7716655c4b
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = ru.rmamedov.taskmanager.controller.TaskController
+           Method = public org.springframework.http.ResponseEntity ru.rmamedov.taskmanager.controller.TaskController.deleteById(java.lang.String)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 204
+    Error message = null
+          Headers = [X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = DELETE
+      Request URI = /api/manager/delete/project/408dc905-f667-4cdd-a528-16f97c082a15
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = ru.rmamedov.taskmanager.controller.ProjectManagerController
+           Method = public org.springframework.http.ResponseEntity ru.rmamedov.taskmanager.controller.ProjectManagerController.deleteProjectWithTasksUnderUser(java.lang.String,org.springframework.security.core.Authentication)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 204
+    Error message = null
+          Headers = [X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/manager/comment/save
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8"]
+             Body = {"comment":{"id":null,"text":"izHvXmMqGDRhGDiUCEKFlhfytMVQZGGFpYsnQVClkBytXhwuTGVBUGlqKOevrVmkLzrBlakxbyzqcoDvKnRgNQPuuUtUoBcDdHqtgAOtgMQsMojRGzRydjZvvDhNdCPPLNXxFGsRLguXkNQJyJGZCP","created":null,"commentator":null,"task":null},"taskId":"603b5a69-f969-48d1-a9d3-5f30d8122a64"}
+    Session Attrs = {}
+
+Handler:
+             Type = ru.rmamedov.taskmanager.controller.ProjectManagerController
+           Method = public org.springframework.http.ResponseEntity ru.rmamedov.taskmanager.controller.ProjectManagerController.saveCommentUnderUserProjectTask(ru.rmamedov.taskmanager.model.DTO.SaveCommentRequest,org.springframework.security.core.Authentication)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/comment/all/taskId/1cf48097-31cf-443c-b458-4f5529a0f7c5
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = ru.rmamedov.taskmanager.controller.CommentController
+           Method = public org.springframework.http.ResponseEntity<java.util.Set<ru.rmamedov.taskmanager.model.DTO.CommentProjection>> ru.rmamedov.taskmanager.controller.CommentController.findAllByUserId(java.lang.String)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json;charset=UTF-8
+             Body = [{"created":"12.10.2019 20:27","text":"FvZPjbuOOnEhiQQhfOvyukOKtmmvieHzJFvnHEkdYpKPDPoVYqCYzwZFODKcgaSKuRLpSJwGOBZktQbUNwqxDzLWkUsupstZSclvvUVhtbPNvkDxmBUXuwlmxVoEztMJkzXyyrolRUMkqAamzTdWkk","id":"c3ccd134-e7f2-40cb-b542-22e9df2042f8"},{"created":"12.10.2019 20:27","text":"tvdumcNdsehYVXNPeLRjQEwXQcXWUMaGzpTZhAVIgmRqiUymOYtijXGxkpykpmnlhCUrqoiZQctsaYbWQBkFhxIfSFZrKjezrMcYrUlIONyATnmVBXiEjUFDzYGFItVrkRicOycmHhsvgYmheeExXL","id":"dcc7c82d-c648-4c31-8078-a6aeee298156"}]
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = DELETE
+      Request URI = /api/manager/comment/delete/1be772ee-642c-4dcc-bf55-5c23a6f90ec6
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = ru.rmamedov.taskmanager.controller.ProjectManagerController
+           Method = public org.springframework.http.ResponseEntity ru.rmamedov.taskmanager.controller.ProjectManagerController.deleteCommentUnderTasksAndUser(java.lang.String)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 204
+    Error message = null
+          Headers = [X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = DELETE
+      Request URI = /api/task/delete/8d85a5a1-fc5d-44b0-b892-e0a1c3adc80b
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = ru.rmamedov.taskmanager.controller.TaskController
+           Method = public org.springframework.http.ResponseEntity ru.rmamedov.taskmanager.controller.TaskController.deleteById(java.lang.String)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 204
+    Error message = null
+          Headers = [X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2019-10-12 20:27:15.604  WARN 19263 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 23001, SQLState: 23001
+2019-10-12 20:27:15.604 ERROR 19263 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : Unique index or primary key violation: "UK_3K4CPLVH82SRUEUTTFKWNYLQ0_INDEX_7 ON PUBLIC.APP_USER(USERNAME)"; SQL statement:
+insert into app_user (created, email, first_name, last_name, password, phone, updated, username, version, id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [23001-148]
+2019-10-12 20:27:15.605 ERROR 19263 --- [    Test worker] o.h.i.ExceptionMapperStandardImpl        : HHH000346: Error during managed flush [org.hibernate.exception.ConstraintViolationException: could not execute statement]
+2019-10-12 20:27:15.767  WARN 19263 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 23001, SQLState: 23001
+2019-10-12 20:27:15.767 ERROR 19263 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : Unique index or primary key violation: "UK_3K4CPLVH82SRUEUTTFKWNYLQ0_INDEX_7 ON PUBLIC.APP_USER(USERNAME)"; SQL statement:
+insert into app_user (created, email, first_name, last_name, password, phone, updated, username, version, id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [23001-148]
+2019-10-12 20:27:15.768 ERROR 19263 --- [    Test worker] o.h.i.ExceptionMapperStandardImpl        : HHH000346: Error during managed flush [org.hibernate.exception.ConstraintViolationException: could not execute statement]
+2019-10-12 20:27:15.866  INFO 19263 --- [    Test worker] r.r.t.service.ProjectManagerService      : While user 'developer_01' were leaving project 'HnCxCsCfEb', he removed: '1' tasks.
+2019-10-12 20:27:15.873  INFO 19263 --- [    Test worker] r.r.t.service.ProjectManagerService      : While user 'developer_01' were leaving project 'JeZhRycDyo', he removed: '1' tasks.
+2019-10-12 20:27:15.879  INFO 19263 --- [    Test worker] r.r.t.service.ProjectManagerService      : While user 'developer_01' were leaving project 'BBccVdWRKq', he removed: '1' tasks.
+
+MockHttpServletRequest:
+      HTTP Method = DELETE
+      Request URI = /api/manager/user/delete/developer_01
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = ru.rmamedov.taskmanager.controller.ProjectManagerController
+           Method = public org.springframework.http.ResponseEntity ru.rmamedov.taskmanager.controller.ProjectManagerController.deleteUserWithProjectsTasksComments(java.lang.String)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 204
+    Error message = null
+          Headers = [X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
