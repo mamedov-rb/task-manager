@@ -1,0 +1,47 @@
+version: '3.3'
+
+services:
+
+
+  db:
+    build: ./postgres      
+    restart: always
+    ports:
+      - 5432:5432
+    image: postgres-image
+    container_name: postgres-container
+    environment:
+      TASK_MANAGER_USER: task_manager_admin
+      TASK_MANAGER_PASSWORD: 123qwe
+      TASK_MANAGER_DATABASE: task_manager_db    
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./pg_data:/var/lib/postgresql/data/pgdata
+
+
+  server:
+    build: ./server
+    restart: always
+    image: server-image
+    container_name: server-container
+    ports:
+      - 9090:9090            
+    links:
+      - db      
+
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      args:
+        API_BASE_URL: http://server-container:9090/api
+    restart: always
+    image: client-image
+    container_name: client-container
+    ports:
+      - 80:80      
+    links:
+      - server     
+

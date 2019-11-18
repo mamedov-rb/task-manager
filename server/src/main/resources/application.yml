@@ -1,0 +1,69 @@
+
+server:
+  port: 9090
+
+logging.level.root: INFO
+
+spring:
+  profiles: development
+
+  jpa:
+    generate-ddl: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+        current_session_context_class: thread
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+---
+
+server:
+  port: 6060
+
+spring:
+  profiles: test
+
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+
+  datasource:
+    initialization-mode: never
+
+---
+
+server:
+  port: 9090
+
+logging.level.org: ERROR
+
+spring:
+  profiles: prodaction
+
+  jpa:
+    generate-ddl: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL93Dialect
+        current_session_context_class: thread
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+  datasource:
+    initialization-mode: always
+    username: task_manager_admin
+    password: 123qwe
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://task-postgres-container:5432/task_manager_db
