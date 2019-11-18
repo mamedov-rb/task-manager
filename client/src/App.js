@@ -17,7 +17,7 @@ class App extends Component {
     }
 
     componentDidMount() {
-        let authenticated = Boolean(sessionStorage.getItem('isAuthenticated'));
+        let authenticated = Boolean(sessionStorage.getItem('isAuthenticated'))
         this.setState({isAuthenticated: authenticated})
     }
 
