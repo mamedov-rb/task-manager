@@ -7,7 +7,7 @@ client/package-lock.json
 client/node_modules/
 client/node_modules/**
 
-server/build/**
+server/build/resources/
 server/build/
 server/gradle/**
 server/gradle/
