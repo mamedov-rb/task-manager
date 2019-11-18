@@ -1,12 +1,13 @@
-#FROM gradle:jdk10 as builder
-#COPY ./gradle /usr/src/api
-#COPY ./gradlew /usr/src/api/.gradlew
-#RUN gradle wrapper && ./gradlew build
+FROM gradle:4.10.2-jdk10 as builder
+COPY --chown=gradle:gradle . /home/gradle/src
+WORKDIR /home/gradle/src
+USER root
+RUN chown -R gradle /home/gradle/src
+USER gradle
+user "gradle"
+RUN gradle build --stacktrace
 
 FROM openjdk:10-jre-slim
-WORKDIR /app
-#COPY ./gradle /usr/src/api
-#COPY ./gradlew /usr/src/api/.gradlew
-#RUN gradle wrapper && ./gradlew build
-COPY ./build/libs/*.jar /app
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=development", "/app/task-manager-1.0-SNAPSHOT.jar"]
+RUN mkdir /app
+COPY --from=builder /home/gradle/src/build/libs/*.jar /app/task-service.jar
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=prodaction", "/app/task-service.jar"]
