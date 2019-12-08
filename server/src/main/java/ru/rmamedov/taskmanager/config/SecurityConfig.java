@@ -29,7 +29,6 @@ import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String LOGIN_URL = "/api/login";
@@ -46,14 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .cors()
-                .and()
-                .csrf().disable()
-                .httpBasic();
-
-        http
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http
                 .authorizeRequests()
@@ -61,29 +52,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/user/save").permitAll()
                 .antMatchers("/api/project/**").authenticated()
                 .anyRequest().authenticated()
-                    .and()
+                .and()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(), LOGIN_URL))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager()));
+
+	http
+                .cors()
+                .and()
+                .csrf().disable();
+
+        http
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public FilterRegistrationBean simpleCorsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
-        config.setAllowedMethods(Collections.singletonList("*"));
-        config.setAllowedHeaders(Collections.singletonList("*"));
-        source.registerCorsConfiguration("/**", config);
-        final FilterRegistrationBean bean = new FilterRegistrationBean<>(new CorsFilter(source));
-        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-        return bean;
     }
 
 }

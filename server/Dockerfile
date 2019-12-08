@@ -4,8 +4,8 @@ WORKDIR /home/gradle/src
 USER root
 RUN chown -R gradle /home/gradle/src
 USER gradle
-user "gradle"
-RUN gradle build --stacktrace
+USER "gradle"
+RUN gradle clean build -x test --stacktrace
 
 FROM openjdk:10-jre-slim
 RUN mkdir /app

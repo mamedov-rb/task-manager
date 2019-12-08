@@ -5,7 +5,7 @@ const jwt = sessionStorage.getItem('jwt')
 
 export default axios.create({
     baseURL: URL,
-    timeout: 1500,
+    timeout: 5000,
     headers: {
         'Content-Type': 'application/json',
         'Authorization': jwt

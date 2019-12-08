@@ -8,7 +8,7 @@ services:
     image: task-client-image
     container_name: task-client-container
     ports:
-      - 3000:3000   
+      - "3000:3000"   
     depends_on:
       - server            
     networks:
@@ -19,8 +19,8 @@ services:
     restart: always
     image: task-server-image
     container_name: task-server-container
-    expose:
-      - 9090        
+    ports:
+      - "9090:9090"        
     depends_on:
       - db
     networks: 
@@ -31,7 +31,7 @@ services:
     image: postgres:10-alpine
     restart: always
     ports:
-      - 5445:5445
+      - "5445:5445"
     container_name: task-postgres-container
     environment:
       TASK_MANAGER_USER: task_admin

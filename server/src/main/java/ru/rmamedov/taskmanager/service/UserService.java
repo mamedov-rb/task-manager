@@ -27,7 +27,8 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    private final PasswordEncoder encoder;
+    @Autowired
+    private PasswordEncoder encoder;
 
     @NotNull
     @Override
