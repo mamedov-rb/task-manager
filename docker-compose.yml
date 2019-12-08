@@ -2,46 +2,49 @@ version: '3.3'
 
 services:
 
-
-  db:
-    build: ./postgres      
+  client:
+    build: ./client
     restart: always
+    image: task-client-image
+    container_name: task-client-container
     ports:
-      - 5432:5432
-    image: postgres-image
-    container_name: postgres-container
-    environment:
-      TASK_MANAGER_USER: task_manager_admin
-      TASK_MANAGER_PASSWORD: 123qwe
-      TASK_MANAGER_DATABASE: task_manager_db    
-      PGDATA: /var/lib/postgresql/data/pgdata
-    volumes:
-      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./pg_data:/var/lib/postgresql/data/pgdata
-
-
+      - 3000:3000   
+    depends_on:
+      - server            
+    networks:
+      - backend
+      
   server:
     build: ./server
     restart: always
-    image: server-image
-    container_name: server-container
-    ports:
-      - 9090:9090            
-    links:
-      - db      
+    image: task-server-image
+    container_name: task-server-container
+    expose:
+      - 9090        
+    depends_on:
+      - db
+    networks: 
+      - backend
+      - frontend         
 
-
-  client:
-    build:
-      context: ./client
-      dockerfile: Dockerfile
-      args:
-        API_BASE_URL: http://server-container:9090/api
+  db:     
+    image: postgres:10-alpine
     restart: always
-    image: client-image
-    container_name: client-container
     ports:
-      - 80:80      
-    links:
-      - server     
+      - 5445:5445
+    container_name: task-postgres-container
+    environment:
+      TASK_MANAGER_USER: task_admin
+      TASK_MANAGER_PASSWORD: 123qwe
+      TASK_MANAGER_DATABASE: task_db    
+      PGDATA: /var/lib/postgresql/data/pgdata
+    networks:
+      - backend    
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./postgres-data:/var/lib/postgresql/data
 
+
+networks:
+  backend:
+  frontend:        
