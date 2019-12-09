@@ -62,8 +62,10 @@ spring:
             non_contextual_creation: true
 
   datasource:
-    initialization-mode: always
-    username: task_manager_admin
+    #initialization-mode: always
+    username: task_admin
     password: 123qwe
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://task-postgres-container:5432/task_manager_db
+    url: jdbc:postgresql://task-postgres-container/task_db
+
+

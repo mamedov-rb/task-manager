@@ -6,6 +6,7 @@ client/.idea/
 client/package-lock.json
 client/node_modules/
 client/node_modules/**
+client/yarn.lock
 
 server/build/resources/
 server/build/

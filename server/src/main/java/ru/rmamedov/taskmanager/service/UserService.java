@@ -2,6 +2,7 @@ package ru.rmamedov.taskmanager.service;
 
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,7 +28,8 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    private final PasswordEncoder encoder;
+    @Autowired
+    private PasswordEncoder encoder;
 
     @NotNull
     @Override
