@@ -13,19 +13,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 import ru.rmamedov.taskmanager.model.enums.Status;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -37,7 +25,11 @@ import java.util.Set;
  */
 
 @Data
-@Table(name = "task")
+@Table(
+        name = "task",
+        uniqueConstraints=
+        @UniqueConstraint(columnNames={"name", "description"})
+)
 @Entity
 @ToString(exclude = {"createdBy", "assignedTo", "project", "comments"})
 @NoArgsConstructor
@@ -56,7 +48,7 @@ public class Task {
     private int version;
 
     @Size(min = 3, max = 30, message = "Task name should be not less than '3' and more than '30' characters!")
-    @Column(name = "name", unique = true, nullable = false, length = 30)
+    @Column(name = "name", nullable = false, length = 30)
     @NotBlank
     private String name;
 
