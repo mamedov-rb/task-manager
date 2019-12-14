@@ -21,16 +21,21 @@ class Login extends Component {
                 if (jwt !== null) {
                     sessionStorage.setItem('jwt', jwt)
                     sessionStorage.setItem('isAuthenticated', 'true')
-                    toast.success("Успешно.", {
+                    this.props.setAuthenticated(true)
+                    window.location.href = "/projects"
+                }
+            })
+            .catch(err => {
+                if (err.response) {
+                    toast.error(err.response.data, {
                         position: toast.POSITION.TOP_RIGHT
                     })
-                    this.props.setAuthenticated(true)
+                } else {
+                    toast.error("Something went wrong", {
+                        position: toast.POSITION.TOP_RIGHT
+                    })
                 }
-            }).catch(err => {
-            toast.error("Неверные логин или пароль", {
-                position: toast.POSITION.TOP_RIGHT
             })
-        })
     }
 
     performLogout = () => {
