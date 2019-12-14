@@ -30,14 +30,19 @@ class Register extends Component {
         }
         api.post('/user/save', user)
             .then(res => {
-                toast.success("Success", {
-                    position: toast.POSITION.TOP_RIGHT
-                })
-            }).catch(err => {
-            toast.error("Something went wrong", {
-                position: toast.POSITION.TOP_RIGHT
+                window.location.href = "/login"
             })
-        })
+            .catch(err => {
+                if (err.response) {
+                    toast.error(JSON.stringify(err), {
+                        position: toast.POSITION.TOP_RIGHT
+                    })
+                } else {
+                    toast.error("Something went wrong", {
+                        position: toast.POSITION.TOP_RIGHT
+                    })
+                }
+            })
     }
 
     render() {
