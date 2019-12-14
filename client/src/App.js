@@ -39,9 +39,7 @@ class App extends Component {
                         <Link to="/login" className="item">
                             {this.state.isAuthenticated ? 'Logout' : 'Login'}
                         </Link>
-                        <Link to="/register" className="item">
-                            Register
-                        </Link>
+                        {this.state.isAuthenticated ? '' : <Link to="/register" className="item">Register</Link>}
                         <div className="right menu">
                             <div className="item">
                                 <div className="ui transparent icon input">
