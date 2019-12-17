@@ -3,6 +3,7 @@ package ru.rmamedov.taskmanager.service;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import ru.rmamedov.taskmanager.model.Project;
 import ru.rmamedov.taskmanager.model.User;
 import ru.rmamedov.taskmanager.repository.ProjectRepository;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -23,6 +25,10 @@ public class ProjectService {
     private final ProjectRepository projectRepository;
 
     private final UserService userService;
+
+    List<ProjectProjection> getPreview(final String name, final Pageable pageable) {
+        return projectRepository.getPreview(name, pageable);
+    }
 
     @Transactional
     public Project save(@NotNull final Project project) throws UserNotAuthorizedException {

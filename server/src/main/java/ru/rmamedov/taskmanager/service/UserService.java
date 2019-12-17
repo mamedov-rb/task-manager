@@ -3,6 +3,7 @@ package ru.rmamedov.taskmanager.service;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,11 +12,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.rmamedov.taskmanager.exception.UserNotFoundException;
 import ru.rmamedov.taskmanager.model.DTO.UserDTO;
+import ru.rmamedov.taskmanager.model.DTO.UserPreviewDTO;
+import ru.rmamedov.taskmanager.model.DTO.UserQuickPreview;
 import ru.rmamedov.taskmanager.model.Project;
 import ru.rmamedov.taskmanager.model.User;
-import ru.rmamedov.taskmanager.model.DTO.UserMetaDTO;
 import ru.rmamedov.taskmanager.repository.UserRepository;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,6 +33,10 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder encoder;
+
+    List<UserQuickPreview> getPreview(final String param, final Pageable pageable) {
+        return userRepository.getPreview(param, pageable);
+    }
 
     @NotNull
     @Override
@@ -47,7 +54,7 @@ public class UserService implements UserDetailsService {
     }
 
     @NotNull
-    public Set<UserMetaDTO> findAllByProjectWithRoles(final Project project) throws UserNotFoundException {
+    public Set<UserPreviewDTO> findAllByProjectWithRoles(final Project project) throws UserNotFoundException {
         return userRepository.findAllByProjectWithEagerRolesAsProjection(project);
     }
 

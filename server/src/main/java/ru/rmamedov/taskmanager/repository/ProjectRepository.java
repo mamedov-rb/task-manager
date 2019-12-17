@@ -1,5 +1,6 @@
 package ru.rmamedov.taskmanager.repository;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -9,11 +10,20 @@ import ru.rmamedov.taskmanager.model.DTO.ProjectProjection;
 import ru.rmamedov.taskmanager.model.Project;
 import ru.rmamedov.taskmanager.model.User;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, String> {
+
+    @Query("SELECT p FROM Project p " +
+            "WHERE LOWER(p.name) LIKE CONCAT('%', :param, '%') " +
+            "OR LOWER(p.description) LIKE LOWER(CONCAT('%', :param, '%'))")
+    List<ProjectProjection> getPreview(
+            @Param("param") String param,
+            Pageable pageable
+    );
 
     @Query("SELECT p FROM Project p WHERE :user MEMBER OF p.users OR p.createdBy = :user")
     Set<ProjectProjection> findAllAsProjectionByUsername(@Param("user") User user);

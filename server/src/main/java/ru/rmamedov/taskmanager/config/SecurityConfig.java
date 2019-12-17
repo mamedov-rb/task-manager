@@ -40,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
+                .antMatchers("/api/manager/search").permitAll()
                 .antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
                 .antMatchers(HttpMethod.POST, "/api/user/save").permitAll()
                 .antMatchers("/api/project/**").authenticated()
@@ -48,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(), LOGIN_URL))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager()));
 
-	http
+	    http
                 .cors()
                 .and()
                 .csrf().disable();

@@ -1,29 +1,25 @@
 package ru.rmamedov.taskmanager.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.rmamedov.taskmanager.model.DTO.SaveCommentRequest;
 import ru.rmamedov.taskmanager.model.DTO.SaveTaskRequest;
-import ru.rmamedov.taskmanager.model.DTO.UserMetaDTO;
+import ru.rmamedov.taskmanager.model.DTO.UserPreviewDTO;
 import ru.rmamedov.taskmanager.model.Project;
 import ru.rmamedov.taskmanager.service.ProjectManagerService;
 import ru.rmamedov.taskmanager.service.ProjectService;
 import ru.rmamedov.taskmanager.service.UserService;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -41,6 +37,11 @@ public class ProjectManagerController {
 
     private final UserService userService;
 
+    @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Map<String, List<?>> globalSearch(@NotNull @RequestParam(value = "param", required = false, defaultValue = "") final String param) {
+        return projectManagerService.globalSearch(param);
+    }
+
     @PostMapping(value = "/project/save", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity create(@RequestBody @Valid final Project project,
                                  @Nullable @AuthenticationPrincipal Authentication authentication) {
@@ -52,7 +53,7 @@ public class ProjectManagerController {
     }
 
     @GetMapping(value = "/users/{projectId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Set<UserMetaDTO>> findAllByProject(@PathVariable final String projectId) {
+    public ResponseEntity<Set<UserPreviewDTO>> findAllByProject(@PathVariable final String projectId) {
         return ResponseEntity.status(HttpStatus.OK).body(projectManagerService.findAllByProjectWithRoles(projectId));
     }
 

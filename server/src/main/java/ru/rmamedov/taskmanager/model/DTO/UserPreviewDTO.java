@@ -8,7 +8,7 @@ import java.util.Set;
  * @author Rustam Mamedov
  */
 
-public interface UserMetaDTO {
+public interface UserPreviewDTO {
 
     String getFullName();
 

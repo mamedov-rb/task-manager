@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,13 +12,15 @@ import ru.rmamedov.taskmanager.exception.UserNotAuthorizedException;
 import ru.rmamedov.taskmanager.model.Comment;
 import ru.rmamedov.taskmanager.model.DTO.SaveCommentRequest;
 import ru.rmamedov.taskmanager.model.DTO.SaveTaskRequest;
+import ru.rmamedov.taskmanager.model.DTO.UserPreviewDTO;
 import ru.rmamedov.taskmanager.model.Project;
 import ru.rmamedov.taskmanager.model.Task;
 import ru.rmamedov.taskmanager.model.User;
-import ru.rmamedov.taskmanager.model.DTO.UserMetaDTO;
 
 import javax.validation.Valid;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -36,6 +39,16 @@ public class ProjectManagerService {
     private final TaskService taskService;
 
     private final CommentService commentService;
+
+    @Transactional(readOnly = true)
+    public Map<String, List<?>> globalSearch(final String param) {
+        final PageRequest pageRequest = PageRequest.of(0, 10);
+        return Map.of(
+                "users", userService.getPreview(param, pageRequest),
+                "projects", projectService.getPreview(param, pageRequest),
+                "tasks", taskService.getPreview(param, pageRequest)
+        );
+    }
 
     @Transactional
     public boolean saveProjectAndAssignUserToIt(final Project project, final Authentication authentication) {
@@ -152,7 +165,7 @@ public class ProjectManagerService {
     }
 
     @Transactional(readOnly = true)
-    public Set<UserMetaDTO> findAllByProjectWithRoles(final String projectId) {
+    public Set<UserPreviewDTO> findAllByProjectWithRoles(final String projectId) {
         @NotNull final Project project = projectService.findById(projectId);
         return userService.findAllByProjectWithRoles(project);
     }

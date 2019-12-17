@@ -2,11 +2,13 @@ package ru.rmamedov.taskmanager.service;
 
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.rmamedov.taskmanager.exception.TaskNotFoundException;
 import ru.rmamedov.taskmanager.model.Comment;
 import ru.rmamedov.taskmanager.model.DTO.TaskDetailsProjection;
+import ru.rmamedov.taskmanager.model.DTO.TaskPreviewProjection;
 import ru.rmamedov.taskmanager.model.DTO.TaskProjection;
 import ru.rmamedov.taskmanager.model.Project;
 import ru.rmamedov.taskmanager.model.Task;
@@ -14,6 +16,7 @@ import ru.rmamedov.taskmanager.model.User;
 import ru.rmamedov.taskmanager.model.enums.Status;
 import ru.rmamedov.taskmanager.repository.TaskRepository;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -21,6 +24,10 @@ import java.util.Set;
 public class TaskService {
 
     private final TaskRepository taskRepository;
+
+    List<TaskPreviewProjection> getPreview(final String param, Pageable pageable) {
+        return taskRepository.getPreview(param, pageable);
+    }
 
     public Task save(final Task task) {
         return taskRepository.save(task);
