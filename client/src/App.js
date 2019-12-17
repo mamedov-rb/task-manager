@@ -33,9 +33,7 @@ class App extends Component {
                 <Header isAuthenticated={this.state.isAuthenticated}/>
                 <Router>
                     <div className="ui top attached tabular menu">
-                        <Link to="/projects" className="item">
-                            {!this.state.isAuthenticated ? '' : <Link to="/projects" className="item">Projects</Link>}
-                        </Link>
+                        {!this.state.isAuthenticated ? '' : <Link to="/projects" className="item">Projects</Link>}
                         <Link to="/login" className="item">
                             {this.state.isAuthenticated ? 'Logout' : 'Login'}
                         </Link>
