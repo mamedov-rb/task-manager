@@ -21,7 +21,7 @@ class Projects extends Component {
                 this.setState({projects: response.data})
             })
             .catch(err => {
-                toast.error(err.message, {
+                toast.error(err.response.data, {
                     position: toast.POSITION.TOP_RIGHT
                 })
             })
@@ -36,7 +36,7 @@ class Projects extends Component {
                 this.fetchProjects()
             })
             .catch(err => {
-                toast.error(err.message, {
+                toast.error(err.response.data, {
                     position: toast.POSITION.TOP_RIGHT
                 })
             })

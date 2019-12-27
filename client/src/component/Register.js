@@ -34,7 +34,7 @@ class Register extends Component {
             })
             .catch(err => {
                 if (err.response) {
-                    toast.error(JSON.stringify(err), {
+                    toast.error(err.response.data, {
                         position: toast.POSITION.TOP_RIGHT
                     })
                 } else {

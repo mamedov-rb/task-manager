@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import {BrowserRouter as Router, Link, Route} from 'react-router-dom'
-import {ToastContainer} from "react-toastify"
+import {toast, ToastContainer} from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
 import Projects from './component/Projects'
 import ProjectDetails from './component/ProjectDetails'
@@ -9,11 +9,20 @@ import TaskDetails from './component/TaskDetails'
 import Header from './component/Header'
 import Login from './component/Login'
 import Register from './component/Register'
+import api from "./axios-config";
 
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {isAuthenticated: false}
+        this.state = {
+            isAuthenticated: false,
+            param: '',
+            searchResult: {
+                users: [],
+                projects: [],
+                tasks: []
+            }
+        }
     }
 
     componentDidMount() {
@@ -25,6 +34,23 @@ class App extends Component {
         this.setState({isAuthenticated: value})
         // this.forceUpdate()
         window.location.reload()
+    }
+
+    performSearch = () => {
+        api.get('/manager/search', {params: {param: this.state.param}})
+            .then(res => {
+                this.setState({searchResult: res.data})
+            })
+            .catch(err => {
+                toast.error(err.response.data, {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+            })
+    }
+
+    handleChange = (event) => {
+        this.setState({[event.target.name]: event.target.value})
+        this.performSearch()
     }
 
     render() {
@@ -41,7 +67,7 @@ class App extends Component {
                         <div className="right menu">
                             <div className="item">
                                 <div className="ui transparent icon input">
-                                    <input type="text" placeholder="Search anything..." />
+                                    <input type="text" name="param" placeholder="Search something..." onChange={this.handleChange} />
                                         <i className="search link icon" />
                                 </div>
                             </div>

@@ -24,7 +24,7 @@ class TaskDetails extends Component {
                 this.setState({task: response.data})
             })
             .catch(err => {
-                toast.error(err.message, {
+                toast.error(err.response.data, {
                     position: toast.POSITION.TOP_RIGHT
                 })
             })
@@ -39,7 +39,7 @@ class TaskDetails extends Component {
                 this.fetchTaskDetails()
             })
             .catch(err => {
-                toast.error(err.message, {
+                toast.error(err.response.data, {
                     position: toast.POSITION.TOP_RIGHT
                 })
             })
@@ -53,7 +53,7 @@ class TaskDetails extends Component {
                 })
             })
             .catch(err => {
-                toast.error(err.message, {
+                toast.error(err.response.data, {
                     position: toast.POSITION.TOP_RIGHT
                 })
             })
