@@ -82,7 +82,7 @@ class App extends Component {
                                         <div className="item">
                                             <img className="ui avatar image" src={Faker.image.avatar()} />
                                             <div className="content">
-                                                <div className="header">{el.name}</div>
+                                                <a className="header">{el.firstName} {el.lastName}</a>
                                             </div>
                                         </div>
                                     )
@@ -92,7 +92,8 @@ class App extends Component {
                                         <div className="item">
                                             <img className="ui avatar image" src={Faker.image.avatar()} />
                                             <div className="content">
-                                                <div className="header">{el.name}</div>
+                                                <a className="header">{el.name}</a>
+                                                <div className="description">{el.description}</div>
                                             </div>
                                         </div>
                                     )
@@ -103,6 +104,7 @@ class App extends Component {
                                             <img className="ui avatar image" src={Faker.image.avatar()} />
                                             <div className="content">
                                                 <div className="header">{el.name}</div>
+                                                <div className="description">{el.description}</div>
                                             </div>
                                         </div>
                                     )
