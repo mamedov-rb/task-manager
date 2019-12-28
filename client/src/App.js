@@ -77,7 +77,27 @@ class App extends Component {
                         </div>
                         <SkyLight hideOnOverlayClicked ref="addDialog">
                             <div className="ui middle aligned selection list left floated">
+                                {this.state.searchResult.users.map((el) => {
+                                    return (
+                                        <div className="item">
+                                            <img className="ui avatar image" src={Faker.image.avatar()} />
+                                            <div className="content">
+                                                <div className="header">{el.name}</div>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
                                 {this.state.searchResult.projects.map((el) => {
+                                    return (
+                                        <div className="item">
+                                            <img className="ui avatar image" src={Faker.image.avatar()} />
+                                            <div className="content">
+                                                <div className="header">{el.name}</div>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                                {this.state.searchResult.tasks.map((el) => {
                                     return (
                                         <div className="item">
                                             <img className="ui avatar image" src={Faker.image.avatar()} />
