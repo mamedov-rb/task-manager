@@ -10,6 +10,9 @@ import Header from './component/Header'
 import Login from './component/Login'
 import Register from './component/Register'
 import api from "./axios-config";
+import SkyLight from "react-skylight";
+import Faker from "faker"
+import Project from "./component/Project";
 
 class App extends Component {
     constructor(props) {
@@ -32,7 +35,6 @@ class App extends Component {
 
     setAuthenticated = (value) => {
         this.setState({isAuthenticated: value})
-        // this.forceUpdate()
         window.location.reload()
     }
 
@@ -42,7 +44,7 @@ class App extends Component {
                 this.setState({searchResult: res.data})
             })
             .catch(err => {
-                toast.error(err.response.data, {
+                toast.error(JSON.stringify(err), {
                     position: toast.POSITION.TOP_RIGHT
                 })
             })
@@ -51,6 +53,7 @@ class App extends Component {
     handleChange = (event) => {
         this.setState({[event.target.name]: event.target.value})
         this.performSearch()
+        this.refs.addDialog.show()
     }
 
     render() {
@@ -68,10 +71,24 @@ class App extends Component {
                             <div className="item">
                                 <div className="ui transparent icon input">
                                     <input type="text" name="param" placeholder="Search something..." onChange={this.handleChange} />
-                                        <i className="search link icon" />
+                                    <i className="search link icon"/>
                                 </div>
                             </div>
                         </div>
+                        <SkyLight hideOnOverlayClicked ref="addDialog">
+                            <div className="ui middle aligned selection list left floated">
+                                {this.state.searchResult.projects.map((el) => {
+                                    return (
+                                        <div className="item">
+                                            <img className="ui avatar image" src={Faker.image.avatar()} />
+                                            <div className="content">
+                                                <div className="header">{el.name}</div>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </SkyLight>
                     </div>
                     <div className="ui bottom container">
                         <Route exact path="/projects" component={Projects}/>
@@ -81,7 +98,8 @@ class App extends Component {
                         <Route path="/task/details/:taskId" component={TaskDetails}/>
                         <Route path="/register" component={Register}/>
                         <Route path="/login" component={() =>
-                            <Login isAuthenticated={this.state.isAuthenticated} setAuthenticated={this.setAuthenticated} />}
+                            <Login isAuthenticated={this.state.isAuthenticated}
+                                   setAuthenticated={this.setAuthenticated}/>}
                         />
                     </div>
                     <ToastContainer autoClose={3000}/>

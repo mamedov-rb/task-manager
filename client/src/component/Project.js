@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import Faker from "faker";
-import {Link} from "react-router-dom";
+import Faker from "faker"
+import {Link} from "react-router-dom"
 
 class Project extends Component {
 
