@@ -16,4 +16,5 @@ server/.idea/
 server/out/
 
 /pg_data
+/postgres-data
 
