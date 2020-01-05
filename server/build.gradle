@@ -19,7 +19,7 @@ plugins {
 apply plugin: 'groovy'
 apply plugin: 'io.spring.dependency-management'
 
-sourceCompatibility = 1.9
+sourceCompatibility = 11
 group 'ru.rmamedov.taskmanager'
 version '1.0-SNAPSHOT'
 
