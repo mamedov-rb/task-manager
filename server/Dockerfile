@@ -5,7 +5,7 @@ USER root
 RUN chown -R gradle /home/gradle/src
 USER gradle
 USER "gradle"
-RUN gradle clean build -x test --stacktrace
+RUN gradle build -x test --stacktrace
 
 FROM adoptopenjdk/openjdk11:jdk-11.0.5_10-alpine-slim
 RUN mkdir /app

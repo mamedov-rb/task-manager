@@ -12,7 +12,7 @@ services:
     depends_on:
       - server            
     networks:
-      - backend
+      - back-front
       
   server:
     build: ./server
@@ -24,8 +24,8 @@ services:
     depends_on:
       - db
     networks: 
-      - backend
-      - frontend         
+      - back-front
+      - db-back         
 
   db:     
     image: postgres:10-alpine
@@ -39,12 +39,12 @@ services:
       TASK_MANAGER_DATABASE: task_db    
       PGDATA: /var/lib/postgresql/data/pgdata
     networks:
-      - backend    
+      - db-back    
     volumes:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./postgres-data:/var/lib/postgresql/data
 
 
 networks:
-  backend:
-  frontend:        
+  back-front:
+  db-back:        
