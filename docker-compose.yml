@@ -30,13 +30,13 @@ services:
   db:     
     image: postgres:10-alpine
     restart: always
-    #ports:
-    # - "5445:5432"
+    ports:
+     - "5432:5432"
     container_name: task-postgres-container
     environment:
-      TASK_MANAGER_USER: task_admin
-      TASK_MANAGER_PASSWORD: 123qwe
-      TASK_MANAGER_DATABASE: task_db    
+      POSTGRES_USER: task_admin
+      POSTGRES_PASSWORD: 123qwe
+      POSTGRES_DB: task_db    
       PGDATA: /var/lib/postgresql/data/pgdata
     networks:
       - db-back    
