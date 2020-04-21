@@ -19,7 +19,7 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         saveUser("developer_01")
 
         when:
-        def result = performPost(SAVE_PROJECT, getProject())
+        def result = performPost(SAVE_PROJECT_URL, getProject())
 
         then:
         result.andDo(print())
@@ -37,7 +37,7 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         def id = projectRepository.findAll().stream().findFirst().get().id
 
         when:
-        def result = performPatch(ASSIGN_USER_TO_PROJECT, developer, id)
+        def result = performPatch(ASSIGN_USER_TO_PROJECT_URL, developer, id)
 
         then:
         result.andDo(print())
@@ -53,7 +53,7 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         saveProjectWithCreatedBy("admin-user")
         def id = projectRepository.findAll().stream().findFirst().get().id
         when:
-        def result = performGet(IS_MEMBER, id)
+        def result = performGet(IS_MEMBER_URL, id)
 
         then:
         result.andDo(print())
@@ -73,12 +73,12 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         saveUser(developer_02)
         saveUser(developer_03)
         def id = projectRepository.findAll().stream().findFirst().get().id
-        performPatch(ASSIGN_USER_TO_PROJECT, developer_01, id)
-        performPatch(ASSIGN_USER_TO_PROJECT, developer_02, id)
-        performPatch(ASSIGN_USER_TO_PROJECT, developer_03, id)
+        performPatch(ASSIGN_USER_TO_PROJECT_URL, developer_01, id)
+        performPatch(ASSIGN_USER_TO_PROJECT_URL, developer_02, id)
+        performPatch(ASSIGN_USER_TO_PROJECT_URL, developer_03, id)
 
         when:
-        def result = performGet(FIND_ALL_USERS_OF_PROJECT, id)
+        def result = performGet(FIND_ALL_USERS_OF_PROJECT_URL, id)
 
         then:
         result.andDo(print())
@@ -97,11 +97,11 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         given:
         saveProjectWithCreatedBy("admin-user")
         def projectId = projectRepository.findAll().stream().findFirst().get().id
-        performPatch(ASSIGN_USER_TO_PROJECT, "admin-user", projectId)
-        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, "admin-user"))
+        performPatch(ASSIGN_USER_TO_PROJECT_URL, "admin-user", projectId)
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER_URL, getCreateTaskRequest(projectId, "admin-user"))
 
         when:
-        def result = performPatch(LEAVE_PROJECT_UNDER_USER, projectId)
+        def result = performPatch(LEAVE_PROJECT_UNDER_USER_URL, projectId)
 
         then:
         result.andDo(print())
@@ -121,12 +121,12 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         saveProjectWithCreatedBy("admin-user")
         saveProjectWithCreatedBy("admin-user")
         for (Project p : projectRepository.findAll()) {
-            performPatch(ASSIGN_USER_TO_PROJECT, developer_01, p.id)
-            performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(p.id, developer_01))
+            performPatch(ASSIGN_USER_TO_PROJECT_URL, developer_01, p.id)
+            performPost(SAVE_AND_ASSIGN_TASK_TO_USER_URL, getCreateTaskRequest(p.id, developer_01))
         }
 
         when:
-        def result = performPatch(LEAVE_ALL_PROJECTS, developer_01)
+        def result = performPatch(LEAVE_ALL_PROJECTS_URL, developer_01)
 
         then:
         result.andDo(print())
@@ -143,10 +143,10 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         saveProjectWithCreatedBy("admin-user")
         saveUser(developer)
         def projectId = projectRepository.findAll().stream().findFirst().get().id
-        performPatch(ASSIGN_USER_TO_PROJECT, developer, projectId)
+        performPatch(ASSIGN_USER_TO_PROJECT_URL, developer, projectId)
 
         when:
-        def result = performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer))
+        def result = performPost(SAVE_AND_ASSIGN_TASK_TO_USER_URL, getCreateTaskRequest(projectId, developer))
 
         then:
         result.andDo(print())
@@ -176,17 +176,17 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         saveUser(developer_01)
         saveUser(developer_02)
         def projectId = projectRepository.findAll().stream().findFirst().get().id
-        performPatch(ASSIGN_USER_TO_PROJECT, developer_01, projectId)
-        performPatch(ASSIGN_USER_TO_PROJECT, developer_02, projectId)
-        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer_01))
-        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer_01))
-        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer_01))
-        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer_02))
-        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer_02))
-        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer_02))
+        performPatch(ASSIGN_USER_TO_PROJECT_URL, developer_01, projectId)
+        performPatch(ASSIGN_USER_TO_PROJECT_URL, developer_02, projectId)
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER_URL, getCreateTaskRequest(projectId, developer_01))
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER_URL, getCreateTaskRequest(projectId, developer_01))
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER_URL, getCreateTaskRequest(projectId, developer_01))
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER_URL, getCreateTaskRequest(projectId, developer_02))
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER_URL, getCreateTaskRequest(projectId, developer_02))
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER_URL, getCreateTaskRequest(projectId, developer_02))
 
         when:
-        def result = performGet(FIND_ALL_TASKS_BY_ASSIGNED_TO_AND_PROJECT, projectId)
+        def result = performGet(FIND_ALL_TASKS_BY_ASSIGNED_TO_AND_PROJECT_URL, projectId)
 
         then:
         result.andDo(print())
@@ -207,13 +207,13 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         saveUser(developer_02)
 
         def projectId = projectRepository.findAll().stream().findFirst().get().id
-        performPatch(ASSIGN_USER_TO_PROJECT, developer_01, projectId)
-        performPatch(ASSIGN_USER_TO_PROJECT, developer_02, projectId)
-        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer_01))
+        performPatch(ASSIGN_USER_TO_PROJECT_URL, developer_01, projectId)
+        performPatch(ASSIGN_USER_TO_PROJECT_URL, developer_02, projectId)
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER_URL, getCreateTaskRequest(projectId, developer_01))
         def taskId = taskRepository.findAll().stream().findFirst().get().id
 
         when:
-        def result = performPatch(REASSIGN_TASK_TO_ANOTHER_USER, taskId, developer_02, projectId)
+        def result = performPatch(REASSIGN_TASK_TO_ANOTHER_USER_URL, taskId, developer_02, projectId)
 
         then:
         result.andDo(print())
@@ -235,12 +235,12 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         saveUser(developer_01)
 
         def projectId = projectRepository.findAll().stream().findFirst().get().id
-        performPatch(ASSIGN_USER_TO_PROJECT, developer_01, projectId)
-        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer_01))
+        performPatch(ASSIGN_USER_TO_PROJECT_URL, developer_01, projectId)
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER_URL, getCreateTaskRequest(projectId, developer_01))
         def taskId = taskRepository.findAll().stream().findFirst().get().id
 
         when:
-        def result = performDelete(DELETE_TASK_BY_ID, taskId)
+        def result = performDelete(DELETE_TASK_BY_ID_URL, taskId)
 
         then:
         result.andDo(print())
@@ -255,10 +255,10 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         saveProjectWithCreatedBy("admin-user")
 
         def id = projectRepository.findAll().stream().findFirst().get().id
-        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(id, "user-admin"))
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER_URL, getCreateTaskRequest(id, "user-admin"))
 
         when:
-        def result = performDelete(DELETE_PROJECT_BY_ID, id)
+        def result = performDelete(DELETE_PROJECT_BY_ID_URL, id)
 
         then:
         result.andDo(print())
@@ -278,12 +278,12 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         saveUser(developer_01)
 
         def projectId = projectRepository.findAll().stream().findFirst().get().id
-        performPatch(ASSIGN_USER_TO_PROJECT, developer_01, projectId)
-        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer_01))
+        performPatch(ASSIGN_USER_TO_PROJECT_URL, developer_01, projectId)
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER_URL, getCreateTaskRequest(projectId, developer_01))
         def taskId = taskRepository.findAll().stream().findFirst().get().id
 
         when:
-        def result = performPost(SAVE_COMMENT_UNDER_USER_TASK, getSaveCommentRequest(taskId))
+        def result = performPost(SAVE_COMMENT_UNDER_USER_TASK_URL, getSaveCommentRequest(taskId))
 
         then:
         result.andDo(print())
@@ -301,12 +301,12 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         saveUser(developer_01)
 
         def projectId = projectRepository.findAll().stream().findFirst().get().id
-        performPatch(ASSIGN_USER_TO_PROJECT, developer_01, projectId)
-        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer_01))
+        performPatch(ASSIGN_USER_TO_PROJECT_URL, developer_01, projectId)
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER_URL, getCreateTaskRequest(projectId, developer_01))
         def taskId = taskRepository.findAll().stream().findFirst().get().id
-        performPost(SAVE_COMMENT_UNDER_USER_TASK, getSaveCommentRequest(taskId))
-        performPost(SAVE_COMMENT_UNDER_USER_TASK, getSaveCommentRequest(taskId))
-        performPost(SAVE_COMMENT_UNDER_USER_TASK, getSaveCommentRequest(taskId))
+        performPost(SAVE_COMMENT_UNDER_USER_TASK_URL, getSaveCommentRequest(taskId))
+        performPost(SAVE_COMMENT_UNDER_USER_TASK_URL, getSaveCommentRequest(taskId))
+        performPost(SAVE_COMMENT_UNDER_USER_TASK_URL, getSaveCommentRequest(taskId))
 
         when:
         def task = taskRepository.findByIdWithEagerComments(taskId).get()
@@ -322,14 +322,14 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         def developer_01 = "developer_01"
         saveProjectWithCreatedBy(developer_01)
         def projectId = projectRepository.findAll().stream().findFirst().get().id
-        performPatch(ASSIGN_USER_TO_PROJECT, developer_01, projectId)
-        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer_01))
+        performPatch(ASSIGN_USER_TO_PROJECT_URL, developer_01, projectId)
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER_URL, getCreateTaskRequest(projectId, developer_01))
         def taskId = taskRepository.findAll().stream().findFirst().get().id
-        performPost(SAVE_COMMENT_UNDER_USER_TASK, getSaveCommentRequest(taskId))
-        performPost(SAVE_COMMENT_UNDER_USER_TASK, getSaveCommentRequest(taskId))
+        performPost(SAVE_COMMENT_UNDER_USER_TASK_URL, getSaveCommentRequest(taskId))
+        performPost(SAVE_COMMENT_UNDER_USER_TASK_URL, getSaveCommentRequest(taskId))
 
         when:
-        def result = performGet(FIND_ALL_COMMENTS_OF_TASK, taskId)
+        def result = performGet(FIND_ALL_COMMENTS_OF_TASK_URL, taskId)
 
         then:
         result.andDo(print())
@@ -348,14 +348,14 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         saveUser(developer_01)
 
         def projectId = projectRepository.findAll().stream().findFirst().get().id
-        performPatch(ASSIGN_USER_TO_PROJECT, developer_01, projectId)
-        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer_01))
+        performPatch(ASSIGN_USER_TO_PROJECT_URL, developer_01, projectId)
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER_URL, getCreateTaskRequest(projectId, developer_01))
         def taskId = taskRepository.findAll().stream().findFirst().get().id
-        performPost(SAVE_COMMENT_UNDER_USER_TASK, getSaveCommentRequest(taskId))
+        performPost(SAVE_COMMENT_UNDER_USER_TASK_URL, getSaveCommentRequest(taskId))
         def commentId = commentRepository.findAll().findAll().stream().findFirst().get().id
 
         when:
-        def result = performDelete(DELETE_COMMENT_UNDER_USER_TASK, commentId)
+        def result = performDelete(DELETE_COMMENT_UNDER_USER_TASK_URL, commentId)
 
         then:
         result.andDo(print())
@@ -373,15 +373,15 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         saveUser(developer_01)
 
         def projectId = projectRepository.findAll().stream().findFirst().get().id
-        performPatch(ASSIGN_USER_TO_PROJECT, developer_01, projectId)
-        performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(projectId, developer_01))
+        performPatch(ASSIGN_USER_TO_PROJECT_URL, developer_01, projectId)
+        performPost(SAVE_AND_ASSIGN_TASK_TO_USER_URL, getCreateTaskRequest(projectId, developer_01))
         def taskId = taskRepository.findAll().stream().findFirst().get().id
-        performPost(SAVE_COMMENT_UNDER_USER_TASK, getSaveCommentRequest(taskId))
-        performPost(SAVE_COMMENT_UNDER_USER_TASK, getSaveCommentRequest(taskId))
-        performPost(SAVE_COMMENT_UNDER_USER_TASK, getSaveCommentRequest(taskId))
+        performPost(SAVE_COMMENT_UNDER_USER_TASK_URL, getSaveCommentRequest(taskId))
+        performPost(SAVE_COMMENT_UNDER_USER_TASK_URL, getSaveCommentRequest(taskId))
+        performPost(SAVE_COMMENT_UNDER_USER_TASK_URL, getSaveCommentRequest(taskId))
 
         when:
-        def result = performDelete(DELETE_TASK_BY_ID, taskId)
+        def result = performDelete(DELETE_TASK_BY_ID_URL, taskId)
 
         then:
         result.andDo(print())
@@ -398,14 +398,14 @@ class ProjectManagerControllerTest extends MockMvcHelper {
         saveProjectWithCreatedBy("admin-user")
         saveProjectWithCreatedBy("admin-user")
         for (Project p : projectRepository.findAll()) {
-            performPatch(ASSIGN_USER_TO_PROJECT, developer_01, p.id)
-            performPost(SAVE_AND_ASSIGN_TASK_TO_USER, getCreateTaskRequest(p.id, developer_01))
+            performPatch(ASSIGN_USER_TO_PROJECT_URL, developer_01, p.id)
+            performPost(SAVE_AND_ASSIGN_TASK_TO_USER_URL, getCreateTaskRequest(p.id, developer_01))
 
         }
-        performPatch(LEAVE_ALL_PROJECTS, developer_01)
+        performPatch(LEAVE_ALL_PROJECTS_URL, developer_01)
 
         when:
-        def result = performDelete(DELETE_USER_UNDER_PROJECTS_TASKS, developer_01)
+        def result = performDelete(DELETE_USER_UNDER_PROJECTS_TASKS_URL, developer_01)
 
         then:
         result.andDo(print())

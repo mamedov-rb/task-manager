@@ -33,43 +33,43 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @AutoConfigureMockMvc
 class MockMvcHelper extends Specification {
 
-    protected final static String SAVE_PROJECT = "/api/manager/project/save"
+    protected final static String SAVE_PROJECT_URL = "/api/manager/project/save"
 
-    protected final static String FIND_PROJECT_BY_ID = "/api/project/find/{id}"
+    protected final static String FIND_PROJECT_BY_ID_URL = "/api/project/find/{id}"
 
-    protected final static String IS_MEMBER = "/api/project/is-member"
+    protected final static String IS_MEMBER_URL = "/api/project/is-member"
 
-    protected final static String FIND_ALL_PROJECTS_BY_CURRENT_USER = "/api/project/all"
+    protected final static String FIND_ALL_PROJECTS_BY_CURRENT_USER_URL = "/api/project/all"
 
-    protected final static String ASSIGN_USER_TO_PROJECT = "/api/manager/assign/username/{username}/projectId/{id}"
+    protected final static String ASSIGN_USER_TO_PROJECT_URL = "/api/manager/assign/username/{username}/projectId/{id}"
 
-    protected final static String LEAVE_PROJECT_UNDER_USER = "/api/manager/leave/projectId/{id}"
+    protected final static String LEAVE_PROJECT_UNDER_USER_URL = "/api/manager/leave/projectId/{id}"
 
-    protected final static String LEAVE_ALL_PROJECTS = "/api/manager/leave/all/projects/user/{username}"
+    protected final static String LEAVE_ALL_PROJECTS_URL = "/api/manager/leave/all/projects/user/{username}"
 
-    protected final static String SAVE_AND_ASSIGN_TASK_TO_USER = "/api/manager/assign/task/to/user"
+    protected final static String SAVE_AND_ASSIGN_TASK_TO_USER_URL = "/api/manager/assign/task/to/user"
 
-    protected final static String REASSIGN_TASK_TO_ANOTHER_USER = "/api/manager/reassign/task/{taskId}/user/{username}/by-project/{projectId}"
+    protected final static String REASSIGN_TASK_TO_ANOTHER_USER_URL = "/api/manager/reassign/task/{taskId}/user/{username}/by-project/{projectId}"
 
-    protected final static String REGISTER_USER = "/api/user/save"
+    protected final static String REGISTER_USER_URL = "/api/user/save"
 
-    protected final static String FIND_USER_BY_USERNAME = "/api/user/find/{assignTo}"
+    protected final static String FIND_USER_BY_USERNAME_URL = "/api/user/find/{assignTo}"
 
-    protected final static String FIND_ALL_USERS_OF_PROJECT = "/api/manager/users/{projectId}"
+    protected final static String FIND_ALL_USERS_OF_PROJECT_URL = "/api/manager/users/{projectId}"
 
-    protected final static String DELETE_TASK_BY_ID = "/api/task/delete/{id}"
+    protected final static String DELETE_TASK_BY_ID_URL = "/api/task/delete/{id}"
 
-    protected final static String DELETE_PROJECT_BY_ID = "/api/manager/delete/project/{id}"
+    protected final static String DELETE_PROJECT_BY_ID_URL = "/api/manager/delete/project/{id}"
 
-    protected final static String SAVE_COMMENT_UNDER_USER_TASK = "/api/manager/comment/save"
+    protected final static String SAVE_COMMENT_UNDER_USER_TASK_URL = "/api/manager/comment/save"
 
-    protected final static String DELETE_COMMENT_UNDER_USER_TASK = "/api/manager/comment/delete/{id}"
+    protected final static String DELETE_COMMENT_UNDER_USER_TASK_URL = "/api/manager/comment/delete/{id}"
 
-    protected final static String FIND_ALL_COMMENTS_OF_TASK = "/api/comment/all/taskId/{taskId}"
+    protected final static String FIND_ALL_COMMENTS_OF_TASK_URL = "/api/comment/all/taskId/{taskId}"
 
-    protected final static String DELETE_USER_UNDER_PROJECTS_TASKS = "/api/manager/user/delete/{username}"
+    protected final static String DELETE_USER_UNDER_PROJECTS_TASKS_URL = "/api/manager/user/delete/{username}"
 
-    protected final static String FIND_ALL_TASKS_BY_ASSIGNED_TO_AND_PROJECT = "/api/task/all/by/assignedTo/projectId/{projectId}"
+    protected final static String FIND_ALL_TASKS_BY_ASSIGNED_TO_AND_PROJECT_URL = "/api/task/all/by/assignedTo/projectId/{projectId}"
 
     @Autowired
     private MockMvc mockMvc
@@ -130,13 +130,13 @@ class MockMvcHelper extends Specification {
     def saveProjectWithCreatedBy(String createdBy) {
         saveUser(createdBy)
         def project = getProject()
-        performPost(SAVE_PROJECT, project)
+        performPost(SAVE_PROJECT_URL, project)
     }
 
 
     def saveUser(String username) {
         def user = getUser(username)
-        performPost(REGISTER_USER, user)
+        performPost(REGISTER_USER_URL, user)
     }
 
 }

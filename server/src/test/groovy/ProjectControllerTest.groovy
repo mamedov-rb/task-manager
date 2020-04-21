@@ -4,6 +4,7 @@ import org.springframework.security.test.context.support.WithMockUser
 import ru.rmamedov.taskmanager.model.Project
 
 import static data.TestData.getProject
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
@@ -20,7 +21,7 @@ class ProjectControllerTest extends MockMvcHelper {
         def id = projectRepository.findAll().stream().findFirst().get().id
 
         when:
-        def result = performGet(FIND_PROJECT_BY_ID, id)
+        def result = performGet(FIND_PROJECT_BY_ID_URL, id)
 
         then:
         result.andDo(print())
@@ -42,11 +43,11 @@ class ProjectControllerTest extends MockMvcHelper {
         saveProjectWithCreatedBy(developer_01)
         saveProjectWithCreatedBy(developer_01)
         for (Project p : projectRepository.findAll()) {
-            performPatch(ASSIGN_USER_TO_PROJECT, developer_01, p.id)
+            performPatch(ASSIGN_USER_TO_PROJECT_URL, developer_01, p.id)
         }
 
         when:
-        def result = performGet(FIND_ALL_PROJECTS_BY_CURRENT_USER)
+        def result = performGet(FIND_ALL_PROJECTS_BY_CURRENT_USER_URL)
 
         then:
         result.andDo(print())
@@ -55,22 +56,22 @@ class ProjectControllerTest extends MockMvcHelper {
                 .andExpect((jsonPath('$', Matchers.hasSize(2))))
     }
 
-    def "Create new project - 401"() {
+    def "When find project by id unauthorized then 403 error"() {
         when:
-        def result = performPost(SAVE_PROJECT, getProject())
+        def result = performGet(FIND_PROJECT_BY_ID_URL, randomAlphabetic(5))
 
         then:
         result.andDo(print())
-                .andExpect(status().isUnauthorized())
+                .andExpect(status().isForbidden())
     }
 
-    def "Find project by id - 401"() {
+    def "When create new project unauthorized then 403 error"() {
         when:
-        def result = performGet(FIND_PROJECT_BY_ID, "123")
+        def result = performPost(SAVE_PROJECT_URL, getProject())
 
         then:
         result.andDo(print())
-                .andExpect(status().isUnauthorized())
+                .andExpect(status().isForbidden())
     }
 
 }

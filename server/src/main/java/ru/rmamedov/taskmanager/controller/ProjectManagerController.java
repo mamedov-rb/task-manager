@@ -8,7 +8,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import ru.rmamedov.taskmanager.model.DTO.SaveCommentRequest;
 import ru.rmamedov.taskmanager.model.DTO.SaveTaskRequest;
 import ru.rmamedov.taskmanager.model.DTO.UserPreviewDTO;
@@ -46,10 +54,7 @@ public class ProjectManagerController {
     public ResponseEntity create(@RequestBody @Valid final Project project,
                                  @Nullable @AuthenticationPrincipal Authentication authentication) {
         final boolean created = projectManagerService.saveProjectAndAssignUserToIt(project, authentication);
-        if (created) {
-            return ResponseEntity.status(HttpStatus.CREATED).build();
-        }
-        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+        return created ? ResponseEntity.status(HttpStatus.CREATED).build() : ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
 
     @GetMapping(value = "/users/{projectId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -60,32 +65,19 @@ public class ProjectManagerController {
     @PatchMapping("/assign/username/{username}/projectId/{id}")
     public ResponseEntity assignUserToProject(@PathVariable final String username, @PathVariable String id) {
         final boolean assigned = projectManagerService.assignUserToProject(username, id);
-        if (assigned) {
-            return ResponseEntity.status(HttpStatus.CREATED).build();
-        }
-        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+        return assigned ? ResponseEntity.status(HttpStatus.CREATED).build() : ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
 
     @PatchMapping("/assign/yourself/projectId/{id}")
-    public ResponseEntity assignYourselfToProject(@PathVariable String id,
-                                                  @AuthenticationPrincipal Authentication authentication) {
-
+    public ResponseEntity assignYourselfToProject(@PathVariable String id, @AuthenticationPrincipal Authentication authentication) {
         final boolean assigned = projectManagerService.assignYourselfToProject(id, authentication);
-        if (assigned) {
-            return ResponseEntity.status(HttpStatus.CREATED).build();
-        }
-        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+        return assigned ? ResponseEntity.status(HttpStatus.CREATED).build() : ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
 
     @PatchMapping("/leave/projectId/{id}")
-    public ResponseEntity leaveProjectWithTasksUnderUser(@PathVariable String id,
-                                                         @AuthenticationPrincipal Authentication authentication) {
-
+    public ResponseEntity leaveProjectWithTasksUnderUser(@PathVariable String id, @AuthenticationPrincipal Authentication authentication) {
         final boolean assigned = projectManagerService.leaveProjectUnderUser(id, authentication);
-        if (assigned) {
-            return ResponseEntity.status(HttpStatus.CREATED).build();
-        }
-        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+        return assigned ? ResponseEntity.status(HttpStatus.CREATED).build() : ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
 
     @PatchMapping("/leave/all/projects/user/{username}")
@@ -95,14 +87,9 @@ public class ProjectManagerController {
     }
 
     @PostMapping(value = "/assign/task/to/user", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity createTaskAndAssignToYourself(@Valid @RequestBody SaveTaskRequest request,
-                                                    @AuthenticationPrincipal Authentication authentication) {
-
+    public ResponseEntity createTaskAndAssignToYourself(@Valid @RequestBody SaveTaskRequest request, @AuthenticationPrincipal Authentication authentication) {
         final boolean assigned = projectManagerService.createAndAssignTaskToUser(request, authentication);
-        if (assigned) {
-            return ResponseEntity.status(HttpStatus.CREATED).build();
-        }
-        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+        return assigned ? ResponseEntity.status(HttpStatus.CREATED).build() : ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
 
     @PatchMapping("/reassign/task/{taskId}/user/{username}/by-project/{projectId}")
@@ -124,23 +111,15 @@ public class ProjectManagerController {
     }
 
     @PostMapping(value = "/comment/save", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity saveCommentUnderUserProjectTask(@Valid @RequestBody SaveCommentRequest request,
-                                                          @AuthenticationPrincipal Authentication authentication) {
-
+    public ResponseEntity saveCommentUnderUserProjectTask(@Valid @RequestBody SaveCommentRequest request, @AuthenticationPrincipal Authentication authentication) {
         final boolean saved = projectManagerService.saveCommentUnderUserAndTask(request, authentication);
-        if (saved) {
-            return ResponseEntity.status(HttpStatus.CREATED).build();
-        }
-        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+        return saved ? ResponseEntity.status(HttpStatus.CREATED).build() : ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
 
     @DeleteMapping("/comment/delete/{id}")
     public ResponseEntity deleteCommentUnderTasksAndUser(@PathVariable String id) {
         final boolean removed = projectManagerService.removeCommentUnderUserAndTask(id);
-        if (removed) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+        return removed ? ResponseEntity.status(HttpStatus.NO_CONTENT).build() : ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
 
     @DeleteMapping("/user/delete/{username}")

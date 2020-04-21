@@ -1,7 +1,6 @@
 package ru.rmamedov.taskmanager.model.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import ru.rmamedov.taskmanager.model.User;
 
 import java.time.LocalDateTime;
 

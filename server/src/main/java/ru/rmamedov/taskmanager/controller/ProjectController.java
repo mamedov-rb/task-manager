@@ -41,11 +41,7 @@ public class ProjectController {
 
     @GetMapping("/is-member")
     public String containsUser(@Nullable @AuthenticationPrincipal Authentication authentication) {
-        final boolean memberOf = projectService.isMemberOf(authentication);
-        if (memberOf) {
-            return Boolean.TRUE.toString();
-        }
-        return Boolean.FALSE.toString();
+        return projectService.isMemberOf(authentication) ? Boolean.TRUE.toString() : Boolean.FALSE.toString();
     }
 
 }
